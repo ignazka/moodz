@@ -1,11 +1,13 @@
 const app = require('express')()
 const { connectDB, middlewares, sessionConfig } = require('./config')
+const authRouter = require('./modules/auth')
 const { PORT } = process.env
 async function start() {
   try {
     await connectDB()
     middlewares(app)
     sessionConfig(app)
+    authRouter(app)
 
     app.get('/', (req, res) => {
       res.status(200).json({ message: 'running' })

@@ -1,6 +1,6 @@
 const User = require('./user.model')
 const bcrypt = require('bcryptjs')
-const mongoose = reqwuire('mongoose')
+const mongoose = require('mongoose')
 
 function validationError(error) {
   return error instanceof mongoose.Error.ValidationError
@@ -12,7 +12,7 @@ function isMongoError(error) {
 
 async function signup(req, res) {
   try {
-    const { email, password, username } = req.body
+    const { email, password } = req.body
     if (!email || !password) {
       return res
         .status(400)
@@ -30,7 +30,6 @@ async function signup(req, res) {
     const user = await User.create({
       email,
       password: hashedPassword,
-      username,
     })
     const userWithoutPassword = { email: user.email, _id: user._id }
 
@@ -50,16 +49,15 @@ async function signup(req, res) {
 
 async function login(req, res) {
   try {
-    const { email, password, username } = req.body
-    if ((!email || !password) && (!username || !password)) {
+    const { email, password } = req.body
+    console.log(req.body)
+    if (!email || !password) {
       return res
         .status(400)
         .json({ message: 'Email/Username and password are required' })
         .end()
     }
-    const user =
-      (await User.findOne({ email }).lean()) ||
-      User.findOne({ username }).lean()
+    const user = await User.findOne({ email }).lean()
 
     if (!user) {
       return res
