@@ -1,23 +1,31 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Auth from '../pages/Auth';
 import Main from '../pages/Main';
 import { ROUTES } from '.';
-import { AppRoute, GuestRoute } from '.';
+import RequireAuth from './RequireAuth';
+import PublicRoute from './PublicRoute';
 
 function router() {
   return (
-    <Switch>
-      <GuestRoute path={ROUTES.login}>
-        <Auth isLogin={false} />
-      </GuestRoute>
-      <GuestRoute path={ROUTES.signup}>
-        <Auth isLogin={true} />
-      </GuestRoute>
-      <AppRoute exact path={ROUTES.main}>
-        <Main />
-      </AppRoute>
-    </Switch>
+    <Routes>
+      <Route
+        path={ROUTES.main}
+        element={
+          <RequireAuth>
+            <Main />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path={ROUTES.login}
+        element={
+          <PublicRoute>
+            <Auth />
+          </PublicRoute>
+        }
+      />
+    </Routes>
   );
 }
 
