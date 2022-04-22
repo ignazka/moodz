@@ -64,11 +64,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
         <Navigate to={ROUTES.main} />;
       })
-      .catch(error =>{
-        setError(error)
-        console.error(error.message){
-
-        })
+      .catch(error => {
+        setError(error);
+        console.error(error.message);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -84,9 +83,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
         <Navigate to={ROUTES.main} />;
       })
-      .catch(error =>{
-        setError(error)
-        console.error(error.message)})
+      .catch(error => {
+        setError(error);
+        console.error(error.message);
+      })
       .finally(() => setLoading(false));
   };
   const logout = async () => {
@@ -97,9 +97,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
       })
       .catch(error => {
-        setError(error)
+        setError(error);
 
-        console.error(error.message)})
+        console.error(error.message);
+      })
       .finally(() => setLoading(false));
   };
 
