@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const controllers = require('./auth.controllers')
-const middlewares = require('../../middlewares')
+// const middlewares = require('../../middlewares')
 
 const ROUTES = {
   signup: '/signup',
@@ -14,9 +14,9 @@ const ROUTES = {
 // the logout and isLoggedIn controllers should only run if there is a user in the session
 function authRouter(app) {
   router
-    .post(ROUTES.signup, middlewares.isNotLoggedIn, controllers.signup)
-    .post(ROUTES.login, middlewares.isNotLoggedIn, controllers.login)
-    .post(ROUTES.logout, middlewares.isLoggedIn, controllers.logout)
+    .post(ROUTES.signup, controllers.signup)
+    .post(ROUTES.login, controllers.login)
+    .post(ROUTES.logout, controllers.logout)
     .get(ROUTES.isLoggedIn, controllers.getLoggedInUser)
 
   app.use('/moodz_api', router)

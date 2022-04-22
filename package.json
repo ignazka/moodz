@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server/index.js",
     "build": "next build",
     "start": "next start"
   },
@@ -11,17 +11,25 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.6.2",
+    "@types/webrtc": "^0.0.32",
     "axios": "^0.26.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "connect-mongo": "^4.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
     "mongodb": "^4.5.0",
+    "mongoose": "^6.3.1",
     "next": "latest",
-    "next-transpile-modules": "^9.0.0",
+    "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.30.0"
   },
   "devDependencies": {
     "@types/node": "17.0.4",
-    "@types/react": "17.0.38",
+    "@types/react": "^17.0.38",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",

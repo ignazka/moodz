@@ -63,8 +63,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { email, password } = args
     setLoading(true)
     await signup({ email, password })
-      .then((userCredential) => {
-        setUser(userCredential)
+      .then(({ data }) => {
+        console.log(data)
+        setUser(data)
         router.push('/')
         setLoading(false)
       })
@@ -76,8 +77,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { email, password } = args
     setLoading(true)
     await login({ email, password })
-      .then((userCredential) => {
-        setUser(userCredential)
+      .then(({ data }) => {
+        console.log(data)
+        setUser(data)
         router.push('/')
         setLoading(false)
       })

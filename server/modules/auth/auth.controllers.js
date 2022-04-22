@@ -13,6 +13,7 @@ function isMongoError(error) {
 async function signup(req, res) {
   try {
     const { email, password } = req.body
+
     if (!email || !password) {
       return res
         .status(400)
@@ -33,7 +34,7 @@ async function signup(req, res) {
     })
     const userWithoutPassword = { email: user.email, _id: user._id }
 
-    req.session.user = userWithoutPassword
+    // req.session.user = userWithoutPassword
 
     return res.status(200).json(userWithoutPassword)
   } catch (error) {
@@ -50,7 +51,6 @@ async function signup(req, res) {
 async function login(req, res) {
   try {
     const { email, password } = req.body
-    console.log(req.body)
     if (!email || !password) {
       return res
         .status(400)
@@ -66,11 +66,11 @@ async function login(req, res) {
         .end()
     }
 
-    const hasCorrectPassword = await bcrypt.compare(password, user.password)
+    const hasCorrectPassword = await bcrypt.compare(password, user?.password)
 
     if (hasCorrectPassword) {
-      const userWithoutPass = { email: user.email, _id: user._id }
-      req.session.user = userWithoutPass
+      const userWithoutPass = { email: user?.email, _id: user?._id }
+      // req.session.user = userWithoutPass
       return res.status(200).json(userWithoutPass)
     }
   } catch (error) {

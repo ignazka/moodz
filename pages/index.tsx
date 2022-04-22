@@ -23,8 +23,7 @@ const Home: NextPage = () => {
       </Head>
 
       <header>
-        {' '}
-        {user && <p>{user}</p>}
+        {user && user.email}
         <LogoutIcon onClick={handleClick} className="cursor-pointer" />
       </header>
       <main></main>
