@@ -21,6 +21,7 @@ function Login() {
     if (login) {
       await signIn(email, password);
     } else {
+      console.log('hwet');
       await signUp(email, password);
     }
   };
@@ -65,7 +66,9 @@ function Login() {
         </Button>
         <div className='text-[gray]'>
           New to moodZ ?{' '}
-          <Button onClick={() => setLogin(false)}>Sign up now</Button>
+          <Button onClick={() => setLogin(false)} type='submit'>
+            Sign up now
+          </Button>
         </div>
       </form>
     </div>
