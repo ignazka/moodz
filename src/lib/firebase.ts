@@ -1,20 +1,22 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+
 // import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyBZ8kH4RTbAVSqanIPRF9O-CSBMZP8u9k4',
-  authDomain: 'moodz-489da.firebaseapp.com',
-  projectId: 'moodz-489da',
-  storageBucket: 'moodz-489da.appspot.com',
-  messagingSenderId: '587774869090',
-  appId: '1:587774869090:web:12ce6700591ab615155b3b',
-  measurementId: 'G-CTB5JJ2ZVX',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

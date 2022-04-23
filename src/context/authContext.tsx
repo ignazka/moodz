@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signUp = async (email: string, password: string) => {
     setLoading(true);
-    console.log('signup');
+
     await createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         console.log(userCredential);
