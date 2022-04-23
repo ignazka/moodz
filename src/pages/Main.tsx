@@ -22,7 +22,7 @@ function Main() {
   // const { data, loading, error } = useFetch(() => {}, []);
 
   const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
-  const [moodz, setMoodz] = useState<any | null>(null);
+  const [moodz, setMoodz] = useState<any | null>([{}]);
 
   // styled components
   const StyledButton = styled(Button)`
@@ -55,20 +55,25 @@ function Main() {
     const querySnapshot = await getDocs(
       collection(db, `users/${user?.uid}/moodz`)
     );
-    const arr: any = [];
+    let arr: any = [];
     querySnapshot.forEach(doc => {
       // console.log(doc.id, ' => ', doc.data());
       arr.push({
-        name: new Date(doc.data().addedAt.seconds * 1000).toLocaleString(),
-        maximal: doc.data().value,
+        name: doc.data().addedAt.seconds,
+        moodLevel: doc.data().value,
         note: doc.data().note,
       });
     });
-    const sorted = arr.sort((a: any, b: any) => {
-      return a.name < b.name;
+    const sorted = arr.sort((a: any, b: any): any => a.name - b.name);
+    arr = [{}];
+    sorted.forEach((element: any) => {
+      arr.push({
+        name: new Date(element.name * 1000).toLocaleDateString(),
+        moodLevel: element.moodLevel,
+        note: element.note,
+      });
     });
-    console.log(sorted);
-    setMoodz(sorted);
+    setMoodz(arr);
   };
 
   // custom tooltip for chart
@@ -159,7 +164,7 @@ function Main() {
           data={moodz}
           margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
         >
-          <Line type='monotone' dataKey='maximal' stroke='#00acf0' />
+          <Line type='monotone' dataKey='moodLevel' stroke='#00acf0' />
           <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
           <XAxis dataKey='name' />
           <YAxis
@@ -168,7 +173,6 @@ function Main() {
             domain={[-10, 10]}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend />
         </LineChart>
       </ResponsiveContainer>
     </div>
