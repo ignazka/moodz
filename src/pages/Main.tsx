@@ -26,7 +26,7 @@ function Main() {
   // styled components
   const StyledButton = styled(Button)`
     padding: 0;
-    min-width: 24px;
+    max-width: 24px;
   `;
   /**
    * send data to firebase
@@ -110,12 +110,12 @@ function Main() {
 
   return (
     <div className=''>
-      <header className='flex justify-between items-center flex-row p-2  border-b-2 border-black md:px-4'>
+      <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
         <div>
           <p>moodZ</p>
         </div>
-        <div className='flex items-center md:space-x-4'>
-          <p>Hello, {user?.email}</p>
+        <div className='flex items-center p-0 m-0 md:space-x-4'>
+          <p className='pr-2 text-sm'>Hello, {user?.email}</p>
           <StyledButton onClick={logout}>
             <LogoutIcon />
           </StyledButton>
@@ -161,7 +161,7 @@ function Main() {
         <LineChart
           className='m-auto'
           data={moodz}
-          margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
+          margin={{ top: 5, right: 30, bottom: 5, left: 0 }}
         >
           <Line type='monotone' dataKey='moodLevel' stroke='#00acf0' />
           <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
