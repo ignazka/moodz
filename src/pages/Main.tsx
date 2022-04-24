@@ -7,14 +7,19 @@ import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import Slider from '@mui/material/Slider';
+import Card from '@mui/material/Card';
 import {
   LineChart,
   Line,
-  CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
+  CartesianGrid,
+  ReferenceLine,
+  ComposedChart,
   ResponsiveContainer,
+  Tooltip,
+  ScatterChart,
+  Scatter, Legend
 } from 'recharts';
 
 function Main() {
@@ -131,6 +136,8 @@ function Main() {
           </StyledButton>
         </div>
       </header>
+  
+      <Card style={{marginTop:30, margin: 15, padding: 0}}>
       <form
         className='flex justify-center flex-col items-center m-9'
         onSubmit={handleSubmit}
@@ -171,23 +178,36 @@ function Main() {
           add mood
         </Button>
       </form>
-      <ResponsiveContainer width='100%' height={400}>
-        <LineChart
-          className='m-auto'
-          data={moodz}
-          margin={{ top: 5, right: 30, bottom: 5, left: 0 }}
-        >
-          <Line type='monotone' dataKey='moodLevel' stroke='#00acf0' />
-          <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
-          <XAxis dataKey='name' />
-          <YAxis
-            label={{ value: 'Mood Level', angle: -90 }}
-            type='number'
-            domain={[-10, 10]}
-          />
-          <Tooltip content={<CustomTooltip />} />
-        </LineChart>
-      </ResponsiveContainer>
+      </Card>
+
+      <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
+        <ResponsiveContainer >
+          <ComposedChart data={moodz}
+            margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
+            <CartesianGrid />
+            <XAxis dataKey='name' />
+            <YAxis
+              label={{ value: 'moodz Level', angle: -90 }}
+              type='number'
+              domain={[-10, 10]}
+            />
+            <Tooltip content={<CustomTooltip />} />
+
+            <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
+            <Line
+              type="monotone"
+              dataKey="moodLevel"
+              stroke="red"
+              strokeWidth="1"
+              activeDot={{ r: 5 }}
+              name="moodz level"
+            />
+            <Legend />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </Card>
+
+
     </div>
   );
 }
