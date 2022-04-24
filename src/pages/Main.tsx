@@ -6,6 +6,7 @@ import { Button, TextField } from '@mui/material';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
+import Slider from '@mui/material/Slider';
 import {
   LineChart,
   Line,
@@ -22,6 +23,7 @@ function Main() {
 
   const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
+  const [sliderValue, setSliderValue] = useState(0);
 
   // styled components
   const StyledButton = styled(Button)`
@@ -31,10 +33,11 @@ function Main() {
   /**
    * send data to firebase
    **/
+
   const setMood = async () => {
     try {
       await addDoc(collection(db, `users/${user?.uid}/moodz`), {
-        value: inputTerm?.value,
+        value: sliderValue,
         note: inputTerm?.note,
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
@@ -98,15 +101,22 @@ function Main() {
     setMood();
     getMoodz();
   };
+
   const handleChange = ({ target }: any) => {
     const { name, value } = target;
     setInputTerm({ ...inputTerm, [name]: value });
+  };
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setSliderValue(newValue as number);
   };
 
   useEffect(() => {
     getMoodz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   return (
     <div className=''>
@@ -125,18 +135,22 @@ function Main() {
         className='flex justify-center flex-col items-center m-9'
         onSubmit={handleSubmit}
       >
-        <TextField
-          sx={{ width: '200px' }}
-          variant='outlined'
-          label='Mood Value'
-          type='number'
-          InputProps={{ inputProps: { min: -10, max: 10 } }}
+
+
+        <Slider
+          style={{ marginTop: 80, marginBottom: 20 }}
           name='value'
-          id='value'
-          value={inputTerm.value}
-          onChange={handleChange}
-          required={true}
+          onChange={handleSliderChange}
+          defaultValue={0}
+          aria-labelledby="discrete-slider-small-steps"
+          step={0.5}
+          marks={true}
+          min={-10}
+          max={10}
+          valueLabelDisplay="on"
+          value={sliderValue}
         />
+
 
         <TextField
           sx={{
