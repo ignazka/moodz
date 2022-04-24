@@ -9,16 +9,13 @@ import AddIcon from '@mui/icons-material/Add';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
   CartesianGrid,
-  ReferenceLine,
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  ScatterChart,
   Scatter, Legend
 } from 'recharts';
 
