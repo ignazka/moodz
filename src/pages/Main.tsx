@@ -202,7 +202,7 @@ function Main() {
         {/* ------------- FORM -------------- */}
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop:30, height:100,}}>
+        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop: 30, height:200}}>
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
@@ -225,8 +225,8 @@ function Main() {
             <TextField
               sx={{
                 margin: '.5em',
-                maxWidth: '400px',
                 width: '100%',
+                maxWidth:400,
               }}
               color='secondary'
               variant='outlined'

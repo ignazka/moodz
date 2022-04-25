@@ -3,13 +3,11 @@
 @tailwind utilities; 
 
 
-  body {
-    @apply h-screen bg-black;
-  }
+body {
+  background:#393939;
+}
 
-  form{
-    background: white;
-  }
+
 
 
 h3.apptitle {
