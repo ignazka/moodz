@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { AppBar, Button, TextField, Typography } from '@mui/material';
+import { AppBar, BottomNavigation, BottomNavigationAction, Button, TextField, Typography } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
 import Fab from '@mui/material/Fab';
 import SaveIcon from '@mui/icons-material/Save';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 import {
   Line,
   XAxis,
@@ -20,6 +25,7 @@ import {
   Scatter, Legend
 } from 'recharts';
 
+
 function Main() {
   const { user, logout } = useAuth();
   // const { data, loading, error } = useFetch(() => {}, []);
@@ -28,14 +34,45 @@ function Main() {
   const [moodz, setMoodz] = useState<any | null>([{}]);
   const [sliderValue, setSliderValue] = useState(0);
 
-  // styled components
-  const StyledButton = styled(Button)`
-    padding: 0;
-    max-width: 24px;
-  `;
-
-
   
+
+
+  const theme = createTheme({
+    palette: {
+      // type:dark,
+      mode: 'dark',
+      primary: {
+        // light: will be calculated from palette.primary.main,
+        main: '#b8ebb8',
+        // #b99747 dark: will be calculated from palette.primary.main,
+        // contrastText: will be calculated to contrast with palette.primary.main
+      },
+      background: {
+        default: '#b8ebb8',
+        
+      },
+      secondary: {
+        main: '#ffd7a3',
+        // #0044ff dark: will be calculated from palette.secondary.main,
+        contrastText: '#2c2c2c',
+      },
+      // Used by `getContrastText()` to maximize the contrast between
+      // the background and the text.
+      contrastThreshold: 3,
+      // Used by the functions below to shift a color's luminance by approximately
+      // two indexes within its tonal palette.
+      // E.g., shift from Red 500 to Red 300 or Red 700.
+      tonalOffset: 0.2,
+      
+
+    },
+
+
+  });
+
+
+
+
 
 
   /**
@@ -127,28 +164,18 @@ function Main() {
 
 
   return (
-    <div className=''>
-      {/* <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
-        <div>
-          <p>moodZ</p>
-        </div>
-        <div className='flex items-center p-0 m-0 md:space-x-4'>
-          <p className='pr-2 text-sm'>Hello, {user?.email}</p>
-          <StyledButton onClick={logout}>
-            <LogoutIcon />
-          </StyledButton>
-        </div>
-      </header> */}
+    <ThemeProvider theme={theme}
+    >
+      <div className=''>
+        <AppBar className="appbar" color="inherit">
+          <Typography className="apptitle" align="center" variant="h3">
+            MOODZ
+          </Typography>
 
-      <AppBar className="appbar" color="inherit">
-        <Typography className="apptitle" align="center" variant="h3">
-          MOODZ
-        </Typography>
-        
-      </AppBar>
+        </AppBar>
 
-      {/* ------------- CHART -------------- */}
-      
+        {/* ------------- CHART -------------- */}
+
         <Card style={{ margin: 15, marginTop: 80, padding: 0, height: 300, maxHeight: 400 }}>
           <ResponsiveContainer >
             <ComposedChart data={moodz}
@@ -162,11 +189,11 @@ function Main() {
               />
               <Tooltip content={<CustomTooltip />} />
 
-              <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
+              <Scatter name="TREND" dataKey="moodLevel" fill={theme.palette.secondary.main} line lineType="fitting" shape="circle" />
               <Line
                 type="monotone"
                 dataKey="moodLevel"
-                stroke="red"
+                stroke= {theme.palette.primary.main}
                 strokeWidth="1"
                 activeDot={{ r: 5 }}
                 name="moodz level"
@@ -175,12 +202,12 @@ function Main() {
             </ComposedChart>
           </ResponsiveContainer>
         </Card>
-      
 
 
-      {/* ------------- FORM -------------- */}
 
-      
+        {/* ------------- FORM -------------- */}
+
+
         <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
           <form
             className='flex justify-center flex-col items-center m-9'
@@ -215,33 +242,70 @@ function Main() {
               value={inputTerm.note}
               onChange={handleChange}
             />
-            
-              <Fab
-              style={{ position: 'fixed',
-              bottom: 50,
-              right: 30,
-              zIndex: 999,
-              transform: 'scale(1.2)' }}
-                color="primary"
-                aria-label="save"
-                onClick={handleSubmit}
-                type="submit"
-              >
-                <SaveIcon />
-              </Fab>
-            
+
+            {/* <Fab
+              style={{
+                  position: 'fixed',
+                  bottom: 30,
+                  zIndex: 999,
+                  transform: 'scale(1.2)',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+              }}
+              color="primary"
+              aria-label="save"
+              onClick={handleSubmit}
+              type="submit"
+            >
+              <SaveIcon />
+            </Fab> */}
+
           </form>
         </Card>
-     
 
-        <div className='flex items-left p-0 m-0 md:space-x-4'>
-          {/* <p className='pr-2 text-sm'>Hello, {user?.email}</p> */}
+
+
+
+        <BottomNavigation
+          showLabels
+          style={{
+            position: "fixed",
+            bottom: 0,
+            width: "100%",
+            zIndex: '1'
+          }}
+        >
+          <BottomNavigationAction sx={{minWidth:'auto'}} label="Values" icon={<RestoreIcon />} />
+          <BottomNavigationAction sx={{minWidth:'auto'}} label="Dashboard" icon={<FavoriteIcon />} />
+          <BottomNavigationAction sx={{minWidth:'auto'}} label="" icon={
+
+            <Fab
+
+              style={{
+                
+                bottom: 20,
+                transform: 'scale(1.4)',
+                position:'absolute',
+              }}
+              color="primary"
+              aria-label="save"
+              onClick={handleSubmit}
+              type="submit"
+            >
+              <SaveIcon />
+            </Fab>} />
+          <BottomNavigationAction sx={{minWidth:'auto'}} label="Settings" icon={<SettingsIcon />} />
+          <BottomNavigationAction sx={{minWidth:'auto'}} label="Logout" icon={<LogoutIcon />} onClick={logout} />
+        </BottomNavigation>
+
+        {/* <div className='flex items-left p-0 m-0 md:space-x-4'>
+          {<p className='pr-2 text-sm'>Hello, {user?.email}</p> }
           <StyledButton onClick={logout}>
             <LogoutIcon />
           </StyledButton>
-        </div>
-
-    </div>
+        </div> */}
+      </div>
+    </ThemeProvider>
   );
 }
 
