@@ -5,9 +5,10 @@ import { db } from '../lib/firebase';
 import { Button, TextField } from '@mui/material';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AddIcon from '@mui/icons-material/Add';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
+import Fab from '@mui/material/Fab';
+import SaveIcon from '@mui/icons-material/Save';
 import {
   Line,
   XAxis,
@@ -32,6 +33,18 @@ function Main() {
     padding: 0;
     max-width: 24px;
   `;
+
+  const StyledCard = styled(Card)`
+    marginTop: 15;
+    marginBottom: 140;
+    padding: 10;
+  `;
+
+  const StyledSaveButton = styled(Fab)`
+  flexShrink: '0';
+  `;
+
+
   /**
    * send data to firebase
    **/
@@ -133,48 +146,54 @@ function Main() {
           </StyledButton>
         </div>
       </header>
-  
-      <Card style={{marginTop:30, margin: 15, padding: 0}}>
-      <form
-        className='flex justify-center flex-col items-center m-9'
-        onSubmit={handleSubmit}
-      >
+
+      <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
+        <form
+          className='flex justify-center flex-col items-center m-9'
+          onSubmit={handleSubmit}
+        >
 
 
-        <Slider
-          style={{ marginTop: 80, marginBottom: 20 }}
-          name='value'
-          onChange={handleSliderChange}
-          defaultValue={0}
-          aria-labelledby="discrete-slider-small-steps"
-          step={0.5}
-          marks={true}
-          min={-10}
-          max={10}
-          valueLabelDisplay="on"
-          value={sliderValue}
-        />
+          <Slider
+            style={{ marginTop: 80, marginBottom: 20 }}
+            name='value'
+            onChange={handleSliderChange}
+            defaultValue={0}
+            aria-labelledby="discrete-slider-small-steps"
+            step={0.5}
+            marks={true}
+            min={-10}
+            max={10}
+            valueLabelDisplay="on"
+            value={sliderValue}
+          />
 
 
-        <TextField
-          sx={{
-            margin: '.5em',
-            width: '200px',
-          }}
-          color='secondary'
-          variant='outlined'
-          label='Add Note (optional)'
-          name='note'
-          multiline={true}
-          id='note'
-          value={inputTerm.note}
-          onChange={handleChange}
-        />
+          <TextField
+            sx={{
+              margin: '.5em',
+              width: '200px',
+            }}
+            color='secondary'
+            variant='outlined'
+            label='Add Note (optional)'
+            name='note'
+            multiline={true}
+            id='note'
+            value={inputTerm.note}
+            onChange={handleChange}
+          />
 
-        <Button variant='outlined' startIcon={<AddIcon />} type='submit'>
-          add mood
-        </Button>
-      </form>
+          <Fab
+            color="primary"
+            aria-label="save"
+            onClick={handleSubmit}
+            type="submit"
+          >
+            <SaveIcon />
+          </Fab>
+
+        </form>
       </Card>
 
       <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
