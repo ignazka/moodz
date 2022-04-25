@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities; 
 
-@layer base {
+
   body {
     @apply h-screen bg-black;
   }
-} 
+
 
 h3.apptitle {
   font-family: Rubik, Raleway;
