@@ -202,13 +202,13 @@ function Main() {
         {/* ------------- FORM -------------- */}
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
+        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop: 30, height:200}}>
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
           >
             <Slider
-              style={{ marginTop: 80, marginBottom: 20 }}
+              style={{ marginBottom: 20 }}
               name='value'
               onChange={handleSliderChange}
               defaultValue={0}
@@ -225,7 +225,8 @@ function Main() {
             <TextField
               sx={{
                 margin: '.5em',
-                width: '200px',
+                width: '100%',
+                maxWidth:400,
               }}
               color='secondary'
               variant='outlined'
