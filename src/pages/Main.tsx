@@ -34,15 +34,8 @@ function Main() {
     max-width: 24px;
   `;
 
-  const StyledCard = styled(Card)`
-    marginTop: 15;
-    marginBottom: 140;
-    padding: 10;
-  `;
 
-  const StyledSaveButton = styled(Fab)`
-  flexShrink: '0';
-  `;
+  
 
 
   /**
@@ -147,81 +140,93 @@ function Main() {
         </div>
       </header>
 
-      <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
-        <form
-          className='flex justify-center flex-col items-center m-9'
-          onSubmit={handleSubmit}
-        >
+      {/* ------------- CHART -------------- */}
+      
+        <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
+          <ResponsiveContainer >
+            <ComposedChart data={moodz}
+              margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
+              <CartesianGrid />
+              <XAxis dataKey='name' />
+              <YAxis
+                label={{ value: 'moodz Level', angle: -90 }}
+                type='number'
+                domain={[-10, 10]}
+              />
+              <Tooltip content={<CustomTooltip />} />
+
+              <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
+              <Line
+                type="monotone"
+                dataKey="moodLevel"
+                stroke="red"
+                strokeWidth="1"
+                activeDot={{ r: 5 }}
+                name="moodz level"
+              />
+              <Legend />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </Card>
+      
 
 
-          <Slider
-            style={{ marginTop: 80, marginBottom: 20 }}
-            name='value'
-            onChange={handleSliderChange}
-            defaultValue={0}
-            aria-labelledby="discrete-slider-small-steps"
-            step={0.5}
-            marks={true}
-            min={-10}
-            max={10}
-            valueLabelDisplay="on"
-            value={sliderValue}
-          />
+      {/* ------------- FORM -------------- */}
 
-
-          <TextField
-            sx={{
-              margin: '.5em',
-              width: '200px',
-            }}
-            color='secondary'
-            variant='outlined'
-            label='Add Note (optional)'
-            name='note'
-            multiline={true}
-            id='note'
-            value={inputTerm.note}
-            onChange={handleChange}
-          />
-
-          <Fab
-            color="primary"
-            aria-label="save"
-            onClick={handleSubmit}
-            type="submit"
+      
+        <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
+          <form
+            className='flex justify-center flex-col items-center m-9'
+            onSubmit={handleSubmit}
           >
-            <SaveIcon />
-          </Fab>
-
-        </form>
-      </Card>
-
-      <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
-        <ResponsiveContainer >
-          <ComposedChart data={moodz}
-            margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
-            <CartesianGrid />
-            <XAxis dataKey='name' />
-            <YAxis
-              label={{ value: 'moodz Level', angle: -90 }}
-              type='number'
-              domain={[-10, 10]}
+            <Slider
+              style={{ marginTop: 80, marginBottom: 20 }}
+              name='value'
+              onChange={handleSliderChange}
+              defaultValue={0}
+              aria-labelledby="discrete-slider-small-steps"
+              step={0.5}
+              marks={true}
+              min={-10}
+              max={10}
+              valueLabelDisplay="on"
+              value={sliderValue}
             />
-            <Tooltip content={<CustomTooltip />} />
 
-            <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
-            <Line
-              type="monotone"
-              dataKey="moodLevel"
-              stroke="red"
-              strokeWidth="1"
-              activeDot={{ r: 5 }}
-              name="moodz level"
+
+            <TextField
+              sx={{
+                margin: '.5em',
+                width: '200px',
+              }}
+              color='secondary'
+              variant='outlined'
+              label='Add Note (optional)'
+              name='note'
+              multiline={true}
+              id='note'
+              value={inputTerm.note}
+              onChange={handleChange}
             />
-            <Legend />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </Card>
+            
+              <Fab
+              style={{ position: 'fixed',
+              bottom: 50,
+              right: 30,
+              zIndex: 999,
+              transform: 'scale(1.2)' }}
+                color="primary"
+                aria-label="save"
+                onClick={handleSubmit}
+                type="submit"
+              >
+                <SaveIcon />
+              </Fab>
+            
+          </form>
+        </Card>
+     
+
 
 
     </div>
