@@ -7,6 +7,10 @@
     @apply h-screen bg-black;
   }
 
+  form{
+    background: white;
+  }
+
 
 h3.apptitle {
   font-family: Rubik, Raleway;
