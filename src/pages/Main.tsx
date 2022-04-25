@@ -4,7 +4,6 @@ import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { AppBar, BottomNavigation, BottomNavigationAction, Button, TextField, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
