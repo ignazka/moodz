@@ -7,3 +7,23 @@
     @apply h-screen bg-gray-800;
   }
 } */
+
+h3.apptitle {
+  font-family: Rubik, Raleway;
+}
+.appbar .apptitle::after {
+  /* creates the full-width crossing line */
+  content: '';
+  width: 100%;
+  height: 2px;
+  display: block;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 50%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 40pt;
+  font-weight: 300;
+}

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Button, TextField } from '@mui/material';
+import { AppBar, Button, TextField, Typography } from '@mui/material';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AddIcon from '@mui/icons-material/Add';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
+import Fab from '@mui/material/Fab';
+import SaveIcon from '@mui/icons-material/Save';
 import {
   Line,
   XAxis,
@@ -32,6 +33,11 @@ function Main() {
     padding: 0;
     max-width: 24px;
   `;
+
+
+  
+
+
   /**
    * send data to firebase
    **/
@@ -122,7 +128,7 @@ function Main() {
 
   return (
     <div className=''>
-      <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
+      {/* <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
         <div>
           <p>moodZ</p>
         </div>
@@ -132,78 +138,108 @@ function Main() {
             <LogoutIcon />
           </StyledButton>
         </div>
-      </header>
-  
-      <Card style={{marginTop:30, margin: 15, padding: 0}}>
-      <form
-        className='flex justify-center flex-col items-center m-9'
-        onSubmit={handleSubmit}
-      >
+      </header> */}
+
+      <AppBar className="appbar" color="inherit">
+        <Typography className="apptitle" align="center" variant="h3">
+          MOODZ
+        </Typography>
+        
+      </AppBar>
+
+      {/* ------------- CHART -------------- */}
+      
+        <Card style={{ margin: 15, marginTop: 80, padding: 0, height: 300, maxHeight: 400 }}>
+          <ResponsiveContainer >
+            <ComposedChart data={moodz}
+              margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
+              <CartesianGrid />
+              <XAxis dataKey='name' />
+              <YAxis
+                label={{ value: 'moodz Level', angle: -90 }}
+                type='number'
+                domain={[-10, 10]}
+              />
+              <Tooltip content={<CustomTooltip />} />
+
+              <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
+              <Line
+                type="monotone"
+                dataKey="moodLevel"
+                stroke="red"
+                strokeWidth="1"
+                activeDot={{ r: 5 }}
+                name="moodz level"
+              />
+              <Legend />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </Card>
+      
 
 
-        <Slider
-          style={{ marginTop: 80, marginBottom: 20 }}
-          name='value'
-          onChange={handleSliderChange}
-          defaultValue={0}
-          aria-labelledby="discrete-slider-small-steps"
-          step={0.5}
-          marks={true}
-          min={-10}
-          max={10}
-          valueLabelDisplay="on"
-          value={sliderValue}
-        />
+      {/* ------------- FORM -------------- */}
 
-
-        <TextField
-          sx={{
-            margin: '.5em',
-            width: '200px',
-          }}
-          color='secondary'
-          variant='outlined'
-          label='Add Note (optional)'
-          name='note'
-          multiline={true}
-          id='note'
-          value={inputTerm.note}
-          onChange={handleChange}
-        />
-
-        <Button variant='outlined' startIcon={<AddIcon />} type='submit'>
-          add mood
-        </Button>
-      </form>
-      </Card>
-
-      <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
-        <ResponsiveContainer >
-          <ComposedChart data={moodz}
-            margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
-            <CartesianGrid />
-            <XAxis dataKey='name' />
-            <YAxis
-              label={{ value: 'moodz Level', angle: -90 }}
-              type='number'
-              domain={[-10, 10]}
+      
+        <Card style={{ marginTop: 30, margin: 15, padding: 0 }}>
+          <form
+            className='flex justify-center flex-col items-center m-9'
+            onSubmit={handleSubmit}
+          >
+            <Slider
+              style={{ marginTop: 80, marginBottom: 20 }}
+              name='value'
+              onChange={handleSliderChange}
+              defaultValue={0}
+              aria-labelledby="discrete-slider-small-steps"
+              step={0.5}
+              marks={true}
+              min={-10}
+              max={10}
+              valueLabelDisplay="on"
+              value={sliderValue}
             />
-            <Tooltip content={<CustomTooltip />} />
 
-            <Scatter name="TREND" dataKey="moodLevel" fill="orange" line lineType="fitting" shape="circle" />
-            <Line
-              type="monotone"
-              dataKey="moodLevel"
-              stroke="red"
-              strokeWidth="1"
-              activeDot={{ r: 5 }}
-              name="moodz level"
+
+            <TextField
+              sx={{
+                margin: '.5em',
+                width: '200px',
+              }}
+              color='secondary'
+              variant='outlined'
+              label='Add Note (optional)'
+              name='note'
+              multiline={true}
+              id='note'
+              value={inputTerm.note}
+              onChange={handleChange}
             />
-            <Legend />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </Card>
+            
+              <Fab
+              style={{ position: 'fixed',
+              bottom: 50,
+              right: 30,
+              zIndex: 999,
+              transform: 'scale(1.2)' }}
+                color="primary"
+                aria-label="save"
+                onClick={handleSubmit}
+                type="submit"
+              >
+                <SaveIcon />
+              </Fab>
+            
+          </form>
+        </Card>
+     
 
+        <div className='flex items-left p-0 m-0 md:space-x-4'>
+          {/* <p className='pr-2 text-sm'>Hello, {user?.email}</p> */}
+          <StyledButton onClick={logout}>
+            <LogoutIcon />
+          </StyledButton>
+        </div>
 
     </div>
   );
