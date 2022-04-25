@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Button, TextField } from '@mui/material';
+import { AppBar, Button, TextField, Typography } from '@mui/material';
 import styled from 'styled-components';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Slider from '@mui/material/Slider';
@@ -128,7 +128,7 @@ function Main() {
 
   return (
     <div className=''>
-      <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
+      {/* <header className='flex justify-between p-2 items-center flex-row  border-b-2 border-black'>
         <div>
           <p>moodZ</p>
         </div>
@@ -138,11 +138,18 @@ function Main() {
             <LogoutIcon />
           </StyledButton>
         </div>
-      </header>
+      </header> */}
+
+      <AppBar className="appbar" color="inherit">
+        <Typography className="apptitle" align="center" variant="h3">
+          MOODZ
+        </Typography>
+        
+      </AppBar>
 
       {/* ------------- CHART -------------- */}
       
-        <Card style={{ margin: 15, padding: 0, height: 400, maxHeight: 400 }}>
+        <Card style={{ margin: 15, marginTop: 80, padding: 0, height: 300, maxHeight: 400 }}>
           <ResponsiveContainer >
             <ComposedChart data={moodz}
               margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
@@ -227,7 +234,12 @@ function Main() {
         </Card>
      
 
-
+        <div className='flex items-left p-0 m-0 md:space-x-4'>
+          {/* <p className='pr-2 text-sm'>Hello, {user?.email}</p> */}
+          <StyledButton onClick={logout}>
+            <LogoutIcon />
+          </StyledButton>
+        </div>
 
     </div>
   );
