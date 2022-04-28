@@ -122,8 +122,9 @@ function Main() {
   function CustomTooltip({ payload, label, active }: any) {
     if (active) {
       return (
-        <div className='custom-tooltip'>
-          <p className='label'>{`${label} : ${payload[0]!?.value}`}</p>
+        <div className='custom-tooltip' style={{background:"#393939", padding:5, maxWidth:200, wordBreak:"break-word"}}>
+          <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
+          <p className='label'>{`DATE: ${label}`}</p>
 
           <p className='desc'>{payload[0]!?.payload?.note}</p>
         </div>
@@ -170,26 +171,27 @@ function Main() {
 
         {/* ------------- CHART -------------- */}
 
-        <Card style={{ margin: 15, marginTop: 80, padding: 0, height: 300, maxHeight: 400 }}>
-          <ResponsiveContainer >
+        <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop:20, height: 300, maxHeight: 400 }}>
+          <ResponsiveContainer height={"100%"} >
             <ComposedChart data={moodz}
-              margin={{ top: 40, right: 50, left: 0, bottom: 20 }}>
+              
+              style={{marginLeft:"-25px"}}>
               <CartesianGrid />
               <XAxis dataKey='name' />
               <YAxis
-                label={{ value: 'moodz Level', angle: -90 }}
+                // label={{ value: 'moodz Level', angle: -90 }}
                 type='number'
                 domain={[-10, 10]}
               />
               <Tooltip content={<CustomTooltip />} />
 
-              <Scatter name="TREND" dataKey="moodLevel" fill={theme.palette.secondary.main} line lineType="fitting" shape="circle" />
+              <Scatter name="TREND" dataKey="moodLevel" line={{ stroke: theme.palette.secondary.main, strokeWidth: 1}} fill='#00000000' lineType="fitting" />
               <Line
                 type="monotone"
                 dataKey="moodLevel"
                 stroke= {theme.palette.primary.main}
                 strokeWidth="1"
-                activeDot={{ r: 5 }}
+                activeDot={{ r: 4 }}
                 name="moodz level"
               />
               <Legend />
