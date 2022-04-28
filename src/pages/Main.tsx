@@ -2,16 +2,12 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { AppBar, BottomNavigation, BottomNavigationAction, TextField, Typography } from '@mui/material';
+import { AppBar, TextField, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
 import Fab from '@mui/material/Fab';
 import SaveIcon from '@mui/icons-material/Save';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 //components
 import Moodchart from '../components/Moodchart';
@@ -19,7 +15,7 @@ import BottomNav from '../components/BottomNav';
 
 
 function Main() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => {}, []);
 
   const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
@@ -156,11 +152,10 @@ function Main() {
 
         {/* ------------- CHART -------------- */}
         <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}>
-          <Moodchart 
-            primaryColor={theme.palette.primary.main} 
-            secondaryColor={theme.palette.secondary.main} 
-            moodz={moodz} 
-            setMoodz={setMoodz}
+          <Moodchart
+            primaryColor={theme.palette.primary.main}
+            secondaryColor={theme.palette.secondary.main}
+            moodz={moodz}
           />
         </Card>
 
@@ -168,19 +163,19 @@ function Main() {
 
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom:50}}>
+        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom: 50 }}>
 
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
           >
             <p
-            style={{textAlign:"center"}}> 
-            Hi, {user?.email}<br/>
-        How is your MOOD level?
-        </p>
+              style={{ textAlign: "center" }}>
+              Hi, {user?.email}<br />
+              How is your MOOD level?
+            </p>
             <Slider
-              style={{ marginTop:50, marginBottom: 30 }}
+              style={{ marginTop: 50, marginBottom: 30 }}
               name='value'
               onChange={handleSliderChange}
               defaultValue={0}
@@ -213,26 +208,7 @@ function Main() {
           </form>
         </Card>
 
-
-
-
-        <BottomNavigation
-          showLabels={true}
-          style={{
-            position: "fixed",
-            bottom: 0,
-            width: "100%",
-            zIndex: '1'
-          }}
-        >
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} />
-          {/* placeholder for FAB */}
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
-
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
-        </BottomNavigation>
+        <BottomNav />
 
         <Fab
           style={{
@@ -252,13 +228,6 @@ function Main() {
         >
           <SaveIcon />
         </Fab>
-
-        {/* <div className='flex items-left p-0 m-0 md:space-x-4'>
-          {<p className='pr-2 text-sm'>Hello, {user?.email}</p> }
-          <StyledButton onClick={logout}>
-            <LogoutIcon />
-          </StyledButton>
-        </div> */}
       </div>
     </ThemeProvider>
   );
