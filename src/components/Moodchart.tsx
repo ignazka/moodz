@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     Line,
     XAxis,
@@ -35,7 +35,7 @@ import {
   }
 
 
-const Linechart:any= ({moodz, primaryColor, secondaryColor}:any) => {
+const Moodchart:any= ({moodz, primaryColor, secondaryColor}:any) => {
 
 
   //######################
@@ -79,4 +79,4 @@ const Linechart:any= ({moodz, primaryColor, secondaryColor}:any) => {
   );
 };
 
-export default Linechart;
+export default Moodchart;
