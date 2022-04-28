@@ -262,7 +262,7 @@ function Main() {
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
         </BottomNavigation>
-        
+ 
         <Fab
             style={{
               minWidth: 'auto',
