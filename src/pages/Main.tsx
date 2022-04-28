@@ -15,6 +15,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 //components
 import Moodchart from '../components/Moodchart';
+import BottomNav from '../components/BottomNav';
 
 
 function Main() {
