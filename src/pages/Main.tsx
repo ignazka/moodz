@@ -297,7 +297,7 @@ function Main() {
             minWidth: 'auto',
             bottom: 20,
             transform: 'scale(1.4)',
-            position: 'absolute',
+            position: 'fixed',
             marginLeft: 'auto',
             marginRight: 'auto',
             left: 0,
