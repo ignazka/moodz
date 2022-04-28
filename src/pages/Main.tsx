@@ -13,16 +13,8 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import {
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ComposedChart,
-  ResponsiveContainer,
-  Tooltip,
-  Scatter, Legend
-} from 'recharts';
+//components
+import Moodchart from '../components/Moodchart';
 
 
 function Main() {
@@ -117,23 +109,6 @@ function Main() {
     setMoodz(arr);
   };
 
-  // custom tooltip for chart
-
-  function CustomTooltip({ payload, label, active }: any) {
-    if (active) {
-      return (
-        <div className='custom-tooltip' style={{ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }}>
-          <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
-          <p className='label'>{`DATE: ${label}`}</p>
-
-          <p className='desc'>{payload[0]!?.payload?.note}</p>
-        </div>
-      );
-    }
-
-    return null;
-  }
-
   // form handler
 
   const handleSubmit = (event: any) => {
@@ -155,10 +130,6 @@ function Main() {
     getMoodz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const trendLineShape:any = () => {
-    return "";
-  }
 
   const sliderMarks = [
     {
@@ -183,44 +154,14 @@ function Main() {
         </AppBar>
 
         {/* ------------- CHART -------------- */}
-
         <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}>
-          <ResponsiveContainer height={"100%"} >
-            <ComposedChart data={moodz}
-
-              style={{ marginLeft: "-25px" }}>
-              <CartesianGrid />
-              <XAxis dataKey='name' />
-              <YAxis
-                // label={{ value: 'moodz Level', angle: -90 }}
-                type='number'
-                domain={[-10, 10]}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Scatter 
-                name="TREND" 
-                dataKey="moodLevel" 
-                legendType="line" 
-                lineType='fitting' 
-                line 
-                shape={trendLineShape} 
-                fill={theme.palette.secondary.main} 
-                />
-              <Line
-                type="monotone"
-                dataKey="moodLevel"
-                stroke={theme.palette.primary.main}
-                strokeWidth="1"
-                activeDot={{ r: 4 }}
-                name="MOOD LEVEL"
-                legendType='circle'
-              />
-              <Legend />
-            </ComposedChart>
-          </ResponsiveContainer>
+          <Moodchart 
+            primaryColor={theme.palette.primary.main} 
+            secondaryColor={theme.palette.secondary.main} 
+            moodz={moodz} 
+            setMoodz={setMoodz}
+          />
         </Card>
-
-
 
         {/* ------------- FORM -------------- */}
 
