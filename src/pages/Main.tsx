@@ -160,6 +160,17 @@ function Main() {
     return "";
   }
 
+  const sliderMarks = [
+    {
+      value: -10,
+      label: '-10',
+    },
+    {
+      value: 10,
+      label: '10',
+    },
+  ];
+
   return (
     <ThemeProvider theme={theme}
     >
@@ -214,23 +225,31 @@ function Main() {
         {/* ------------- FORM -------------- */}
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop: 15, height: 200 }}>
+
+        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom:50}}>
+
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
           >
+            <p
+            style={{textAlign:"center"}}> 
+            Hi, {user?.email}<br/>
+        How is your MOOD level?
+        </p>
             <Slider
-              style={{ marginBottom: 20 }}
+              style={{ marginTop:50, marginBottom: 30 }}
               name='value'
               onChange={handleSliderChange}
               defaultValue={0}
               aria-labelledby="discrete-slider-small-steps"
               step={0.5}
-              marks={true}
               min={-10}
               max={10}
+              marks={sliderMarks}
               valueLabelDisplay="on"
               value={sliderValue}
+              track={false}
             />
 
 
