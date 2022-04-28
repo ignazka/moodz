@@ -33,7 +33,7 @@ function Main() {
   const [moodz, setMoodz] = useState<any | null>([{}]);
   const [sliderValue, setSliderValue] = useState(0);
 
-  
+
 
 
   const theme = createTheme({
@@ -48,7 +48,7 @@ function Main() {
       },
       background: {
         default: '#b8ebb8',
-        
+
       },
       secondary: {
         main: '#ffd7a3',
@@ -62,7 +62,7 @@ function Main() {
       // two indexes within its tonal palette.
       // E.g., shift from Red 500 to Red 300 or Red 700.
       tonalOffset: 0.2,
-      
+
 
     },
 
@@ -122,7 +122,7 @@ function Main() {
   function CustomTooltip({ payload, label, active }: any) {
     if (active) {
       return (
-        <div className='custom-tooltip' style={{background:"#393939", padding:5, maxWidth:200, wordBreak:"break-word"}}>
+        <div className='custom-tooltip' style={{ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }}>
           <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
           <p className='label'>{`DATE: ${label}`}</p>
 
@@ -156,7 +156,9 @@ function Main() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
+  const trendLineShape:any = () => {
+    return "";
+  }
 
   return (
     <ThemeProvider theme={theme}
@@ -171,11 +173,11 @@ function Main() {
 
         {/* ------------- CHART -------------- */}
 
-        <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop:20, height: 300, maxHeight: 400 }}>
+        <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}>
           <ResponsiveContainer height={"100%"} >
             <ComposedChart data={moodz}
-              
-              style={{marginLeft:"-25px"}}>
+
+              style={{ marginLeft: "-25px" }}>
               <CartesianGrid />
               <XAxis dataKey='name' />
               <YAxis
@@ -184,15 +186,23 @@ function Main() {
                 domain={[-10, 10]}
               />
               <Tooltip content={<CustomTooltip />} />
-
-              <Scatter name="TREND" dataKey="moodLevel" line={{ stroke: theme.palette.secondary.main, strokeWidth: 1}} fill='#00000000' lineType="fitting" />
+              <Scatter 
+                name="TREND" 
+                dataKey="moodLevel" 
+                legendType="line" 
+                lineType='fitting' 
+                line 
+                shape={trendLineShape} 
+                fill={theme.palette.secondary.main} 
+                />
               <Line
                 type="monotone"
                 dataKey="moodLevel"
-                stroke= {theme.palette.primary.main}
+                stroke={theme.palette.primary.main}
                 strokeWidth="1"
                 activeDot={{ r: 4 }}
-                name="moodz level"
+                name="MOOD LEVEL"
+                legendType='circle'
               />
               <Legend />
             </ComposedChart>
@@ -204,7 +214,7 @@ function Main() {
         {/* ------------- FORM -------------- */}
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop: 15, height:200}}>
+        <Card style={{ marginTop: 30, margin: 15, padding: 0, paddingTop: 15, height: 200 }}>
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
@@ -228,7 +238,7 @@ function Main() {
               sx={{
                 margin: '.5em',
                 width: '100%',
-                maxWidth:400,
+                maxWidth: 400,
               }}
               color='secondary'
               variant='outlined'
@@ -239,24 +249,6 @@ function Main() {
               value={inputTerm.note}
               onChange={handleChange}
             />
-
-            {/* <Fab
-              style={{
-                  position: 'fixed',
-                  bottom: 30,
-                  zIndex: 999,
-                  transform: 'scale(1.2)',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-              }}
-              color="primary"
-              aria-label="save"
-              onClick={handleSubmit}
-              type="submit"
-            >
-              <SaveIcon />
-            </Fab> */}
-
           </form>
         </Card>
 
@@ -264,7 +256,7 @@ function Main() {
 
 
         <BottomNavigation
-          showLabels
+          showLabels={true}
           style={{
             position: "fixed",
             bottom: 0,
@@ -272,28 +264,33 @@ function Main() {
             zIndex: '1'
           }}
         >
-          <BottomNavigationAction sx={{minWidth:'auto'}} label="Values" icon={<RestoreIcon />} />
-          <BottomNavigationAction sx={{minWidth:'auto'}} label="Dashboard" icon={<FavoriteIcon />} />
-          <BottomNavigationAction sx={{minWidth:'auto'}} label="" icon={
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} />
+          {/* placeholder for FAB */}
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
 
-            <Fab
-
-              style={{
-                
-                bottom: 20,
-                transform: 'scale(1.4)',
-                position:'absolute',
-              }}
-              color="primary"
-              aria-label="save"
-              onClick={handleSubmit}
-              type="submit"
-            >
-              <SaveIcon />
-            </Fab>} />
-          <BottomNavigationAction sx={{minWidth:'auto'}} label="Settings" icon={<SettingsIcon />} />
-          <BottomNavigationAction sx={{minWidth:'auto'}} label="Logout" icon={<LogoutIcon />} onClick={logout} />
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
         </BottomNavigation>
+
+        <Fab
+          style={{
+            minWidth: 'auto',
+            bottom: 20,
+            transform: 'scale(1.4)',
+            position: 'absolute',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            left: 0,
+            right: 0,
+          }}
+          color="primary"
+          aria-label="save"
+          onClick={handleSubmit}
+          type="submit"
+        >
+          <SaveIcon />
+        </Fab>
 
         {/* <div className='flex items-left p-0 m-0 md:space-x-4'>
           {<p className='pr-2 text-sm'>Hello, {user?.email}</p> }
