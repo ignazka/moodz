@@ -159,6 +159,7 @@ function Main() {
   const trendLineShape:any = () => {
     return "";
   }
+
   const sliderMarks = [
     {
       value: -10,
@@ -224,8 +225,9 @@ function Main() {
         {/* ------------- FORM -------------- */}
 
 
+
         <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom:50}}>
-        
+
           <form
             className='flex justify-center flex-col items-center m-9'
             onSubmit={handleSubmit}
