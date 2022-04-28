@@ -156,7 +156,9 @@ function Main() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
+  const trendLineShape:any = () => {
+    return "";
+  }
 
   return (
     <ThemeProvider theme={theme}
@@ -184,15 +186,23 @@ function Main() {
                 domain={[-10, 10]}
               />
               <Tooltip content={<CustomTooltip />} />
-
-              <Scatter name="TREND" dataKey="moodLevel" line={{ stroke: theme.palette.secondary.main, strokeWidth: 1 }} fill='#00000000' lineType="fitting" />
+              <Scatter 
+                name="TREND" 
+                dataKey="moodLevel" 
+                legendType="line" 
+                lineType='fitting' 
+                line 
+                shape={trendLineShape} 
+                fill={theme.palette.secondary.main} 
+                />
               <Line
                 type="monotone"
                 dataKey="moodLevel"
                 stroke={theme.palette.primary.main}
                 strokeWidth="1"
                 activeDot={{ r: 4 }}
-                name="moodz level"
+                name="MOOD LEVEL"
+                legendType='circle'
               />
               <Legend />
             </ComposedChart>
@@ -257,30 +267,30 @@ function Main() {
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} />
           {/* placeholder for FAB */}
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false}/>;
-          
+          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
+
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
           <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
         </BottomNavigation>
- 
+
         <Fab
-            style={{
-              minWidth: 'auto',
-              bottom: 20,
-              transform: 'scale(1.4)',
-              position: 'absolute',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              left:0,
-              right:0,
-            }}
-            color="primary"
-            aria-label="save"
-            onClick={handleSubmit}
-            type="submit"
-          >
-            <SaveIcon />
-          </Fab>
+          style={{
+            minWidth: 'auto',
+            bottom: 20,
+            transform: 'scale(1.4)',
+            position: 'absolute',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            left: 0,
+            right: 0,
+          }}
+          color="primary"
+          aria-label="save"
+          onClick={handleSubmit}
+          type="submit"
+        >
+          <SaveIcon />
+        </Fab>
 
         {/* <div className='flex items-left p-0 m-0 md:space-x-4'>
           {<p className='pr-2 text-sm'>Hello, {user?.email}</p> }
