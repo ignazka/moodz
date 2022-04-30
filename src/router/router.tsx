@@ -17,11 +17,19 @@ function router() {
           </RequireAuth>
         }
       />
+       <Route
+        path={ROUTES.signup}
+        element={
+          <PublicRoute>
+            <Auth isLogin={false} />
+          </PublicRoute>
+        }
+      />
       <Route
         path={ROUTES.login}
         element={
           <PublicRoute>
-            <Auth />
+            <Auth isLogin/>
           </PublicRoute>
         }
       />

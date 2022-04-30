@@ -5,7 +5,7 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-import { Navigate } from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth } from '../lib/firebase';
 import { ROUTES } from '../router';
@@ -35,7 +35,7 @@ const AuthContext = createContext<IAuth>({
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(
@@ -56,17 +56,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signUp = async (email: string, password: string) => {
     setLoading(true);
-    console.log('signup');
     await createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        console.log(userCredential);
         setUser(userCredential.user);
         setLoading(false);
         <Navigate to={ROUTES.main} />;
       })
-      .catch(error => {
-        setError(error);
-        console.error(error.message);
+      .catch((error : string) => {
+        if(error){
+          setError(`User already exists. Please sign in`);
+          
+        }
       })
       .finally(() => setLoading(false));
   };
@@ -77,15 +77,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     await signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        console.log(userCredential);
 
         setUser(userCredential.user);
         setLoading(false);
         <Navigate to={ROUTES.main} />;
       })
-      .catch(error => {
-        setError(error);
-        console.error(error.message);
+      .catch((error : string) => {
+        if(error){
+          setError(`User not found. Please sign up`);
+          
+        }
       })
       .finally(() => setLoading(false));
   };
@@ -97,9 +98,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
       })
       .catch(error => {
-        setError(error);
+        setError(error.message);
 
-        console.error(error.message);
       })
       .finally(() => setLoading(false));
   };

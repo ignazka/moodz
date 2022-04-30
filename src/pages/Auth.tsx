@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAuth from '../context/authContext';
 import { Button, InputLabel, Input } from '@mui/material';
+import {Link} from 'react-router-dom'
 
 interface Inputs {
   email: string;
   password: string;
 }
-function Login() {
-  const [login, setLogin] = useState(false);
-  const { signIn, signUp } = useAuth();
+
+interface Props {
+  isLogin: boolean;
+}
+function Login({isLogin} : Props) {
+  const [login, setLogin] = useState(isLogin);
+  const { signIn, signUp , error} = useAuth();
 
   const {
     register,
@@ -17,11 +22,14 @@ function Login() {
     formState: { errors },
   } = useForm<Inputs>();
 
+  useEffect(() => {
+    setLogin(isLogin)
+  }, [isLogin])
+
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (login) {
       await signIn(email, password);
     } else {
-      console.log('hwet');
       await signUp(email, password);
     }
   };
@@ -34,7 +42,7 @@ function Login() {
         className='relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14 md:bg-white'
         style={{background:'white'}}
       >
-        <h1 className='text-4xl font-semibold '>Sign In</h1>
+        <h1 className='text-4xl font-semibold '>{login ? 'Sign in' : 'Sign up'}</h1>
         <div className='space-y-4'>
           <InputLabel>
             <Input
@@ -48,6 +56,7 @@ function Login() {
                 Please enter a valid email.
               </p>
             )}
+
           </InputLabel>
           <InputLabel>
             <Input
@@ -63,15 +72,23 @@ function Login() {
             )}
           </InputLabel>
         </div>
+        {error && <p className='p-1 text-[13px] font-light text-orange-500'>
+             {error} </p>}
+            
         <Button variant='outlined' onClick={() => setLogin(true)} type='submit'>
-          Sign In
+          {login? 'Sign In' : 'Sign up'}
         </Button>
-        <div className='text-[gray]'>
-          New to moodZ ?{' '}
-          <Button onClick={() => setLogin(false)} type='submit'>
-            Sign up now
-          </Button>
-        </div>
+        {login? 
+         <div>
+            <p>New to moodZ? <Link className='underline text-blue-500 hover:text-blue-600' to='/signup'>Create an account</Link></p>
+         </div>
+         :
+         <div>
+            <p>Already have an account? <Link className='underline text-blue-500 hover:text-blue-600' to='/login'>sign in</Link></p>
+         </div>
+      
+      }
+         
       </form>
     </div>
   );
