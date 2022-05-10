@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from '@mui/material/Card';
 import {
   Line,
   XAxis,
@@ -9,6 +10,8 @@ import {
   Tooltip,
   Scatter, Legend
 } from 'recharts';
+
+
 
 //import values from 'values.json';
 //import GetDataFromJSON from './HandleData';
@@ -35,7 +38,8 @@ const trendLineShape: any = () => {
 }
 
 
-const Moodchart: any = ({ moodz, primaryColor, secondaryColor }: any) => {
+const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => {
+
 
 
   //######################
@@ -43,6 +47,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor }: any) => {
   // Dort stand data={moodEntry}. Nachdem ich das auf moodEntry={moodEntry} geändert hatte, hat auch alles wieder funktioniert
 
   return (
+    <Card style={style}>
     <ResponsiveContainer height={"100%"} >
       <ComposedChart data={moodz}
 
@@ -53,7 +58,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor }: any) => {
           // label={{ value: 'moodz Level', angle: -90 }}
           type='number'
           domain={[-10, 10]}
-        />
+          />
         <Tooltip content={<CustomTooltip />} />
         <Scatter
           name="TREND"
@@ -76,6 +81,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor }: any) => {
         <Legend />
       </ComposedChart>
     </ResponsiveContainer>
+</Card>
   );
 };
 

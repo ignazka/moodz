@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { AppBar, TextField, Typography } from '@mui/material';
+import { AppBar, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Slider from '@mui/material/Slider';
-import Card from '@mui/material/Card';
-import Fab from '@mui/material/Fab';
-import SaveIcon from '@mui/icons-material/Save';
+
 
 //components
+import FormCard from '../components/FormCard';
 import Moodchart from '../components/Moodchart';
 import BottomNav from '../components/BottomNav';
+import { useFetch } from '../hooks/useFetch';
+
+
 
 
 function Main() {
+
   const { user } = useAuth();
-  // const { data, loading, error } = useFetch(() => {}, []);
+  const { data, loading, error } = useFetch(() => { }, []);
 
   const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
-  const [sliderValue, setSliderValue] = useState(0);
+
+  let sliderValue: number;
+
 
 
 
@@ -119,25 +123,14 @@ function Main() {
     setInputTerm({ ...inputTerm, [name]: value });
   };
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setSliderValue(newValue as number);
+  const handleSliderChange = (newValue: number) => {
+    sliderValue = newValue;
   };
 
   useEffect(() => {
     getMoodz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const sliderMarks = [
-    {
-      value: -10,
-      label: '-10',
-    },
-    {
-      value: 10,
-      label: '10',
-    },
-  ];
 
   return (
     <ThemeProvider theme={theme}
@@ -151,83 +144,28 @@ function Main() {
         </AppBar>
 
         {/* ------------- CHART -------------- */}
-        <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}>
-          <Moodchart
-            primaryColor={theme.palette.primary.main}
-            secondaryColor={theme.palette.secondary.main}
-            moodz={moodz}
-          />
-        </Card>
+
+        <Moodchart
+          primaryColor={theme.palette.primary.main}
+          secondaryColor={theme.palette.secondary.main}
+          moodz={moodz}
+          style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}
+        />
+
 
         {/* ------------- FORM -------------- */}
 
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom: 50 }}>
+        <FormCard
+          handleSliderChange={handleSliderChange}
+        />
 
-          <form
-            className='flex justify-center flex-col items-center m-9'
-            onSubmit={handleSubmit}
-          >
-            <p
-              style={{ textAlign: "center" }}>
-              Hi, {user?.email}<br />
-              How is your MOOD level?
-            </p>
-            <Slider
-              style={{ marginTop: 50, marginBottom: 30 }}
-              name='value'
-              onChange={handleSliderChange}
-              defaultValue={0}
-              aria-labelledby="discrete-slider-small-steps"
-              step={0.5}
-              min={-10}
-              max={10}
-              marks={sliderMarks}
-              valueLabelDisplay="on"
-              value={sliderValue}
-              track={false}
-            />
+        <BottomNav
+          setMood={setMood}
+        />
 
 
-            <TextField
-              sx={{
-                margin: '.5em',
-                width: '100%',
-                maxWidth: 400,
-              }}
-              color='secondary'
-              variant='outlined'
-              label='Add Note (optional)'
-              name='note'
-              multiline={true}
-              id='note'
-              value={inputTerm.note}
-              onChange={handleChange}
-            />
-          </form>
-        </Card>
-
-        <BottomNav />
-
-        <Fab
-          style={{
-            minWidth: 'auto',
-            bottom: 20,
-            transform: 'scale(1.4)',
-            position: 'fixed',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            left: 0,
-            right: 0,
-          }}
-          color="primary"
-          aria-label="save"
-          onClick={handleSubmit}
-          type="submit"
-        >
-          <SaveIcon />
-        </Fab>
       </div>
     </ThemeProvider>
   );
