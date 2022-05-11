@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
-import Slider from '@mui/material/Slider';
 import { TextField, Typography } from '@mui/material';
+import MoodSlider from './MoodSlider';
 
 
 interface handleFunctions {
@@ -9,28 +9,7 @@ interface handleFunctions {
 }
 
 const FormCard = ({ handleSliderChange = (newValue: number) => { } }: handleFunctions): any => {
-
-    const [sliderValue, setSliderValue] = useState(0);
-
-    const sliderMarks = [
-        {
-            value: -10,
-            label: '-10',
-        },
-        {
-            value: 10,
-            label: '10',
-        },
-    ];
-
-
-
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        console.log(newValue);
-        handleSliderChange(newValue as number);
-        setSliderValue(newValue as number);
-    };
-
+   
     return (
         <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom: 50 }}>
 
@@ -45,22 +24,10 @@ const FormCard = ({ handleSliderChange = (newValue: number) => { } }: handleFunc
                     How is your MOOD level?
 
                 </Typography>
-                <Slider
-                    style={{ marginTop: 50, marginBottom: 30 }}
-                    name='value'
-                    onChange={handleChange}
-                    aria-labelledby="discrete-slider-small-steps"
-                    defaultValue={0}
-                    step={0.5}
-                    min={-10}
-                    max={10}
-                    marks={sliderMarks}
 
-                    valueLabelDisplay="on"
-                    value={sliderValue}
-                    track={false}
+                <MoodSlider
+                    handleSliderChange={handleSliderChange}
                 />
-
 
                 <TextField
                     sx={{
