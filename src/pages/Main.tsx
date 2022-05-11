@@ -127,6 +127,7 @@ function Main() {
     sliderValue = newValue;
   };
 
+ 
   useEffect(() => {
     getMoodz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
