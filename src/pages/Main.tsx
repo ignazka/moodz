@@ -2,36 +2,30 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { AppBar, BottomNavigation, BottomNavigationAction, TextField, Typography } from '@mui/material';
+import { AppBar, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Slider from '@mui/material/Slider';
-import Card from '@mui/material/Card';
-import Fab from '@mui/material/Fab';
-import SaveIcon from '@mui/icons-material/Save';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import SettingsIcon from '@mui/icons-material/Settings';
 
-import {
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ComposedChart,
-  ResponsiveContainer,
-  Tooltip,
-  Scatter, Legend
-} from 'recharts';
+
+//components
+import FormCard from '../components/FormCard';
+import Moodchart from '../components/Moodchart';
+import BottomNav from '../components/BottomNav';
+// import { useFetch } from '../hooks/useFetch';
+
+
 
 
 function Main() {
-  const { user, logout } = useAuth();
-  // const { data, loading, error } = useFetch(() => {}, []);
 
-  const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
+  const { user } = useAuth();
+  // const { data, loading, error } = useFetch(() => { }, []);
+
+  // const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
-  const [sliderValue, setSliderValue] = useState(0);
+
+  let sliderValue: number;
+  let newNote: string;
+
 
 
 
@@ -77,15 +71,15 @@ function Main() {
     try {
       await addDoc(collection(db, `users/${user?.uid}/moodz`), {
         value: sliderValue,
-        note: inputTerm?.note,
+        note: newNote,
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
-      setInputTerm({ value: 0, note: '' });
     } catch (e) {
       console.log(e);
     } finally {
-      setInputTerm({ value: 0, note: '' });
+       getMoodz();
+       console.log("mood saved");
     }
   };
 
@@ -117,59 +111,21 @@ function Main() {
     setMoodz(arr);
   };
 
-  // custom tooltip for chart
-
-  function CustomTooltip({ payload, label, active }: any) {
-    if (active) {
-      return (
-        <div className='custom-tooltip' style={{ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }}>
-          <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
-          <p className='label'>{`DATE: ${label}`}</p>
-
-          <p className='desc'>{payload[0]!?.payload?.note}</p>
-        </div>
-      );
-    }
-
-    return null;
-  }
-
   // form handler
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    setMood();
-    getMoodz();
+  const handleSliderChange = (newValue: number) => {
+    sliderValue = newValue;
+  };
+  const handleTextfieldChange = (note: string) => {
+    newNote = note;
   };
 
-  const handleChange = ({ target }: any) => {
-    const { name, value } = target;
-    setInputTerm({ ...inputTerm, [name]: value });
-  };
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setSliderValue(newValue as number);
-  };
-
-  useEffect(() => {
-    getMoodz();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const trendLineShape:any = () => {
-    return "";
-  }
-
-  const sliderMarks = [
-    {
-      value: -10,
-      label: '-10',
-    },
-    {
-      value: 10,
-      label: '10',
-    },
-  ];
+   useEffect(() => {
+     
+      getMoodz();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
   return (
     <ThemeProvider theme={theme}
@@ -184,139 +140,29 @@ function Main() {
 
         {/* ------------- CHART -------------- */}
 
-        <Card style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}>
-          <ResponsiveContainer height={"100%"} >
-            <ComposedChart data={moodz}
-
-              style={{ marginLeft: "-25px" }}>
-              <CartesianGrid />
-              <XAxis dataKey='name' />
-              <YAxis
-                // label={{ value: 'moodz Level', angle: -90 }}
-                type='number'
-                domain={[-10, 10]}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Scatter 
-                name="TREND" 
-                dataKey="moodLevel" 
-                legendType="line" 
-                lineType='fitting' 
-                line 
-                shape={trendLineShape} 
-                fill={theme.palette.secondary.main} 
-                />
-              <Line
-                type="monotone"
-                dataKey="moodLevel"
-                stroke={theme.palette.primary.main}
-                strokeWidth="1"
-                activeDot={{ r: 4 }}
-                name="MOOD LEVEL"
-                legendType='circle'
-              />
-              <Legend />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </Card>
-
+        <Moodchart
+          primaryColor={theme.palette.primary.main}
+          secondaryColor={theme.palette.secondary.main}
+          moodz={moodz}
+          style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}
+        />
 
 
         {/* ------------- FORM -------------- */}
 
 
 
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom:50}}>
+        <FormCard
+          handleSliderChange={handleSliderChange}
+          handleTextfieldChange={handleTextfieldChange}
+          
+        />
 
-          <form
-            className='flex justify-center flex-col items-center m-9'
-            onSubmit={handleSubmit}
-          >
-            <p
-            style={{textAlign:"center"}}> 
-            Hi, {user?.email}<br/>
-        How is your MOOD level?
-        </p>
-            <Slider
-              style={{ marginTop:50, marginBottom: 30 }}
-              name='value'
-              onChange={handleSliderChange}
-              defaultValue={0}
-              aria-labelledby="discrete-slider-small-steps"
-              step={0.5}
-              min={-10}
-              max={10}
-              marks={sliderMarks}
-              valueLabelDisplay="on"
-              value={sliderValue}
-              track={false}
-            />
+        <BottomNav
+          setMood={setMood}
+        />
 
 
-            <TextField
-              sx={{
-                margin: '.5em',
-                width: '100%',
-                maxWidth: 400,
-              }}
-              color='secondary'
-              variant='outlined'
-              label='Add Note (optional)'
-              name='note'
-              multiline={true}
-              id='note'
-              value={inputTerm.note}
-              onChange={handleChange}
-            />
-          </form>
-        </Card>
-
-
-
-
-        <BottomNavigation
-          showLabels={true}
-          style={{
-            position: "fixed",
-            bottom: 0,
-            width: "100%",
-            zIndex: '1'
-          }}
-        >
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} />
-          {/* placeholder for FAB */}
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
-
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
-          <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
-        </BottomNavigation>
-
-        <Fab
-          style={{
-            minWidth: 'auto',
-            bottom: 20,
-            transform: 'scale(1.4)',
-            position: 'fixed',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            left: 0,
-            right: 0,
-          }}
-          color="primary"
-          aria-label="save"
-          onClick={handleSubmit}
-          type="submit"
-        >
-          <SaveIcon />
-        </Fab>
-
-        {/* <div className='flex items-left p-0 m-0 md:space-x-4'>
-          {<p className='pr-2 text-sm'>Hello, {user?.email}</p> }
-          <StyledButton onClick={logout}>
-            <LogoutIcon />
-          </StyledButton>
-        </div> */}
       </div>
     </ThemeProvider>
   );
