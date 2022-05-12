@@ -36,12 +36,12 @@ function Main() {
       mode: 'dark',
       primary: {
         // light: will be calculated from palette.primary.main,
-        main: '#b8ebb8',
+        main: '#ace6ac',
         // #b99747 dark: will be calculated from palette.primary.main,
         // contrastText: will be calculated to contrast with palette.primary.main
       },
       background: {
-        default: '#b8ebb8',
+        default: '#ace6ac',
 
       },
       secondary: {
