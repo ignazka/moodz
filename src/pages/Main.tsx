@@ -76,11 +76,11 @@ function Main() {
         addedAt: Timestamp.fromDate(new Date()),
       });
       // setInputTerm({ value: 0, note: '' });
-      handleChange({ value: 0, note: '' });
+      handleChange({ value: sliderValue, note: newNote });
     } catch (e) {
       console.log(e);
     } finally {
-      handleChange({ value: 0, note: '' });
+      handleChange({ value: sliderValue, note: newNote });
       // setInputTerm({ value: 0, note: '' });
       getMoodz();
     }
@@ -115,9 +115,8 @@ function Main() {
   };
 
   // form handler
-  const handleChange = ({ target }: any) => {
-    const { name, value } = target;
-    setInputTerm({ ...inputTerm, [name]: value });
+  const handleChange = ({value,note}:any) => {
+    setInputTerm({value: value,note:note });
     getMoodz();
   };
 
