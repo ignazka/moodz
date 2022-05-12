@@ -8,7 +8,7 @@ import {
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  Scatter, Legend
+  Scatter, Legend, ZAxis
 } from 'recharts';
 
 
@@ -72,6 +72,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => 
             line
             shape={trendLineShape}
             fill={secondaryColor}
+            strokeWidth="4"
           />
           <Line
             type="monotone"
@@ -81,6 +82,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => 
             activeDot={{ r: 4 }}
             name="MOOD LEVEL"
             legendType='circle'
+            dot={{r:1}}
           />
           <Legend />
         </ComposedChart>
