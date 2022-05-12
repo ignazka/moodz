@@ -82,7 +82,7 @@ function Main() {
     } finally {
       handleChange({ value: sliderValue, note: newNote });
       // setInputTerm({ value: 0, note: '' });
-      getMoodz();
+      // getMoodz();
     }
   };
 

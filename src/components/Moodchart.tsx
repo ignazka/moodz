@@ -35,12 +35,16 @@ function CustomTooltip({ payload, label, active }: any) {
 
 const trendLineShape: any = () => {
   return "";
-}
+};
+
 
 
 const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => {
 
-
+  // useEffect(() => {
+     
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   //######################
   //Der Graph wurde nicht gezeichnet, weil der Name der übergebenen moodEntry-Variable in der App.js nicht mit dem Namen übereingestimmt hatte. 
@@ -48,40 +52,40 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => 
 
   return (
     <Card style={style}>
-    <ResponsiveContainer height={"100%"} >
-      <ComposedChart data={moodz}
+      <ResponsiveContainer height={"100%"} >
+        <ComposedChart data={moodz}
 
-        style={{ marginLeft: "-25px" }}>
-        <CartesianGrid />
-        <XAxis dataKey='name' />
-        <YAxis
-          // label={{ value: 'moodz Level', angle: -90 }}
-          type='number'
-          domain={[-10, 10]}
+          style={{ marginLeft: "-25px" }}>
+          <CartesianGrid />
+          <XAxis dataKey='name' />
+          <YAxis
+            // label={{ value: 'moodz Level', angle: -90 }}
+            type='number'
+            domain={[-10, 10]}
           />
-        <Tooltip content={<CustomTooltip />} />
-        <Scatter
-          name="TREND"
-          dataKey="moodLevel"
-          legendType="line"
-          lineType='fitting'
-          line
-          shape={trendLineShape}
-          fill={secondaryColor}
-        />
-        <Line
-          type="monotone"
-          dataKey="moodLevel"
-          stroke={primaryColor}
-          strokeWidth="1"
-          activeDot={{ r: 4 }}
-          name="MOOD LEVEL"
-          legendType='circle'
-        />
-        <Legend />
-      </ComposedChart>
-    </ResponsiveContainer>
-</Card>
+          <Tooltip content={<CustomTooltip />} />
+          <Scatter
+            name="TREND"
+            dataKey="moodLevel"
+            legendType="line"
+            lineType='fitting'
+            line
+            shape={trendLineShape}
+            fill={secondaryColor}
+          />
+          <Line
+            type="monotone"
+            dataKey="moodLevel"
+            stroke={primaryColor}
+            strokeWidth="1"
+            activeDot={{ r: 4 }}
+            name="MOOD LEVEL"
+            legendType='circle'
+          />
+          <Legend />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </Card>
   );
 };
 
