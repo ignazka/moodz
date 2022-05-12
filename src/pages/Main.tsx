@@ -78,8 +78,8 @@ function Main() {
     } catch (e) {
       console.log(e);
     } finally {
-       getMoodz();
-       console.log("mood saved");
+      getMoodz();
+      console.log("mood saved");
     }
   };
 
@@ -121,11 +121,11 @@ function Main() {
   };
 
 
-   useEffect(() => {
-     
-      getMoodz();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+  useEffect(() => {
+
+    getMoodz();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ThemeProvider theme={theme}
@@ -155,7 +155,6 @@ function Main() {
         <FormCard
           handleSliderChange={handleSliderChange}
           handleTextfieldChange={handleTextfieldChange}
-          
         />
 
         <BottomNav
