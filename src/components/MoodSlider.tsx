@@ -32,23 +32,22 @@ const MoodSlider = ({ handleSliderChange = (newValue: number) => { } }: handleFu
     };
 
     return (
-        
-                
-                <Slider
-                    style={{ marginTop: 50, marginBottom: 30 }}
-                    name='value'
-                    onChange={handleChange}
-                    aria-labelledby="discrete-slider-small-steps"
-                    defaultValue={0}
-                    step={0.5}
-                    min={-10}
-                    max={10}
-                    marks={sliderMarks}
 
-                    valueLabelDisplay="on"
-                    value={sliderValue}
-                    track={false}
-                />
+
+        <Slider
+            style={{ marginTop: 50, marginBottom: 30 }}
+            name='value'
+            onChange={handleChange}
+            aria-labelledby="discrete-slider-small-steps"
+            defaultValue={0}
+            step={0.5}
+            min={-10}
+            max={10}
+            marks={sliderMarks}
+            valueLabelDisplay="on"
+            value={sliderValue}
+            track={false}
+        />
 
     );
 };

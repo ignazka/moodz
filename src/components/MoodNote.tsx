@@ -11,40 +11,35 @@ interface handleFunctions {
 
 const MoodNote = ({ handleTextfieldChange = (note: string) => { } }: handleFunctions): any => {
 
- 
-    const [moodNote, setMoodNote] = useState({note: '' });
+
+    const [moodNote, setMoodNote] = useState({ note: '' });
 
 
-
-
-
-    /* const handleChange = (event: Event, newValue: number | number[]) => {
-        console.log(newValue);
-        handleSliderChange(newValue as number);
-        setSliderValue(newValue as number);
-    }; */
 
     const handleChange = ({ target }: any) => {
-        const { note, value } = target;
-        setMoodNote({ ...note, [note]: value });
-      };
+        const { value } = target;
+        setMoodNote({ note: value });
+        handleTextfieldChange(value as string);
+    };
 
     return (
-        
+
         <TextField
-        sx={{
-            margin: '.5em',
-            width: '100%',
-            maxWidth: 400,
-        }}
-        color='secondary'
-        variant='outlined'
-        label='Add Note (optional)'
-        name='note'
-        multiline={true}
-        id='note'
-    />
-              
+            sx={{
+                margin: '.5em',
+                width: '100%',
+                maxWidth: 400,
+            }}
+            onChange={handleChange}
+            color='secondary'
+            variant='outlined'
+            label='Add Note (optional)'
+            name='note'
+            multiline={true}
+            value={moodNote.note}
+            id='note'
+        />
+
 
     );
 };

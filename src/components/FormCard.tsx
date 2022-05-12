@@ -2,16 +2,18 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import { Typography } from '@mui/material';
 import MoodSlider from './MoodSlider';
+import MoodNote from './MoodNote';
 
 
 
-interface handleFunctions  {
-   
-    handleSliderChange : (newValue:number)=>void;
- 
+interface handleFunctions {
+
+    handleSliderChange: (newValue: number) => void;
+    handleTextfieldChange: (note: string) => void;
+
 }
-     const FormCard = ({handleSliderChange=(newValue:number)=>{}}:handleFunctions): any => {
-    
+const FormCard = ({ handleSliderChange = (newValue: number) => { }, handleTextfieldChange = (note) => { } }: handleFunctions): any => {
+
     return (
         <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom: 50 }}>
 
@@ -31,19 +33,9 @@ interface handleFunctions  {
                     handleSliderChange={handleSliderChange}
                 />
 
-               {/*  <TextField
-                    sx={{
-                        margin: '.5em',
-                        width: '100%',
-                        maxWidth: 400,
-                    }}
-                    color='secondary'
-                    variant='outlined'
-                    label='Add Note (optional)'
-                    name='note'
-                    multiline={true}
-                    id='note'
-                /> */}
+                <MoodNote
+                    handleTextfieldChange={handleTextfieldChange}
+                />
             </form>
         </Card>
     );

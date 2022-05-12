@@ -24,6 +24,7 @@ function Main() {
   const [moodz, setMoodz] = useState<any | null>([{}]);
 
   let sliderValue: number;
+  let newNote: string;
 
 
 
@@ -70,7 +71,7 @@ function Main() {
     try {
       await addDoc(collection(db, `users/${user?.uid}/moodz`), {
         value: sliderValue,
-        note: inputTerm?.note,
+        note: newNote,
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
@@ -79,6 +80,7 @@ function Main() {
       console.log(e);
     } finally {
       setInputTerm({ value: 0, note: '' });
+      getMoodz();
     }
   };
 
@@ -112,7 +114,7 @@ function Main() {
 
   // form handler
 
-  const handleSubmit = (event: any) => {
+  /* const handleSubmit = (event: any) => {
     event.preventDefault();
     setMood();
     getMoodz();
@@ -121,13 +123,16 @@ function Main() {
   const handleChange = ({ target }: any) => {
     const { name, value } = target;
     setInputTerm({ ...inputTerm, [name]: value });
-  };
+  }; */
 
   const handleSliderChange = (newValue: number) => {
     sliderValue = newValue;
   };
+  const handleTextfieldChange = (note: string) => {
+    newNote = note;
+  };
 
- 
+
   useEffect(() => {
     getMoodz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,6 +165,7 @@ function Main() {
 
         <FormCard
           handleSliderChange={handleSliderChange}
+          handleTextfieldChange={handleTextfieldChange}
         />
 
         <BottomNav
