@@ -20,7 +20,7 @@ function Main() {
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
 
-  const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
+  // const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
 
   let sliderValue: number;
@@ -75,14 +75,11 @@ function Main() {
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
-      // setInputTerm({ value: 0, note: '' });
-      handleChange({ value: sliderValue, note: newNote });
     } catch (e) {
       console.log(e);
     } finally {
-      handleChange({ value: sliderValue, note: newNote });
-      // setInputTerm({ value: 0, note: '' });
-      // getMoodz();
+       getMoodz();
+       console.log("mood saved");
     }
   };
 
@@ -115,10 +112,6 @@ function Main() {
   };
 
   // form handler
-  const handleChange = ({value,note}:any) => {
-    setInputTerm({...inputTerm,value: value,note:note });
-    getMoodz();
-  };
 
   const handleSliderChange = (newValue: number) => {
     sliderValue = newValue;
@@ -130,7 +123,7 @@ function Main() {
 
    useEffect(() => {
      
-     getMoodz();
+      getMoodz();
      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
