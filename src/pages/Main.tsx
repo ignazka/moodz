@@ -116,7 +116,7 @@ function Main() {
 
   // form handler
   const handleChange = ({value,note}:any) => {
-    setInputTerm({value: value,note:note });
+    setInputTerm({...inputTerm,value: value,note:note });
     getMoodz();
   };
 
