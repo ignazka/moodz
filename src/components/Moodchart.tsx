@@ -8,7 +8,7 @@ import {
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  Scatter, Legend, ZAxis
+  Scatter, Legend
 } from 'recharts';
 
 
