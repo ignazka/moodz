@@ -118,6 +118,7 @@ function Main() {
   const handleChange = ({ target }: any) => {
     const { name, value } = target;
     setInputTerm({ ...inputTerm, [name]: value });
+    getMoodz();
   };
 
   const handleSliderChange = (newValue: number) => {
