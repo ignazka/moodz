@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import FormCard from '../components/FormCard';
 import Moodchart from '../components/Moodchart';
 import BottomNav from '../components/BottomNav';
-import { useFetch } from '../hooks/useFetch';
+// import { useFetch } from '../hooks/useFetch';
 
 
 
@@ -18,7 +18,7 @@ import { useFetch } from '../hooks/useFetch';
 function Main() {
 
   const { user } = useAuth();
-  const { data, loading, error } = useFetch(() => { }, []);
+  // const { data, loading, error } = useFetch(() => { }, []);
 
   const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
@@ -114,17 +114,6 @@ function Main() {
 
   // form handler
 
-  /* const handleSubmit = (event: any) => {
-    event.preventDefault();
-    setMood();
-    getMoodz();
-  };
-
-  const handleChange = ({ target }: any) => {
-    const { name, value } = target;
-    setInputTerm({ ...inputTerm, [name]: value });
-  }; */
-
   const handleSliderChange = (newValue: number) => {
     sliderValue = newValue;
   };
@@ -135,7 +124,7 @@ function Main() {
 
   useEffect(() => {
     getMoodz();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   return (
