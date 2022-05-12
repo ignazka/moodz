@@ -75,11 +75,13 @@ function Main() {
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
-      setInputTerm({ value: 0, note: '' });
+      // setInputTerm({ value: 0, note: '' });
+      handleChange({ value: 0, note: '' });
     } catch (e) {
       console.log(e);
     } finally {
-      setInputTerm({ value: 0, note: '' });
+      handleChange({ value: 0, note: '' });
+      // setInputTerm({ value: 0, note: '' });
       getMoodz();
     }
   };
@@ -113,6 +115,10 @@ function Main() {
   };
 
   // form handler
+  const handleChange = ({ target }: any) => {
+    const { name, value } = target;
+    setInputTerm({ ...inputTerm, [name]: value });
+  };
 
   const handleSliderChange = (newValue: number) => {
     sliderValue = newValue;
@@ -122,10 +128,11 @@ function Main() {
   };
 
 
-  useEffect(() => {
-    getMoodz();
-
-  }, []);
+   useEffect(() => {
+     
+     getMoodz();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
   return (
     <ThemeProvider theme={theme}
@@ -155,6 +162,7 @@ function Main() {
         <FormCard
           handleSliderChange={handleSliderChange}
           handleTextfieldChange={handleTextfieldChange}
+          
         />
 
         <BottomNav
