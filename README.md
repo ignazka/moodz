@@ -1,5 +1,5 @@
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://github.com/ignazka/moodz/blob/main/public/android-icon-192x192.png)
 
 
 # MOODZ
@@ -11,7 +11,7 @@ This tool helps me to remember how my feelings evolve over time.
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/ignazka/moodz/blob/main/public/moodz-screenshot.png)
 
 
 ## Features
