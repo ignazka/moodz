@@ -6,19 +6,19 @@ import { TextField } from '@mui/material';
 
 
 interface handleFunctions {
-    handleTextfieldChange: (note: string) => void
+    handleTextfieldChange: (newNote: string) => void
 }
 
-const MoodNote = ({ handleTextfieldChange = (note: string) => { } }: handleFunctions): any => {
+const MoodNote = ({ handleTextfieldChange = (newNote: string) => { } }: handleFunctions): any => {
 
 
-    const [moodNote, setMoodNote] = useState({ note: '' });
+    const [moodNote, setMoodNote] = useState({ newNote: '' });
 
 
 
     const handleChange = ({ target }: any) => {
         const { value } = target;
-        setMoodNote({ note: value });
+        setMoodNote({ newNote: value });
         handleTextfieldChange(value as string);
     };
 
@@ -36,7 +36,7 @@ const MoodNote = ({ handleTextfieldChange = (note: string) => { } }: handleFunct
             label='Add Note (optional)'
             name='note'
             multiline={true}
-            value={moodNote.note}
+            value={moodNote.newNote}
             id='note'
         />
 

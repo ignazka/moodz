@@ -20,11 +20,11 @@ function Main() {
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
 
-  // const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
+  const [inputTerm, setInputTerm] = useState({ sliderValue: 0, newNote: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
 
-  let sliderValue: number;
-  let newNote: string;
+  let sliderValue: number = 0;
+  let newNote: string = '';
 
 
 
@@ -70,8 +70,8 @@ function Main() {
   const setMood = async () => {
     try {
       await addDoc(collection(db, `users/${user?.uid}/moodz`), {
-        value: sliderValue,
-        note: newNote,
+        value: inputTerm.sliderValue,
+        note: inputTerm.newNote,
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
@@ -109,15 +109,18 @@ function Main() {
       });
     });
     setMoodz(arr);
+    console.log("get moodz from server");
   };
 
   // form handler
 
   const handleSliderChange = (newValue: number) => {
+    setInputTerm({sliderValue:newValue,newNote:inputTerm.newNote});
     sliderValue = newValue;
   };
-  const handleTextfieldChange = (note: string) => {
-    newNote = note;
+  const handleTextfieldChange = (newNote: string) => {
+    setInputTerm({sliderValue:inputTerm.sliderValue,newNote:newNote});
+    
   };
 
 

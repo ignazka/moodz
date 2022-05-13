@@ -25,10 +25,11 @@ const MoodSlider = ({ handleSliderChange = (newValue: number) => { } }: handleFu
 
 
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        console.log(newValue);
-        handleSliderChange(newValue as number);
-        setSliderValue(newValue as number);
+    const handleChange = (event: Event, value: number | number[]) => {
+        // console.log("slider change event.target.value", value);
+        setSliderValue(value as number);
+        handleSliderChange(value as number);
+        
     };
 
     return (
