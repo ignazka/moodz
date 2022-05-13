@@ -17,11 +17,11 @@ interface handleFunctions{
 const BottomNav=({ setMood = () => {}}: handleFunctions):any => {
 const { logout } = useAuth();
 
-// const handleSubmit = (event: any) => {
-//     event.preventDefault();
-//     setMood();
-//     getMoodz();
-//   };
+const handleSubmit = (event: any) => {
+    console.log("clicked on save button");
+    event.preventDefault();
+    setMood();
+  };
    
     return (
         <Paper>
@@ -56,7 +56,7 @@ const { logout } = useAuth();
           }}
           color="primary"
           aria-label="save"
-          onClick={setMood}
+          onClick={handleSubmit}
           type="submit"
         >
           <SaveIcon />
