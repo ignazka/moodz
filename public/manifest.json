@@ -4,9 +4,9 @@
     "display": "standalone",
     "start_url": "/",
     "scope":"/",
-    "name": "MOODZ",
-    "short_name": "simple mood tracker",
-    "description": "",
+    "short_name": "MOODZ",
+    "name": "simple mood tracker",
+    "description": "simple mood tracker",
     "icons": [
         {
             "src": "/icon-192x192.png",
