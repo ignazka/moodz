@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import Slider from '@mui/material/Slider';
 
-
-interface handleFunctions {
-    handleInputChange: (props: any) => void;
-}
-
-const MoodSlider = ({ handleInputChange = (props: any) => { } }: handleFunctions): any => {
+const MoodSlider: any = (props: any) => {
 
     const [sliderValue, setSliderValue] = useState(0);
 
@@ -23,7 +18,7 @@ const MoodSlider = ({ handleInputChange = (props: any) => { } }: handleFunctions
 
     const handleChange = ({ target }: any) => {
         setSliderValue(target.value as number);
-        handleInputChange(target as any);
+        props.handleInputChange(target as any);
     };
 
 

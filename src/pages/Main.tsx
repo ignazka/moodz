@@ -146,9 +146,8 @@ function Main() {
 
 
         <FormCard
-        style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
-
-          handleInputChange={handleInputChange}
+           handleInputChange={handleInputChange}
+           style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
           
         />
 

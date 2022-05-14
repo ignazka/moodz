@@ -33,13 +33,13 @@ const trendLineShape: any = () => {
 };
 
 
+const Moodchart: any = (props: any) => {
 
-const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => {
 
   return (
-    <Card style={style}>
+    <Card style={props.style}>
       <ResponsiveContainer height={"100%"} >
-        <ComposedChart data={moodz}
+        <ComposedChart data={props.moodz}
 
           style={{ marginLeft: "-25px" }}>
           <CartesianGrid />
@@ -57,13 +57,13 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => 
             lineType='fitting'
             line
             shape={trendLineShape}
-            fill={secondaryColor}
+            fill={props.secondaryColor}
             strokeWidth="4"
           />
           <Line
             type="monotone"
             dataKey="moodLevel"
-            stroke={primaryColor}
+            stroke={props.primaryColor}
             strokeWidth="1"
             activeDot={{ r: 4 }}
             name="MOOD LEVEL"
