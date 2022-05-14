@@ -109,7 +109,7 @@ function Main() {
 
   const handleInputChange = (props: any) => {
     const { name, value } = props;
-    // console.log("inputTerm", { ...inputTerm, [name]: value });
+    console.log("inputTerm", { ...inputTerm, [name]: value });
     setInputTerm({ ...inputTerm, [name]: value });
   };
 
@@ -146,9 +146,8 @@ function Main() {
 
 
         <FormCard
-        style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
-
-          handleInputChange={handleInputChange}
+           handleInputChange={handleInputChange}
+           style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
           
         />
 
