@@ -5,7 +5,6 @@ import { db } from '../lib/firebase';
 import { AppBar, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-
 //components
 import FormCard from '../components/FormCard';
 import Moodchart from '../components/Moodchart';
@@ -20,20 +19,14 @@ function Main() {
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
 
-  // const [inputTerm, setInputTerm] = useState({ value: 0, note: '' });
+  const [inputTerm, setInputTerm] = useState({ sliderValue: 0, moodNote: '' });
   const [moodz, setMoodz] = useState<any | null>([{}]);
-
-  let sliderValue: number;
-  let newNote: string;
-
-
-
 
 
   const theme = createTheme({
     palette: {
-      // type:dark,
       mode: 'dark',
+      //mode: 'light',
       primary: {
         // light: will be calculated from palette.primary.main,
         main: '#ace6ac',
@@ -70,8 +63,8 @@ function Main() {
   const setMood = async () => {
     try {
       await addDoc(collection(db, `users/${user?.uid}/moodz`), {
-        value: sliderValue,
-        note: newNote,
+        value: inputTerm.sliderValue,
+        note: inputTerm.moodNote,
         user: user?.uid,
         addedAt: Timestamp.fromDate(new Date()),
       });
@@ -109,15 +102,15 @@ function Main() {
       });
     });
     setMoodz(arr);
+    console.log("get moodz from server");
   };
 
   // form handler
 
-  const handleSliderChange = (newValue: number) => {
-    sliderValue = newValue;
-  };
-  const handleTextfieldChange = (note: string) => {
-    newNote = note;
+  const handleInputChange = (props: any) => {
+    const { name, value } = props;
+    // console.log("inputTerm", { ...inputTerm, [name]: value });
+    setInputTerm({ ...inputTerm, [name]: value });
   };
 
 
@@ -153,8 +146,9 @@ function Main() {
 
 
         <FormCard
-          handleSliderChange={handleSliderChange}
-          handleTextfieldChange={handleTextfieldChange}
+           handleInputChange={handleInputChange}
+           style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
+          
         />
 
         <BottomNav

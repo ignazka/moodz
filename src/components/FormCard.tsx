@@ -5,21 +5,14 @@ import MoodSlider from './MoodSlider';
 import MoodNote from './MoodNote';
 
 
+const FormCard = (props: any): any => {
 
-interface handleFunctions {
-
-    handleSliderChange: (newValue: number) => void;
-    handleTextfieldChange: (note: string) => void;
-
-}
-const FormCard = ({ handleSliderChange = (newValue: number) => { }, handleTextfieldChange = (note) => { } }: handleFunctions): any => {
 
     return (
-        <Card style={{ marginTop: 30, margin: 15, padding: 0, marginBottom: 50 }}>
+        <Card style={props.style}>
 
             <form
                 className='flex justify-center flex-col items-center m-9'
-            // onSubmit={handleSubmit}
             >
                 <Typography
 
@@ -30,11 +23,11 @@ const FormCard = ({ handleSliderChange = (newValue: number) => { }, handleTextfi
                 </Typography>
 
                 <MoodSlider
-                    handleSliderChange={handleSliderChange}
+                    handleInputChange={props.handleInputChange}
                 />
 
                 <MoodNote
-                    handleTextfieldChange={handleTextfieldChange}
+                    handleInputChange={props.handleInputChange}
                 />
             </form>
         </Card>

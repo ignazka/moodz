@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-
-
 import { TextField } from '@mui/material';
 
 
 
-interface handleFunctions {
-    handleTextfieldChange: (note: string) => void
-}
-
-const MoodNote = ({ handleTextfieldChange = (note: string) => { } }: handleFunctions): any => {
+const MoodNote: any = (props: any) => {
 
 
-    const [moodNote, setMoodNote] = useState({ note: '' });
 
-
+    const [moodNote, setMoodNote] = useState({ moodNote: '' });
 
     const handleChange = ({ target }: any) => {
         const { value } = target;
-        setMoodNote({ note: value });
-        handleTextfieldChange(value as string);
+        setMoodNote({ moodNote: value });
+        props.handleInputChange(target as any);
     };
 
     return (
-
         <TextField
             sx={{
                 margin: '.5em',
@@ -34,9 +26,9 @@ const MoodNote = ({ handleTextfieldChange = (note: string) => { } }: handleFunct
             color='secondary'
             variant='outlined'
             label='Add Note (optional)'
-            name='note'
+            name='moodNote'
             multiline={true}
-            value={moodNote.note}
+            value={moodNote.moodNote}
             id='note'
         />
 
