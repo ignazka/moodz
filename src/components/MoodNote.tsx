@@ -3,11 +3,8 @@ import { TextField } from '@mui/material';
 
 
 
-interface handleFunctions {
-    handleInputChange: (props: any) => void;
-}
+const MoodNote: any = (props: any) => {
 
-const MoodNote = ({ handleInputChange = (props: any) => { } }: handleFunctions): any => {
 
 
     const [moodNote, setMoodNote] = useState({ moodNote: '' });
@@ -15,7 +12,7 @@ const MoodNote = ({ handleInputChange = (props: any) => { } }: handleFunctions):
     const handleChange = ({ target }: any) => {
         const { value } = target;
         setMoodNote({ moodNote: value });
-        handleInputChange(target as any);
+        props.handleInputChange(target as any);
     };
 
     return (

@@ -109,7 +109,7 @@ function Main() {
 
   const handleInputChange = (props: any) => {
     const { name, value } = props;
-    console.log("inputTerm", { ...inputTerm, [name]: value });
+    // console.log("inputTerm", { ...inputTerm, [name]: value });
     setInputTerm({ ...inputTerm, [name]: value });
   };
 
