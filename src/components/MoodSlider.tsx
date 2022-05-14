@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-
 import Slider from '@mui/material/Slider';
 
 
-
 interface handleFunctions {
-    handleSliderChange: (newValue: number) => void
+    handleInputChange: (props: any) => void;
 }
 
-const MoodSlider = ({ handleSliderChange = (newValue: number) => { } }: handleFunctions): any => {
+const MoodSlider = ({ handleInputChange = (props: any) => { } }: handleFunctions): any => {
 
     const [sliderValue, setSliderValue] = useState(0);
 
@@ -23,21 +21,16 @@ const MoodSlider = ({ handleSliderChange = (newValue: number) => { } }: handleFu
         },
     ];
 
-
-
-    const handleChange = (event: Event, value: number | number[]) => {
-        // console.log("slider change event.target.value", value);
-        setSliderValue(value as number);
-        handleSliderChange(value as number);
-        
+    const handleChange = ({ target }: any) => {
+        setSliderValue(target.value as number);
+        handleInputChange(target as any);
     };
 
+
     return (
-
-
         <Slider
             style={{ marginTop: 50, marginBottom: 30 }}
-            name='value'
+            name='sliderValue'
             onChange={handleChange}
             aria-labelledby="discrete-slider-small-steps"
             defaultValue={0}
@@ -49,7 +42,6 @@ const MoodSlider = ({ handleSliderChange = (newValue: number) => { } }: handleFu
             value={sliderValue}
             track={false}
         />
-
     );
 };
 
