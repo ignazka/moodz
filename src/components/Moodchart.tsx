@@ -8,13 +8,8 @@ import {
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  Scatter, Legend, ZAxis
+  Scatter, Legend,
 } from 'recharts';
-
-
-
-//import values from 'values.json';
-//import GetDataFromJSON from './HandleData';
 
 // custom tooltip for chart
 
@@ -40,15 +35,6 @@ const trendLineShape: any = () => {
 
 
 const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => {
-
-  // useEffect(() => {
-     
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  //######################
-  //Der Graph wurde nicht gezeichnet, weil der Name der übergebenen moodEntry-Variable in der App.js nicht mit dem Namen übereingestimmt hatte. 
-  // Dort stand data={moodEntry}. Nachdem ich das auf moodEntry={moodEntry} geändert hatte, hat auch alles wieder funktioniert
 
   return (
     <Card style={style}>
@@ -82,7 +68,7 @@ const Moodchart: any = ({ moodz, primaryColor, secondaryColor, style }: any) => 
             activeDot={{ r: 4 }}
             name="MOOD LEVEL"
             legendType='circle'
-            dot={{r:1}}
+            dot={{ r: 1 }}
           />
           <Legend />
         </ComposedChart>
