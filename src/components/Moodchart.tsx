@@ -8,7 +8,8 @@ import {
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  Scatter, Legend,
+  Scatter, 
+  Legend
 } from 'recharts';
 
 // custom tooltip for chart
