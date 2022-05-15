@@ -11,13 +11,14 @@ import { moodzNote, sliderValue, submitMood } from '../atoms/moodzAtom'
 import { useRecoilState } from 'recoil';
 import { useMoodz } from '../hooks/useMoodz'
 import { useFetch } from '../hooks/useFetch'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const BottomNav: any = (props: any) => {
     const [note, setNote] = useRecoilState(moodzNote);
     const [value, setValue] = useRecoilState(sliderValue);
     const [submit, setSubmit] = useRecoilState(submitMood)
 
+    const navigateTo = useNavigate()
 
     const { setMood, getMoodz } = useMoodz()
     const { logout } = useAuth();
@@ -40,9 +41,11 @@ const BottomNav: any = (props: any) => {
                 {/* placeholder for FAB */}
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
 
-                <Link to={ROUTES.settings}>
-                    <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
-                </Link>
+                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} onClick={() => {
+                    navigateTo(ROUTES.settings)
+                }} />
+
+
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
             </BottomNavigation>
 
@@ -77,7 +80,7 @@ const BottomNav: any = (props: any) => {
             >
                 <SaveIcon />
             </Fab>
-        </Paper>
+        </Paper >
     );
 };
 
