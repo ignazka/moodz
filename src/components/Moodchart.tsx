@@ -12,18 +12,28 @@ import {
   Legend
 } from 'recharts';
 import { useTheme } from '@mui/material/styles'
+import { dark } from '@mui/material/styles/createPalette';
 
 // custom tooltip for chart
 
 function CustomTooltip({ payload, label, active }: any) {
+  const theme = useTheme()
+
+
   if (active) {
     return (
-      <div className='custom-tooltip' style={{ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }}>
+      <div className='custom-tooltip' style={theme.palette.mode === 'dark' ? {
+        backgroundColor: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word"
+      } : {
+        backgroundColor: "#eeeee", color: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word"
+      }
+      }
+      >
         <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
-        <p className='label'>{`DATE: ${label}`}</p>
+        <p className='label'>{`DATE: ${label} `}</p>
 
         <p className='desc'>{payload[0]!?.payload?.note}</p>
-      </div>
+      </div >
     );
   }
 
@@ -59,7 +69,8 @@ function Moodchart({ style, moodz }: any) {
             lineType='fitting'
             line
             shape={trendLineShape}
-            fill={theme.palette.secondary.main}
+            fill={
+              theme.palette.secondary.main}
             strokeWidth="4"
           />
           <Line

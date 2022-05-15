@@ -15,7 +15,6 @@ const FormCard = (props: any): any => {
         <Card style={props.style}>
 
             <form
-                className='flex justify-center flex-col items-center m-9'
             >
                 <Typography
 
