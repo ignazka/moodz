@@ -14,8 +14,8 @@ import BottomNav from '../components/BottomNav';
 
 
 
-function Main() {
-
+const Main = (props: any): any => {
+  console.log(props);
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
 
@@ -121,7 +121,7 @@ function Main() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}
+    <ThemeProvider theme={props.theme}
     >
       <div className=''>
         <AppBar className="appbar" color="inherit">
