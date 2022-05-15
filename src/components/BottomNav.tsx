@@ -1,4 +1,3 @@
-import React from 'react';
 import useAuth from '../context/authContext';
 
 import { BottomNavigation, BottomNavigationAction, Fab, Paper } from '@mui/material';
@@ -8,19 +7,19 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SaveIcon from '@mui/icons-material/Save';
+import { moodzNote, sliderValue, submitMood } from '../atoms/moodzAtom'
+import { useRecoilState } from 'recoil';
+import { useMoodz } from '../hooks/useMoodz'
 
 const BottomNav: any = (props: any) => {
-    const { name, value } = props;
-    console.log("name", name);
-    console.log("props", props);
+    const [note, setNote] = useRecoilState(moodzNote);
+    const [value, setValue] = useRecoilState(sliderValue);
+    const [submit, setSubmit] = useRecoilState(submitMood)
 
+
+    const { setMood, getMoodz } = useMoodz()
     const { logout } = useAuth();
 
-    const handleSubmit = (event: any) => {
-        console.log("clicked on save button");
-        event.preventDefault();
-        props.setMood();
-    };
 
     return (
         <Paper>
@@ -55,7 +54,20 @@ const BottomNav: any = (props: any) => {
                 }}
                 color="primary"
                 aria-label="save"
-                onClick={handleSubmit}
+                onClick={async () => {
+                    try {
+
+
+                        console.log('click submit')
+                        setMood({ sliderValue: value, moodNote: note })
+                        setValue(0)
+                        setNote('')
+                        setSubmit(!submit)
+                        console.log(submit)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }}
                 type="submit"
             >
                 <SaveIcon />
