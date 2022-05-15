@@ -5,7 +5,7 @@ import {
   signOut,
   User,
 } from 'firebase/auth';
-import { Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth } from '../lib/firebase';
 import { ROUTES } from '../router';
@@ -25,9 +25,9 @@ interface IAuth {
 
 const AuthContext = createContext<IAuth>({
   user: null,
-  signUp: async () => {},
-  signIn: async () => {},
-  logout: async () => {},
+  signUp: async () => { },
+  signIn: async () => { },
+  logout: async () => { },
   error: null,
   loading: false,
 });
@@ -60,12 +60,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .then(userCredential => {
         setUser(userCredential.user);
         setLoading(false);
-        <Navigate to={ROUTES.main} />;
+        <Navigate to={ROUTES.home} />;
       })
-      .catch((error : string) => {
-        if(error){
+      .catch((error: string) => {
+        if (error) {
           setError(`User already exists. Please sign in`);
-          
+
         }
       })
       .finally(() => setLoading(false));
@@ -80,12 +80,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         setUser(userCredential.user);
         setLoading(false);
-        <Navigate to={ROUTES.main} />;
+        <Navigate to={ROUTES.home} />;
       })
-      .catch((error : string) => {
-        if(error){
+      .catch((error: string) => {
+        if (error) {
           setError(`User not found. Please sign up`);
-          
+
         }
       })
       .finally(() => setLoading(false));

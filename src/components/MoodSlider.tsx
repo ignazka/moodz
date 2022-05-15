@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Slider from '@mui/material/Slider';
+import { useRecoilState } from 'recoil';
+import { sliderValue } from '../atoms/moodzAtom';
 
-const MoodSlider: any = (props: any) => {
+function MoodSlider() {
 
-    const [sliderValue, setSliderValue] = useState(0);
+    const [value, setValue] = useRecoilState(sliderValue);
+
 
     const sliderMarks = [
         {
@@ -17,8 +20,7 @@ const MoodSlider: any = (props: any) => {
     ];
 
     const handleChange = ({ target }: any) => {
-        setSliderValue(target.value as number);
-        props.handleInputChange(target as any);
+        setValue(target.value as number);
     };
 
 
@@ -34,7 +36,7 @@ const MoodSlider: any = (props: any) => {
             max={10}
             marks={sliderMarks}
             valueLabelDisplay="on"
-            value={sliderValue}
+            value={value}
             track={false}
         />
     );

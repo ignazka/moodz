@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextField } from '@mui/material';
+import { useRecoilState } from 'recoil';
+import { moodzNote } from '../atoms/moodzAtom';
 
 
 
-const MoodNote: any = (props: any) => {
+function MoodNote() {
 
 
 
-    const [moodNote, setMoodNote] = useState({ moodNote: '' });
+    const [note, setNote] = useRecoilState(moodzNote);
 
     const handleChange = ({ target }: any) => {
-        const { value } = target;
-        setMoodNote({ moodNote: value });
-        props.handleInputChange(target as any);
+        setNote(target.value);
     };
 
     return (
@@ -28,7 +28,7 @@ const MoodNote: any = (props: any) => {
             label='Add Note (optional)'
             name='moodNote'
             multiline={true}
-            value={moodNote.moodNote}
+            value={note}
             id='note'
         />
 

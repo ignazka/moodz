@@ -8,19 +8,19 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/authContext';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { themes } from './utils/theme'
-
+import { RecoilRoot } from 'recoil'
 
 ReactDOM.render(
   <React.StrictMode>
-
-
-    <AuthProvider>
-      <BrowserRouter>
-        <ThemeProvider theme={themes[0]}>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </AuthProvider>
+    <RecoilRoot>
+      <AuthProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={themes[0]}>
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </AuthProvider>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );

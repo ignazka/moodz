@@ -11,7 +11,7 @@ function PublicRoute({ children }: { children: JSX.Element }) {
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
     // than dropping them off on the home page.
-    return <Navigate to={ROUTES.main} state={{ from: location }} replace />;
+    return <Navigate to={ROUTES.home} state={{ from: location }} replace />;
   }
 
   return children;

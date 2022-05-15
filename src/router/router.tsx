@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Auth from '../pages/Auth';
-import Main from '../pages/Main';
+import Home from '../pages/Home';
 import Settings from '../pages/Settings';
 import { ROUTES } from '.';
 import RequireAuth from './RequireAuth';
@@ -11,12 +11,13 @@ function router(props: any) {
   return (
     <Routes>
       <Route
-        path={ROUTES.main}
+        path={ROUTES.home}
         element={
           <RequireAuth>
-            <Main
+            <Home
               handleSettingsChange={props.handleSettingsChange}
               settings={props.settings}
+              handleSubmit={props.handleSubmit}
             />
           </RequireAuth>
         }
