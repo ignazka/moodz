@@ -6,12 +6,19 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/authContext';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { themes } from './utils/theme'
+
 
 ReactDOM.render(
   <React.StrictMode>
+
+
     <AuthProvider>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={themes[0]}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>,
