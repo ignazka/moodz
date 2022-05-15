@@ -10,6 +10,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SaveIcon from '@mui/icons-material/Save';
 
 const BottomNav: any = (props: any) => {
+    const { name, value } = props;
+    console.log("name", name);
+    console.log("props", props);
 
     const { logout } = useAuth();
 
@@ -35,7 +38,7 @@ const BottomNav: any = (props: any) => {
                 {/* placeholder for FAB */}
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
 
-                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} />
+                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} href="/Settings" />
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
             </BottomNavigation>
 
