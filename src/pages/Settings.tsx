@@ -1,4 +1,4 @@
-import { Card, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Typography } from '@mui/material';
+import { Card, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup } from '@mui/material';
 import { useRecoilState } from 'recoil'
 import { themeValue } from '../atoms/settingsAtom'
 
@@ -6,7 +6,7 @@ import { themeValue } from '../atoms/settingsAtom'
 
 const Settings = (props: any): any => {
 
-    const [theme, setTheme] = useRecoilState(themeValue)
+    const [setTheme] = useRecoilState(themeValue)
 
     const handleChange = ({ target }: any) => {
         switch (target.defaultValue) {

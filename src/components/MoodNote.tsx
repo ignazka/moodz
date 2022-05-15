@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TextField } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import { moodzNote } from '../atoms/moodzAtom';

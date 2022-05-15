@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Card from '@mui/material/Card';
 import { Typography } from '@mui/material';
 import MoodSlider from './MoodSlider';
@@ -7,9 +6,6 @@ import MoodNote from './MoodNote';
 
 
 const FormCard = (props: any): any => {
-
-
-
 
     return (
         <Card style={props.style}>

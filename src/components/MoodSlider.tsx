@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Slider from '@mui/material/Slider';
 import { useRecoilState } from 'recoil';
 import { sliderValue } from '../atoms/moodzAtom';
