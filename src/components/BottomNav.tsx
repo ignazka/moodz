@@ -37,7 +37,10 @@ const BottomNav: any = (props: any) => {
                 }}
             >
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
-                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} />
+                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} onClick={() => {
+                    navigateTo(ROUTES.home)
+                }}
+                />
                 {/* placeholder for FAB */}
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
 
