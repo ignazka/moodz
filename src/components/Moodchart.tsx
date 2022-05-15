@@ -16,9 +16,11 @@ import { useTheme } from '@mui/material/styles'
 // custom tooltip for chart
 
 function CustomTooltip({ payload, label, active }: any) {
+  const theme = useTheme()
   if (active) {
     return (
-      <div className='custom-tooltip' style={{ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }}>
+
+      <div className='custom-tooltip' style={theme.palette.mode === 'dark' ? ({ background: "#393939", padding: 5, maxWidth: 200, wordBreak: "break-word" }) : ({ background: "#eee", color: '#393939', padding: 5, maxWidth: 200, wordBreak: "break-word" })}>
         <p className='label'>{`MOODZ: ${payload[0]!?.value}`}</p>
         <p className='label'>{`DATE: ${label}`}</p>
 
