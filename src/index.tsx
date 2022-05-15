@@ -15,7 +15,7 @@ ReactDOM.render(
     <RecoilRoot>
       <AuthProvider>
         <BrowserRouter>
-          <ThemeProvider theme={themes[0]}>
+          <ThemeProvider theme={themes[1]}>
             <App />
           </ThemeProvider>
         </BrowserRouter>
