@@ -3,7 +3,6 @@ import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { AppBar, Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 //components
 import FormCard from '../components/FormCard';
@@ -15,7 +14,6 @@ import BottomNav from '../components/BottomNav';
 
 
 const Main = (props: any): any => {
-  console.log(props);
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
 
@@ -69,7 +67,6 @@ const Main = (props: any): any => {
         addedAt: Timestamp.fromDate(new Date()),
       });
     } catch (e) {
-      console.log(e);
     } finally {
       getMoodz();
       console.log("mood saved");
@@ -121,44 +118,42 @@ const Main = (props: any): any => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}
-    >
-      <div className=''>
-        <AppBar className="appbar" color="inherit">
-          <Typography className="apptitle" align="center" variant="h3">
-            MOODZ
-          </Typography>
 
-        </AppBar>
+    <div className=''>
+      <AppBar className="appbar" color="inherit">
+        <Typography className="apptitle" align="center" variant="h3">
+          MOODZ
+        </Typography>
 
-        {/* ------------- CHART -------------- */}
+      </AppBar>
 
-        <Moodchart
-          primaryColor={theme.palette.primary.main}
-          secondaryColor={theme.palette.secondary.main}
-          moodz={moodz}
-          style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}
-        />
+      {/* ------------- CHART -------------- */}
 
-
-        {/* ------------- FORM -------------- */}
+      <Moodchart
+        // primaryColor={themes.palette.primary.main}
+        // secondaryColor={theme.palette.secondary.main}
+        moodz={moodz}
+        style={{ margin: 15, marginTop: 80, padding: 10, paddingTop: 20, height: 300, maxHeight: 400 }}
+      />
 
 
-
-        <FormCard
-           handleInputChange={handleInputChange}
-           style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
-          
-        />
-
-        <BottomNav
-          setMood={setMood}
-        />
+      {/* ------------- FORM -------------- */}
 
 
-      </div>
-    </ThemeProvider>
-  );
+
+      <FormCard
+        handleInputChange={handleInputChange}
+        style={{ marginTop: 50, margin: 15, padding: 0, marginBottom: 85 }}
+
+      />
+
+      <BottomNav
+        setMood={setMood}
+      />
+
+
+    </div>
+  )
 }
 
 export default Main;

@@ -8,9 +8,10 @@ import {
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
-  Scatter, 
+  Scatter,
   Legend
 } from 'recharts';
+import { useTheme } from '@mui/material/styles'
 
 // custom tooltip for chart
 
@@ -34,13 +35,13 @@ const trendLineShape: any = () => {
 };
 
 
-const Moodchart: any = (props: any) => {
-
+function Moodchart({ style, moodz }: any) {
+  const theme = useTheme()
 
   return (
-    <Card style={props.style}>
+    <Card style={style}>
       <ResponsiveContainer height={"100%"} >
-        <ComposedChart data={props.moodz}
+        <ComposedChart data={moodz}
 
           style={{ marginLeft: "-25px" }}>
           <CartesianGrid />
@@ -58,13 +59,13 @@ const Moodchart: any = (props: any) => {
             lineType='fitting'
             line
             shape={trendLineShape}
-            fill={props.secondaryColor}
+            fill={theme.palette.secondary.main}
             strokeWidth="4"
           />
           <Line
             type="monotone"
             dataKey="moodLevel"
-            stroke={props.primaryColor}
+            stroke={theme.palette.primary.main}
             strokeWidth="1"
             activeDot={{ r: 4 }}
             name="MOOD LEVEL"
