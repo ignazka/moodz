@@ -6,18 +6,11 @@ import { themeValue } from '../atoms/settingsAtom'
 
 const Settings = (props: any): any => {
 
-    const [, setTheme] = useRecoilState(themeValue)
+    const [theme, setTheme] = useRecoilState(themeValue)
 
     const handleChange = ({ target }: any) => {
-        switch (target.defaultValue) {
-            case 'dark':
-                setTheme(0)
-                break;
-            case 'light':
-                setTheme(1)
-                break;
-            default:
-        }
+        console.log(target.defaultValue)
+        setTheme(target.defaultValue)
     }
     return (
         <div className='Settings'>
@@ -28,13 +21,13 @@ const Settings = (props: any): any => {
                     <FormControl>
                         <FormLabel>Theme</FormLabel>
                         <RadioGroup
-                            defaultValue="dark"
+                            defaultValue={theme}
                             name="radio-buttons-group"
                             onChange={handleChange}
 
                         >
-                            <FormControlLabel value="dark" control={<Radio />} label="Dark" />
-                            <FormControlLabel value="light" control={<Radio />} label="Light" />
+                            <FormControlLabel value={0} control={<Radio />} label="Dark" />
+                            <FormControlLabel value={1} control={<Radio />} label="Light" />
                         </RadioGroup>
                     </FormControl>
                 </Paper>
