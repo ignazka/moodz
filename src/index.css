@@ -8,7 +8,7 @@ body {
 }
 
 h3.apptitle {
-  font-family: Rubik, Raleway;
+  /* font-family: "Rubik, Raleway" */
 }
 .appbar .apptitle::after {
   /* creates the full-width crossing line */
