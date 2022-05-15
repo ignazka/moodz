@@ -10,6 +10,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { moodzNote, sliderValue, submitMood } from '../atoms/moodzAtom'
 import { useRecoilState } from 'recoil';
 import { useMoodz } from '../hooks/useMoodz'
+import { useFetch } from '../hooks/useFetch'
 
 const BottomNav: any = (props: any) => {
     const [note, setNote] = useRecoilState(moodzNote);
@@ -20,6 +21,7 @@ const BottomNav: any = (props: any) => {
     const { setMood, getMoodz } = useMoodz()
     const { logout } = useAuth();
 
+    // const {error, data, loading} = useFetch();
 
     return (
         <Paper>

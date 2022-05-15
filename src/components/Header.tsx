@@ -4,7 +4,7 @@ import React from 'react'
 function Header() {
     return (
         <AppBar className="appbar" color="inherit">
-            <Typography className="apptitle" align="center" variant="h3">
+            <Typography align="center" className='apptitle' variant="h3">
                 MOODZ
             </Typography>
 
