@@ -6,7 +6,7 @@ import { themeValue } from '../atoms/settingsAtom'
 
 const Settings = (props: any): any => {
 
-    const [setTheme] = useRecoilState(themeValue)
+    const [, setTheme] = useRecoilState(themeValue)
 
     const handleChange = ({ target }: any) => {
         switch (target.defaultValue) {
