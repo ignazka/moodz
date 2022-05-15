@@ -1,5 +1,5 @@
 import useAuth from '../context/authContext';
-
+import { ROUTES } from '../router/constants'
 import { BottomNavigation, BottomNavigationAction, Fab, Paper } from '@mui/material';
 
 import RestoreIcon from '@mui/icons-material/Restore';
@@ -11,12 +11,14 @@ import { moodzNote, sliderValue, submitMood } from '../atoms/moodzAtom'
 import { useRecoilState } from 'recoil';
 import { useMoodz } from '../hooks/useMoodz'
 import { useFetch } from '../hooks/useFetch'
+import { useNavigate } from 'react-router-dom'
 
 const BottomNav: any = (props: any) => {
     const [note, setNote] = useRecoilState(moodzNote);
     const [value, setValue] = useRecoilState(sliderValue);
     const [submit, setSubmit] = useRecoilState(submitMood)
 
+    const navigateTo = useNavigate()
 
     const { setMood, getMoodz } = useMoodz()
     const { logout } = useAuth();
@@ -39,7 +41,11 @@ const BottomNav: any = (props: any) => {
                 {/* placeholder for FAB */}
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="save" showLabel={false} />;
 
-                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} href="/Settings" />
+                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Settings" icon={<SettingsIcon />} onClick={() => {
+                    navigateTo(ROUTES.settings)
+                }} />
+
+
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Logout" icon={<LogoutIcon />} onClick={logout} />
             </BottomNavigation>
 
@@ -74,7 +80,7 @@ const BottomNav: any = (props: any) => {
             >
                 <SaveIcon />
             </Fab>
-        </Paper>
+        </Paper >
     );
 };
 
