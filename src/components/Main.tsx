@@ -6,7 +6,7 @@ import FormCard from './FormCard';
 import Moodchart from './Moodchart';
 function Main({ handleInput }: any) {
 
-    const [submit, setSubmit] = useRecoilState(submitMood)
+    const [submit] = useRecoilState(submitMood)
     const { getMoodz, moodz } = useMoodz()
     useEffect(() => {
 
