@@ -43,7 +43,7 @@ const Settings = (props: any): any => {
                 console.log("i", i);
                 // Thanks to the tag, we should only see the "Hi! 9" notification
                 // var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
-                var n = new Notification(
+                new Notification(
                     'MOODZ', 
                     { 
                     body: 'Buzz! Buzz! Notification Nr.:' + i, 
@@ -52,7 +52,7 @@ const Settings = (props: any): any => {
                 });
 
 
-                if (i++ == count) {
+                if (i++ === count) {
                     window.clearInterval(interval);
                     console.log("end notifications");
                     i = 1;
@@ -65,7 +65,7 @@ const Settings = (props: any): any => {
             Notification.requestPermission(function (permission) {
                 // If the user accepts, let's create a notification
                 if (permission === "granted") {
-                    var notification = new Notification("Hi there! You will get "+count+' notifications within '+(duration/1000)+' seconds apart');
+                    new Notification("Hi there! You will get "+count+' notifications within '+(duration/1000)+' seconds apart');
                 }
             });
         }
