@@ -1,4 +1,4 @@
-import { Button, Card, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup } from '@mui/material';
+import { Button, Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import { useRecoilState } from 'recoil'
 import { themeValue, notificationValue } from '../atoms/settingsAtom'
 
@@ -18,7 +18,7 @@ const Settings = (props: any): any => {
 
     const notifyMe = ():any => {
         
-        
+        setNotification(1);
 
              console.log("target",notification);
             let duration = 2000;
