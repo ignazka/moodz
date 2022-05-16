@@ -2,19 +2,24 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../context/authContext';
 import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { AppBar, Typography } from '@mui/material';
+import { AppBar, Button, Snackbar, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 //components
 import FormCard from '../components/FormCard';
 import Moodchart from '../components/Moodchart';
 import BottomNav from '../components/BottomNav';
+
 // import { useFetch } from '../hooks/useFetch';
 
 
 
 
 function Main() {
+
+  
+ 
+
 
   const { user } = useAuth();
   // const { data, loading, error } = useFetch(() => { }, []);
@@ -133,6 +138,8 @@ function Main() {
 
         {/* ------------- CHART -------------- */}
 
+        
+
         <Moodchart
           primaryColor={theme.palette.primary.main}
           secondaryColor={theme.palette.secondary.main}
@@ -143,7 +150,7 @@ function Main() {
 
         {/* ------------- FORM -------------- */}
 
-
+        
 
         <FormCard
            handleInputChange={handleInputChange}
