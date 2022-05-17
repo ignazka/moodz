@@ -35,6 +35,7 @@ const Settings = (props: any): any => {
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
             var n = new Notification("Hi there!");
+            console.log(n);
 
             new Notification(
                 'MOODZ', 
@@ -49,6 +50,7 @@ const Settings = (props: any): any => {
                 console.log("i", i);
                 // Thanks to the tag, we should only see the "Hi! 9" notification
                 var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
+                console.log(n);
                 // new Notification(
                 //     'MOODZ', 
                 //     { 
