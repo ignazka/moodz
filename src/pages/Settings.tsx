@@ -34,22 +34,28 @@ const Settings = (props: any): any => {
         // Let's check whether notification permissions have alredy been granted
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
-            // var notification = new Notification("Hi there!");
+            var n = new Notification("Hi there!");
 
-
-            var i = 1;
+            new Notification(
+                'MOODZ', 
+                { 
+                body: 'Buzz! Buzz! Notification Nr.:' + i, 
+                vibrate: [200, 100, 200, 100, 200, 100, 200], 
+                tag: 'vibration-sample'
+            });
+            var i = notification;
             // Using an interval cause some browsers (including Firefox) are blocking notifications if there are too much in a certain time.
             var interval = window.setInterval(function () {
                 console.log("i", i);
                 // Thanks to the tag, we should only see the "Hi! 9" notification
-                // var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
-                new Notification(
-                    'MOODZ', 
-                    { 
-                    body: 'Buzz! Buzz! Notification Nr.:' + i, 
-                    vibrate: [200, 100, 200, 100, 200, 100, 200], 
-                    tag: 'vibration-sample'
-                });
+                var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
+                // new Notification(
+                //     'MOODZ', 
+                //     { 
+                //     body: 'Buzz! Buzz! Notification Nr.:' + i, 
+                //     vibrate: [200, 100, 200, 100, 200, 100, 200], 
+                //     tag: 'vibration-sample'
+                // });
 
                 setNotification(i);
 
