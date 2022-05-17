@@ -40,7 +40,7 @@ const Settings = (props: any): any => {
             new Notification(
                 'MOODZ', 
                 { 
-                body: 'Buzz! Buzz! Notification Nr.:' + i, 
+                body: 'Buzz! Buzz! Notification Nr.:' + notification, 
                 vibrate: [200, 100, 200, 100, 200, 100, 200], 
                 tag: 'vibration-sample'
             });
