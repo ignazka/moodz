@@ -1,4 +1,4 @@
-import { Button, Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useRecoilState } from 'recoil'
 import { themeValue, notificationValue } from '../atoms/settingsAtom'
 
@@ -51,11 +51,13 @@ const Settings = (props: any): any => {
                     tag: 'vibration-sample'
                 });
 
+                setNotification(i);
 
                 if (i++ === count) {
                     window.clearInterval(interval);
                     console.log("end notifications");
                     i = 1;
+                    setNotification(i);
                 }
             }, duration);
         }
@@ -102,6 +104,9 @@ const Settings = (props: any): any => {
                     >
                         notify me
                     </Button>
+                    <Typography>
+                        {notification}
+                    </Typography>
 
 
                 </FormControl>
