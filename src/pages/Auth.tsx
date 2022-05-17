@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAuth from '../context/authContext';
-import { Button, InputLabel, Input } from '@mui/material';
-import {Link} from 'react-router-dom'
+import { Button, InputLabel, Input, Card, Paper } from '@mui/material';
+import { Link } from 'react-router-dom'
 
 interface Inputs {
   email: string;
@@ -12,9 +12,11 @@ interface Inputs {
 interface Props {
   isLogin: boolean;
 }
-function Login({isLogin} : Props) {
+function Login({ isLogin }: Props) {
   const [login, setLogin] = useState(isLogin);
-  const { signIn, signUp , error} = useAuth();
+  const { signIn, signUp, error } = useAuth();
+  const [isPasswordError, setIsPasswordError] = useState(false)
+  const [isEmailError, setIsEmailError] = useState(false)
 
   const {
     register,
@@ -24,7 +26,21 @@ function Login({isLogin} : Props) {
 
   useEffect(() => {
     setLogin(isLogin)
-  }, [isLogin])
+    errors.password ? setIsPasswordError(true) : setIsPasswordError(false)
+    errors.email ? setIsEmailError(true) : setIsEmailError(false)
+
+
+
+
+  }, [isLogin, errors.password, errors.email])
+
+
+  const handleClick = () => {
+
+    setLogin(true)
+
+
+  }
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     if (login) {
@@ -35,27 +51,37 @@ function Login({isLogin} : Props) {
   };
 
   return (
-    <div className='relative flex h-screen w-screen flex-col px-6 md:items-center md:justify-center md:bg-transparent' 
-    >
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className='relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14 md:bg-white'
-        style={{background:'white'}}
-      >
-        <h1 className='text-4xl font-semibold '>{login ? 'Sign in' : 'Sign up'}</h1>
-        <div className='space-y-4'>
+    <div className='Auth'>
+
+      <Card sx={{ padding: '2em', margin: 'auto' }}>
+
+        <form className='auth-form'
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <h1 className='auth-heading'>{login ? 'Sign in' : 'Sign up'}</h1>
+          {errors.email?.type === 'required' && (
+
+            <p className='error-text'>
+              Please enter a valid email.
+            </p>
+          )}
+          {errors.password && (
+
+            <p className='error-text'>
+              Your password must contain between 4 and 60 characters.
+            </p>
+
+          )}
           <InputLabel>
             <Input
               type='email'
               placeholder='Email'
               className='input'
+              error={isEmailError}
+              // error={isError}
               {...register('email', { required: true })}
             />
-            {errors.email?.type === 'required' && (
-              <p className='p-1 text-[13px] font-light text-orange-500'>
-                Please enter a valid email.
-              </p>
-            )}
+
 
           </InputLabel>
           <InputLabel>
@@ -63,33 +89,36 @@ function Login({isLogin} : Props) {
               type='password'
               placeholder='Password'
               className='input'
+              error={isPasswordError}
+              // error={isError}
+
               {...register('password', { required: true })}
             />{' '}
-            {errors.password && (
-              <p className='p-1 text-[13px] font-light text-orange-500'>
-                Your password must contain between 4 and 60 characters.
-              </p>
-            )}
+
           </InputLabel>
-        </div>
-        {error && <p className='p-1 text-[13px] font-light text-orange-500'>
-             {error} </p>}
-            
-        <Button variant='outlined' onClick={() => setLogin(true)} type='submit'>
-          {login? 'Sign In' : 'Sign up'}
-        </Button>
-        {login? 
-         <div>
-            <p>New to moodZ? <Link className='underline text-blue-500 hover:text-blue-600' to='/signup'>Create an account</Link></p>
-         </div>
-         :
-         <div>
-            <p>Already have an account? <Link className='underline text-blue-500 hover:text-blue-600' to='/login'>sign in</Link></p>
-         </div>
-      
-      }
-         
-      </form>
+          {error && <p className='error-text firebase-error'>
+            {error} </p>}
+
+          <Button variant='outlined' onClick={handleClick} type='submit'>
+            {login ? 'Sign In' : 'Sign up'}
+          </Button>
+          {login ?
+            <div className='auth-link-ctn'>
+              <p><span>New to moodZ?
+              </span> <Link className='auth-link' to='/signup'>Create an account</Link></p>
+            </div>
+            :
+            <div className='auth-link-ctn'>
+              <p><span>
+                Already have an account?
+              </span> <Link className='auth-link' to='/login'>sign in</Link></p>
+            </div>
+
+          }
+
+
+        </form>
+      </Card>
     </div>
   );
 }

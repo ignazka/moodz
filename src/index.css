@@ -34,3 +34,53 @@ h1 {
   height: 100vh;
 
 }
+
+.Auth{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+
+}
+.Auth .auth-heading{
+  font-size: 2.1em;
+}
+.Auth .auth-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70vw;
+  height: 50vh;
+
+}
+
+.Auth input {
+  margin-top: 1.5em;
+
+}
+.Auth button {
+  margin: 1.4em;
+  width: 100px;
+}
+.Auth .error-text {
+  padding-top: 1em;
+  color: tomato;
+  font-weight: 100;
+  word-break: word-break;
+text-align: center;
+
+}
+
+.Auth .firebase-error {
+  color: #ace6ac;
+}
+
+.Auth .auth-link-ctn span {
+  font-weight: 100;
+  
+}
+.Auth .auth-link:hover{
+  text-decoration: underline;
+}
+
