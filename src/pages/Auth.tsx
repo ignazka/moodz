@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useAuth from '../context/authContext';
-import { Button, InputLabel, Input, Card, Paper } from '@mui/material';
+import { Button, InputLabel, Input, Card } from '@mui/material';
 import { Link } from 'react-router-dom'
 
 interface Inputs {
