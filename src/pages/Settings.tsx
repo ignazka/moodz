@@ -24,6 +24,7 @@ const Settings = (props: any): any => {
                 // icon: 'mario.png'
             });
             noti.onclick = () => alert('clicked');
+            setNotification(1);
         }
     }
     showNotification();
