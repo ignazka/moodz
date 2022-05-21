@@ -16,6 +16,18 @@ const Settings = (props: any): any => {
         //  setNotification(target.defaultValue)
     }
 
+    async function showNotification() {
+        const result = await Notification.requestPermission();
+        if (result === 'granted') {
+            const noti = new Notification('Hello!', {
+                body: 'It’s me.',
+                // icon: 'mario.png'
+            });
+            noti.onclick = () => alert('clicked');
+        }
+    }
+    showNotification();
+
     const notifyMe = ():any => {
         
         setNotification(1);
@@ -108,7 +120,8 @@ const Settings = (props: any): any => {
                 <FormControl>
                     <FormLabel>Notifications</FormLabel>
                     <Button
-                        onClick={notifyMe}                       
+                        // onClick={notifyMe}    
+                        onClick={showNotification}                    
                     >
                         notify me
                     </Button>
