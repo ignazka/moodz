@@ -16,86 +16,86 @@ const Settings = (props: any): any => {
         //  setNotification(target.defaultValue)
     }
 
-    async function showNotification() {
-        const result = await Notification.requestPermission();
-        if (result === 'granted') {
-            const noti = new Notification('Hello!', {
-                body: 'It’s me.',
-                // icon: 'mario.png'
-            });
-            noti.onclick = () => alert('clicked');
-            setNotification(1);
+    // async function showNotification() {
+    //     const result = await Notification.requestPermission();
+    //     if (result === 'granted') {
+    //         const noti = new Notification('Hello!', {
+    //             body: 'It’s me.',
+    //             // icon: 'mario.png'
+    //         });
+    //         noti.onclick = () => alert('clicked');
+    //         setNotification(1);
+    //     }
+    // }
+    // showNotification();
+
+    const notifyMe = ():any => {
+        
+        setNotification(1);
+
+             console.log("target",notification);
+            let duration = 2000;
+            let count = 3;
+        // console.log("duration", props.target.timeOut);
+        // console.log("count", props.target.count);
+        
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
         }
-    }
-    showNotification();
 
-    // const notifyMe = ():any => {
-        
-    //     setNotification(1);
+        // Let's check whether notification permissions have alredy been granted
+        else if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var n = new Notification("Hi there!");
+            console.log(n);
 
-    //          console.log("target",notification);
-    //         let duration = 2000;
-    //         let count = 3;
-    //     // console.log("duration", props.target.timeOut);
-    //     // console.log("count", props.target.count);
-        
-    //     // Let's check if the browser supports notifications
-    //     if (!("Notification" in window)) {
-    //         alert("This browser does not support desktop notification");
-    //     }
+            new Notification(
+                'MOODZ', 
+                { 
+                body: 'Buzz! Buzz! Notification Nr.:' + notification, 
+                vibrate: [200, 100, 200, 100, 200, 100, 200], 
+                tag: 'vibration-sample'
+            });
+            var i = notification;
+            // Using an interval cause some browsers (including Firefox) are blocking notifications if there are too much in a certain time.
+            var interval = window.setInterval(function () {
+                console.log("i", i);
+                // Thanks to the tag, we should only see the "Hi! 9" notification
+                var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
+                console.log(n);
+                // new Notification(
+                //     'MOODZ', 
+                //     { 
+                //     body: 'Buzz! Buzz! Notification Nr.:' + i, 
+                //     vibrate: [200, 100, 200, 100, 200, 100, 200], 
+                //     tag: 'vibration-sample'
+                // });
 
-    //     // Let's check whether notification permissions have alredy been granted
-    //     else if (Notification.permission === "granted") {
-    //         // If it's okay let's create a notification
-    //         var n = new Notification("Hi there!");
-    //         console.log(n);
+                setNotification(i);
 
-    //         new Notification(
-    //             'MOODZ', 
-    //             { 
-    //             body: 'Buzz! Buzz! Notification Nr.:' + notification, 
-    //             vibrate: [200, 100, 200, 100, 200, 100, 200], 
-    //             tag: 'vibration-sample'
-    //         });
-    //         var i = notification;
-    //         // Using an interval cause some browsers (including Firefox) are blocking notifications if there are too much in a certain time.
-    //         var interval = window.setInterval(function () {
-    //             console.log("i", i);
-    //             // Thanks to the tag, we should only see the "Hi! 9" notification
-    //             var n = new Notification("Hi! " + i, {tag: 'MOODZ Notification'});
-    //             console.log(n);
-    //             // new Notification(
-    //             //     'MOODZ', 
-    //             //     { 
-    //             //     body: 'Buzz! Buzz! Notification Nr.:' + i, 
-    //             //     vibrate: [200, 100, 200, 100, 200, 100, 200], 
-    //             //     tag: 'vibration-sample'
-    //             // });
+                if (i++ === count) {
+                    window.clearInterval(interval);
+                    console.log("end notifications");
+                    i = 1;
+                    setNotification(i);
+                }
+            }, duration);
+        }
 
-    //             setNotification(i);
+        // Otherwise, we need to ask the user for permission
+        else if (Notification.permission !== 'denied') {
+            Notification.requestPermission(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    new Notification("Hi there! You will get "+count+' notifications within '+(duration/1000)+' seconds apart');
+                }
+            });
+        }
 
-    //             if (i++ === count) {
-    //                 window.clearInterval(interval);
-    //                 console.log("end notifications");
-    //                 i = 1;
-    //                 setNotification(i);
-    //             }
-    //         }, duration);
-    //     }
-
-    //     // Otherwise, we need to ask the user for permission
-    //     else if (Notification.permission !== 'denied') {
-    //         Notification.requestPermission(function (permission) {
-    //             // If the user accepts, let's create a notification
-    //             if (permission === "granted") {
-    //                 new Notification("Hi there! You will get "+count+' notifications within '+(duration/1000)+' seconds apart');
-    //             }
-    //         });
-    //     }
-
-    //     // At last, if the user has denied notifications, and you
-    //     // want to be respectful there is no need to bother them any more.
-    // };
+        // At last, if the user has denied notifications, and you
+        // want to be respectful there is no need to bother them any more.
+    };
 
     return (
         <div className='Settings'>
@@ -121,8 +121,8 @@ const Settings = (props: any): any => {
                 <FormControl>
                     <FormLabel>Notifications</FormLabel>
                     <Button
-                        // onClick={notifyMe}    
-                        onClick={showNotification}                    
+                        onClick={notifyMe}    
+                        // onClick={showNotification}                    
                     >
                         notify me
                     </Button>

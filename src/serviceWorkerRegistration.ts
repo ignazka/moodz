@@ -49,6 +49,18 @@ export function register(config?: Config) {
             'This web app is being served cache-first by a service ' +
               'worker. To learn more, visit https://cra.link/PWA'
           );
+          async function showNotification() {
+            const result = await Notification.requestPermission();
+            if (result === 'granted') {
+                const noti = new Notification('Hello!', {
+                    body: 'It’s me.',
+                    // icon: 'mario.png'
+                });
+                noti.onclick = () => alert('clicked');
+              
+            }
+        }
+        showNotification();
         });
       } else {
         // Is not localhost. Just register service worker
