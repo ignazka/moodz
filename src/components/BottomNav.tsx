@@ -35,7 +35,7 @@ const BottomNav: any = (props: any) => {
                     zIndex: '1'
                 }}
             >
-                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} />
+                <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Values" icon={<RestoreIcon />} onClick={() => { navigateTo(ROUTES.list) }} />
                 <BottomNavigationAction sx={{ minWidth: 'auto' }} label="Home" icon={<FavoriteIcon />} onClick={() => {
                     navigateTo(ROUTES.home)
                 }}
