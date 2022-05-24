@@ -76,3 +76,7 @@ h1 {
 .Auth .auth-link:hover {
   text-decoration: underline;
 }
+
+.List {
+  margin-top: 5em;
+}
