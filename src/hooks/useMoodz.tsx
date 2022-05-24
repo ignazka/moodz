@@ -40,8 +40,10 @@ export function useMoodz() {
         const sorted = arr.sort((a: any, b: any): any => a.name - b.name);
         arr = [{}];
         sorted.forEach((element: any) => {
+            let day = new Date(element.name * 1000).toLocaleDateString();
+            let time = new Date(element.name * 1000).toLocaleTimeString();
             arr.push({
-                name: new Date(element.name * 1000).toLocaleDateString(),
+                name: day + ' ' + time,
                 moodLevel: element.moodLevel,
                 note: element.note,
             });
