@@ -39,6 +39,14 @@ const trendLineShape: any = () => {
 
 function Moodchart({ style, moodz }: any) {
   const theme = useTheme()
+
+
+
+  const formatXAxis = (value: any) => {
+    if (value % 2 === 0) {
+      return value;
+    }
+  }
   return (
     <Card style={style}>
       <ResponsiveContainer height={"100%"} >
@@ -46,7 +54,7 @@ function Moodchart({ style, moodz }: any) {
 
           style={{ marginLeft: "-25px" }}>
           <CartesianGrid />
-          <XAxis dataKey='name' />
+          <XAxis dataKey='name' interval='preserveStart' fontSize='0.8em' />
           <YAxis
             // label={{ value: 'moodz Level', angle: -90 }}
             type='number'
@@ -72,6 +80,7 @@ function Moodchart({ style, moodz }: any) {
             name="MOOD LEVEL"
             legendType='circle'
             dot={{ r: 1 }}
+
           />
           <Legend />
         </ComposedChart>
