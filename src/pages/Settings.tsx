@@ -30,7 +30,7 @@ const Settings = (props: any): any => {
     showNotification();
 
     // const notifyMe = ():any => {
-        
+
     //     setNotification(1);
 
     //          console.log("target",notification);
@@ -38,7 +38,7 @@ const Settings = (props: any): any => {
     //         let count = 3;
     //     // console.log("duration", props.target.timeOut);
     //     // console.log("count", props.target.count);
-        
+
     //     // Let's check if the browser supports notifications
     //     if (!("Notification" in window)) {
     //         alert("This browser does not support desktop notification");
@@ -117,7 +117,7 @@ const Settings = (props: any): any => {
                 </FormControl>
             </Card>
 
-            <Card sx={{ padding: '2em', margin: 15 }}>
+            {/* <Card sx={{ padding: '2em', margin: 15 }}>
                 <FormControl>
                     <FormLabel>Notifications</FormLabel>
                     <Button
@@ -133,7 +133,7 @@ const Settings = (props: any): any => {
 
                 </FormControl>
 
-            </Card>
+            </Card> */}
             {/* </Paper> */}
 
         </div >
