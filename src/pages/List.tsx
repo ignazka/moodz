@@ -15,7 +15,7 @@ function List() {
     return (
 
         <TableContainer className='List' component={Paper}>
-            <Table sx={{ minWidth: 650 }} >
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Date</TableCell>
