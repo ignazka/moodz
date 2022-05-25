@@ -1,6 +1,6 @@
 import { Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import { useRecoilState } from 'recoil'
-import { themeValue, notificationValue } from '../atoms/settingsAtom'
+import { themeValue } from '../atoms/settingsAtom'
 
 
 
