@@ -40,13 +40,6 @@ const trendLineShape: any = () => {
 function Moodchart({ style, moodz }: any) {
   const theme = useTheme()
 
-
-
-  const formatXAxis = (value: any) => {
-    if (value % 2 === 0) {
-      return value;
-    }
-  }
   return (
     <Card style={style}>
       <ResponsiveContainer height={"100%"} >

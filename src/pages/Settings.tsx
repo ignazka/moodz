@@ -1,4 +1,4 @@
-import { Button, Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import { useRecoilState } from 'recoil'
 import { themeValue, notificationValue } from '../atoms/settingsAtom'
 
@@ -8,7 +8,7 @@ import { themeValue, notificationValue } from '../atoms/settingsAtom'
 const Settings = (props: any): any => {
 
     const [theme, setTheme] = useRecoilState(themeValue);
-    const [notification, setNotification] = useRecoilState(notificationValue);
+    // const [notification, setNotification] = useRecoilState(notificationValue);
 
     const handleChange = ({ target }: any) => {
         console.log(target.defaultValue)
@@ -16,18 +16,18 @@ const Settings = (props: any): any => {
         //  setNotification(target.defaultValue)
     }
 
-    async function showNotification() {
-        const result = await Notification.requestPermission();
-        if (result === 'granted') {
-            const noti = new Notification('Hello!', {
-                body: 'It’s me.',
-                // icon: 'mario.png'
-            });
-            noti.onclick = () => alert('clicked');
-            setNotification(1);
-        }
-    }
-    showNotification();
+    // async function showNotification() {
+    //     const result = await Notification.requestPermission();
+    //     if (result === 'granted') {
+    //         const noti = new Notification('Hello!', {
+    //             body: 'It’s me.',
+    //             // icon: 'mario.png'
+    //         });
+    //         noti.onclick = () => alert('clicked');
+    //         setNotification(1);
+    //     }
+    // }
+    // showNotification();
 
     // const notifyMe = ():any => {
 
