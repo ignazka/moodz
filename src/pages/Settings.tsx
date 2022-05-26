@@ -1,6 +1,7 @@
-import { Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
+import { Button, Card, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { useRecoilState } from 'recoil'
 import { themeValue } from '../atoms/settingsAtom'
+import { useState } from 'react'
 
 
 
@@ -8,26 +9,56 @@ import { themeValue } from '../atoms/settingsAtom'
 const Settings = (props: any): any => {
 
     const [theme, setTheme] = useRecoilState(themeValue);
+    const [count, setCount] = useState(0)
     // const [notification, setNotification] = useRecoilState(notificationValue);
 
     const handleChange = ({ target }: any) => {
-        console.log(target.defaultValue)
         setTheme(target.defaultValue)
         //  setNotification(target.defaultValue)
     }
 
-    // async function showNotification() {
-    //     const result = await Notification.requestPermission();
-    //     if (result === 'granted') {
-    //         const noti = new Notification('Hello!', {
-    //             body: 'It’s me.',
-    //             // icon: 'mario.png'
-    //         });
-    //         noti.onclick = () => alert('clicked');
-    //         setNotification(1);
-    //     }
-    // }
-    // showNotification();
+    async function showNotification(body: any) {
+        const registration = await navigator.serviceWorker.getRegistration();
+        const title = 'How is your MOOD level?';
+
+
+        const payload = {
+            body
+        }
+        if (registration) {
+
+            if ('showNotification' in registration) {
+                registration.showNotification(title, payload);
+                console.log(count)
+
+            } else {
+                new Notification(title, payload);
+                console.log(count)
+
+            }
+        }
+
+
+
+    }
+
+    const sendNotification = async () => {
+        const notification: any = document.getElementById('notification')
+        console.log(notification.value)
+        if (Notification.permission === 'granted') {
+            showNotification(notification!.value)
+            setCount(count + 1)
+        } else {
+            if (Notification.permission !== 'denied') {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    showNotification(notification!.value)
+                    setCount(count + 1)
+
+                }
+            }
+        }
+    }
 
     // const notifyMe = ():any => {
 
@@ -115,6 +146,9 @@ const Settings = (props: any): any => {
                         <FormControlLabel value={1} control={<Radio />} label="Light" />
                     </RadioGroup>
                 </FormControl>
+                <TextField type="text" label="Notification" id="notification" value="How is your Mood?"></TextField>
+                <Button onClick={sendNotification}>Notification</Button>
+                {count && <p>{count}</p>}
             </Card>
 
             {/* <Card sx={{ padding: '2em', margin: 15 }}>
