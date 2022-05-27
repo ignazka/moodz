@@ -17,7 +17,7 @@ function NotificationComponent() {
     const now = new Date()
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 40, 0, 0).getTime() - now.getTime();
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 0, 0, 0).getTime() - now.getTime();
 
 
     useEffect(() => {
@@ -76,7 +76,7 @@ function NotificationComponent() {
 
 
     return (
-        <Card>
+        <div>
 
             <FormControlLabel
                 control={
@@ -117,7 +117,7 @@ function NotificationComponent() {
 
                 )
             }
-        </Card>
+        </div>
     )
 }
 
