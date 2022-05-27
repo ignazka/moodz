@@ -18,15 +18,10 @@ function NotificationComponent() {
     }
 
     const now = new Date()
-    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 08, 0, 0, 0).getTime() - now.getTime();
+    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
     const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0, 0).getTime() - now.getTime();
 
-
-
-    // if (millisTill10 < 0) {
-    //     millisTill10 += 86400000; // it's after 10am, try 10am tomorrow.
-    // }
     if (notificationToggle) {
 
         setTimeout(function () { sendNotification() }, eightOClock);
