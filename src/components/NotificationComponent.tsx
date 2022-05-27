@@ -4,10 +4,11 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Alert from "@mui/material/Alert"
 import IconButton from "@mui/material/IconButton"
 import CloseIcon from '@mui/icons-material/Close';
+import Box from "@mui/material/Box"
 
 function NotificationComponent() {
 
-    const [notificationToggle, setNotificationToggle] = useState(true)
+    const [notificationToggle,] = useState(true)
     const [open, setOpen] = useState(false)
 
     const now = new Date()
@@ -72,27 +73,22 @@ function NotificationComponent() {
 
 
     return (
-        <div>
+        <Box>
 
             <FormControlLabel
                 control={
-                    <Switch name="notification-toggle" value={notificationToggle} onClick={() => {
+                    <Switch name="notification-toggle" checked={open} onClick={() => {
+                        setOpen(!open)
 
-                        setNotificationToggle(!notificationToggle)
-                        if (!notificationToggle) {
-                            setOpen(true)
+                        setTimeout(function () { setOpen(false) }, 4000);
 
-                        }
-                        if (notificationToggle) {
-                            setTimeout(function () { setOpen(false) }, 4000);
-                        }
                     }} />
 
                 }
-                label="Enable/Disable Notifications"
+                label="test notification alert "
             />
             {
-                (notificationToggle && open) && (
+                (open) && (
                     <Alert
                         action={
                             <IconButton
@@ -113,7 +109,7 @@ function NotificationComponent() {
 
                 )
             }
-        </div>
+        </Box>
     )
 }
 
