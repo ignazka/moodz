@@ -24,14 +24,18 @@ function NotificationComponent() {
 
     if (notificationToggle) {
 
-        setTimeout(function () { sendNotification() }, 120000);
+        setTimeout(function () {
+            console.log('timeout started:')
+            getRegistration();
+            sendNotification()
+        }, 60000);
         // setTimeout(function () { sendNotification() }, twelveOClock);
 
         // setTimeout(function () { sendNotification() }, sixOClockPM);
     }
 
 
-    const showNotification = (body: any) => {
+    const showNotification = async (body: any) => {
         const title = 'moodZ: Friendly Reminder.';
         const payload = {
             body
