@@ -10,18 +10,14 @@ import Card from "@mui/material/Card"
 
 
 function NotificationComponent() {
-    const now = new Date()
 
-    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
-    const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0).getTime() - now.getTime();
     const [notificationToggle, setNotificationToggle] = useState(false)
-    const [timer, setTimer] = useState({
-
-    })
     const [open, setOpen] = useState(false)
 
-
+    const now = new Date()
+    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
+    const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 35, 0, 0).getTime() - now.getTime();
 
 
     useEffect(() => {
