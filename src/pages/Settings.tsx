@@ -6,7 +6,7 @@ const Settings = (props: any): any => {
 
     return (
         <Card sx={{
-            padding: '2em', margin: 15, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '70vw'
+            padding: '2em', margin: 15, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', width: '70vw'
         }}>
             <div className='settings-ctn'>
                 <Theme />

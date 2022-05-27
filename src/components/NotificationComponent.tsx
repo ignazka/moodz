@@ -7,13 +7,13 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function NotificationComponent() {
 
-    const [notificationToggle, setNotificationToggle] = useState(false)
+    const [notificationToggle, setNotificationToggle] = useState(true)
     const [open, setOpen] = useState(false)
 
     const now = new Date()
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 0, 0, 0).getTime() - now.getTime();
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 30, 0, 0).getTime() - now.getTime();
 
 
     useEffect(() => {
