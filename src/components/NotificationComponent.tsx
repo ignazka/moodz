@@ -37,6 +37,8 @@ function NotificationComponent() {
             clearTimeout(timer3)
 
         }
+        // eslint-disable-next-line
+
     }, [notificationToggle])
 
 
