@@ -8,14 +8,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 function NotificationComponent() {
 
     const [notificationToggle, setNotificationToggle] = useState(false)
-    const getRegistration = async () => {
-        try {
-            const registration = await navigator.serviceWorker.getRegistration();
-            return registration;
-        } catch (error) {
-
-        }
-    }
 
     // const now = new Date()
     // const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
@@ -26,7 +18,6 @@ function NotificationComponent() {
         console.log('if toggle')
         setTimeout(function () {
             console.log('timeout started:')
-            getRegistration();
             sendNotification()
         }, 60000);
         // setTimeout(function () { sendNotification() }, twelveOClock);
@@ -36,23 +27,24 @@ function NotificationComponent() {
 
 
     const showNotification = async (body: any) => {
+        const registration = await navigator.serviceWorker.getRegistration();
+
         const title = 'moodZ: Friendly Reminder.';
         const payload = {
             body
         };
-        getRegistration().then((registration) => {
-            if (registration) {
-                if ('showNotification' in registration) {
-                    registration.showNotification(title, payload);
-                }
-                else {
-                    new Notification(title, payload);
-                }
+        if (registration) {
+            if ('showNotification' in registration) {
+                registration.showNotification(title, payload);
             }
-        })
+            else {
+                new Notification(title, payload);
+            }
+        }
+    }
 
 
-    };
+
 
 
     const sendNotification = async () => {
