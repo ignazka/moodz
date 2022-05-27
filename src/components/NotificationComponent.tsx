@@ -23,7 +23,7 @@ function NotificationComponent() {
     // const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0, 0).getTime() - now.getTime();
 
     if (notificationToggle) {
-
+        console.log('if toggle')
         setTimeout(function () {
             console.log('timeout started:')
             getRegistration();
@@ -75,7 +75,11 @@ function NotificationComponent() {
     return (
         <FormControlLabel
             control={
-                <Switch name="notification-toggle" value={notificationToggle} onClick={() => { setNotificationToggle(!notificationToggle) }} />
+                <Switch name="notification-toggle" value={notificationToggle} onClick={() => {
+
+                    setNotificationToggle(!notificationToggle)
+                    console.log(notificationToggle)
+                }} />
             }
             label="Enable/Disable Notifications"
         />
