@@ -4,10 +4,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Alert from "@mui/material/Alert"
 import IconButton from "@mui/material/IconButton"
 import CloseIcon from '@mui/icons-material/Close';
-import Card from "@mui/material/Card"
-
-
-
 
 function NotificationComponent() {
 
