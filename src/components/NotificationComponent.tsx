@@ -17,7 +17,7 @@ function NotificationComponent() {
     const now = new Date()
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 35, 0, 0).getTime() - now.getTime();
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 37, 0, 0).getTime() - now.getTime();
 
 
     useEffect(() => {
