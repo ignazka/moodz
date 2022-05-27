@@ -1,6 +1,9 @@
 import Switch from "@mui/material/Switch"
 import { useState } from 'react'
 import FormControlLabel from "@mui/material/FormControlLabel"
+import Alert from "@mui/material/Alert"
+import IconButton from "@mui/material/IconButton"
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -8,29 +11,27 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 function NotificationComponent() {
 
     const [notificationToggle, setNotificationToggle] = useState(false)
-    // const [state, setState] = useState()
+    const [open, setOpen] = useState(false)
 
-    // const now = new Date()
-    // const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
-    // const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    // const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0, 0).getTime() - now.getTime();
+    const now = new Date()
+    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
+    const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 50, 0, 0).getTime() - now.getTime();
 
     if (notificationToggle) {
-        console.log('if toggle')
-        setTimeout(function () {
-            console.log('timeout started:')
-            sendNotification()
-        }, 10000);
-        // setTimeout(function () { sendNotification() }, twelveOClock);
 
-        // setTimeout(function () { sendNotification() }, sixOClockPM);
+        setTimeout(function () {
+            sendNotification()
+        }, eightOClock);
+        setTimeout(function () { sendNotification() }, twelveOClock);
+
+        setTimeout(function () { sendNotification() }, sixOClockPM);
     }
 
 
 
     const showNotification = async (body: any) => {
         const registration = await navigator.serviceWorker.getRegistration();
-        console.log('show notification')
         const title = 'moodZ: Friendly Reminder.';
         const payload = {
             body
@@ -68,16 +69,47 @@ function NotificationComponent() {
 
 
     return (
-        <FormControlLabel
-            control={
-                <Switch name="notification-toggle" value={notificationToggle} onClick={() => {
+        <div>
 
-                    setNotificationToggle(!notificationToggle)
-                    console.log(notificationToggle)
-                }} />
+            <FormControlLabel
+                control={
+                    <Switch name="notification-toggle" value={notificationToggle} onClick={() => {
+
+                        setNotificationToggle(!notificationToggle)
+                        if (!notificationToggle) {
+                            setOpen(true)
+
+                        }
+                        if (notificationToggle) {
+                            setTimeout(function () { setOpen(false) }, 4000);
+                        }
+                    }} />
+
+                }
+                label="Enable/Disable Notifications"
+            />
+            {(notificationToggle && open) && (
+                <Alert
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpen(false);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                    Notifications are set.
+                </Alert>
+
+            )
             }
-            label="Enable/Disable Notifications"
-        />
+        </div>
     )
 }
 
