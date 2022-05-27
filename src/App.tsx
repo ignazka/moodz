@@ -17,20 +17,13 @@ function App() {
     setSettings({ ...settings, [name]: value });
   };
 
-
-
   return (
     <ThemeProvider theme={themes[theme]}>
-
       <div>
-
-
         <Header />
-
         <AppRouter
           settings={settings}
           handleSettingsChange={handleSettingsChange}
-
         />
         <BottomNav />
       </div>

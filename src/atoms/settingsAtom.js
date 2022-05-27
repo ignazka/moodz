@@ -5,7 +5,4 @@ export const themeValue = atom({
     default: 0
 })
 
-export const notificationValue = atom({
-    key: 'notification',
-    default:0
-})
+

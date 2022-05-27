@@ -28,6 +28,7 @@ h1 {
 
 .Settings {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -80,4 +81,14 @@ h1 {
 .List {
   padding-top: 50px;
   height: 90vh;
+}
+
+.settings-ctn {
+  padding-bottom: 1em;
+}
+
+.settings-ctn h1 {
+  font-size: 1.2em;
+  padding-bottom: 0.5em;
+  padding-top: 1em;
 }
