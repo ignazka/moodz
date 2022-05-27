@@ -24,10 +24,10 @@ function NotificationComponent() {
 
     if (notificationToggle) {
 
-        setTimeout(function () { sendNotification() }, eightOClock);
-        setTimeout(function () { sendNotification() }, twelveOClock);
+        setTimeout(function () { sendNotification() }, 120000);
+        // setTimeout(function () { sendNotification() }, twelveOClock);
 
-        setTimeout(function () { sendNotification() }, sixOClockPM);
+        // setTimeout(function () { sendNotification() }, sixOClockPM);
     }
 
 
