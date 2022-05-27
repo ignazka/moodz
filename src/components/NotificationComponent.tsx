@@ -8,6 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 function NotificationComponent() {
 
     const [notificationToggle, setNotificationToggle] = useState(false)
+    // const [state, setState] = useState()
 
     // const now = new Date()
     // const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
@@ -19,16 +20,17 @@ function NotificationComponent() {
         setTimeout(function () {
             console.log('timeout started:')
             sendNotification()
-        }, 60000);
+        }, 10000);
         // setTimeout(function () { sendNotification() }, twelveOClock);
 
         // setTimeout(function () { sendNotification() }, sixOClockPM);
     }
 
 
+
     const showNotification = async (body: any) => {
         const registration = await navigator.serviceWorker.getRegistration();
-
+        console.log('show notification')
         const title = 'moodZ: Friendly Reminder.';
         const payload = {
             body
@@ -48,6 +50,7 @@ function NotificationComponent() {
 
 
     const sendNotification = async () => {
+
         if (Notification.permission === 'granted') {
             showNotification('What is your Mood?');
         }
