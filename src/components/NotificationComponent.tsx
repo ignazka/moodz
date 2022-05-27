@@ -1,33 +1,47 @@
 import Switch from "@mui/material/Switch"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Alert from "@mui/material/Alert"
 import IconButton from "@mui/material/IconButton"
 import CloseIcon from '@mui/icons-material/Close';
+import Card from "@mui/material/Card"
 
 
 
 
 function NotificationComponent() {
-
-    const [notificationToggle, setNotificationToggle] = useState(false)
-    const [open, setOpen] = useState(false)
-
     const now = new Date()
+
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
     const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0).getTime() - now.getTime();
-    if (notificationToggle) {
+    const [notificationToggle, setNotificationToggle] = useState(false)
+    const [timer, setTimer] = useState({
 
-        setTimeout(function () {
-            sendNotification()
-        }, eightOClock);
+    })
+    const [open, setOpen] = useState(false)
 
-        setTimeout(function () { sendNotification() }, twelveOClock);
 
-        setTimeout(function () { sendNotification() }, sixOClockPM);
-    }
 
+
+    useEffect(() => {
+        let timer1;
+        let timer2;
+        let timer3;
+        if (notificationToggle) {
+            timer1 = setTimeout(function () {
+                sendNotification()
+            }, eightOClock);
+            timer2 = setTimeout(function () { sendNotification() }, twelveOClock);
+            timer3 = setTimeout(function () { sendNotification() }, sixOClockPM);
+
+        } else {
+            clearTimeout(timer1)
+            clearTimeout(timer2)
+            clearTimeout(timer3)
+
+        }
+    }, [notificationToggle])
 
 
     const showNotification = async (body: any) => {
@@ -45,10 +59,6 @@ function NotificationComponent() {
             }
         }
     }
-
-
-
-
 
     const sendNotification = async () => {
 
@@ -69,7 +79,7 @@ function NotificationComponent() {
 
 
     return (
-        <div>
+        <Card>
 
             <FormControlLabel
                 control={
@@ -88,28 +98,29 @@ function NotificationComponent() {
                 }
                 label="Enable/Disable Notifications"
             />
-            {(notificationToggle && open) && (
-                <Alert
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}
-                        >
-                            <CloseIcon fontSize="inherit" />
-                        </IconButton>
-                    }
-                    sx={{ mb: 2 }}
-                >
-                    Notifications are set.
-                </Alert>
+            {
+                (notificationToggle && open) && (
+                    <Alert
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpen(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                        sx={{ mb: 2 }}
+                    >
+                        Notifications are set.
+                    </Alert>
 
-            )
+                )
             }
-        </div>
+        </Card>
     )
 }
 
