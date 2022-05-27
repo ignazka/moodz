@@ -16,13 +16,13 @@ function NotificationComponent() {
     const now = new Date()
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 50, 0, 0).getTime() - now.getTime();
-
+    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0).getTime() - now.getTime();
     if (notificationToggle) {
 
         setTimeout(function () {
             sendNotification()
         }, eightOClock);
+
         setTimeout(function () { sendNotification() }, twelveOClock);
 
         setTimeout(function () { sendNotification() }, sixOClockPM);
