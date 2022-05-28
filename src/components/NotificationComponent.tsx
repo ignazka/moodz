@@ -119,6 +119,10 @@ function NotificationComponent() {
         label="send notification at"
         value={timeTextfield}
         onChange={handleChange}
+        onClick={() => {
+            setOpen(false);
+            setNotificationToggle(false)
+        }}
         
         />
       
