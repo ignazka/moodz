@@ -5,9 +5,8 @@ import Theme from '../components/Theme';
 const Settings = (props: any): any => {
 
     return (
-        <Card sx={{
-            padding: '2em', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', width: '100vw'
-        }}>
+        <Card         
+        style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', margin: 15, marginTop: 80, padding: 10, paddingTop: 20 }}>
             <div className='settings-ctn'>
                 <Theme />
             </div>
