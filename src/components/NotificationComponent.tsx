@@ -27,6 +27,7 @@ function NotificationComponent() {
             
             
             console.log("timer running");
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             notificationTimer = [timeTextfield];
             
             // eslint-disable-next-line react-hooks/exhaustive-deps
