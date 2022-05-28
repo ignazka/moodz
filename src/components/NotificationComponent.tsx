@@ -8,13 +8,14 @@ import Box from "@mui/material/Box"
 
 function NotificationComponent() {
 
-    const [notificationToggle,] = useState(true)
+    const [notificationToggle,] = useState(false)
     const [open, setOpen] = useState(false)
 
     const now = new Date()
     const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
     const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
     const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 30, 0, 0).getTime() - now.getTime();
+
 
 
     useEffect(() => {
@@ -57,14 +58,14 @@ function NotificationComponent() {
     const sendNotification = async () => {
 
         if (Notification.permission === 'granted') {
-            showNotification('Notifications are now activated');
+            showNotification('What is your Mood?');
         }
         else {
             if (Notification.permission !== 'denied') {
                 const permission = await Notification.requestPermission();
 
                 if (permission === 'granted') {
-                    showNotification('What is your Mood?');
+                    showNotification('Notifications are now activated');
                 }
             }
         }
