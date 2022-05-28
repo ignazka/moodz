@@ -33,6 +33,7 @@ function NotificationComponent() {
             // eslint-disable-next-line react-hooks/exhaustive-deps
             intervalID = setInterval(() => {
                //  console.log(intervalID);
+                // eslint-disable-next-line array-callback-return
                 notificationTimer.map((notificationTime) => {
 
                     const now = new Date();
