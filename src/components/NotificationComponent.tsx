@@ -57,7 +57,7 @@ function NotificationComponent() {
     const sendNotification = async () => {
 
         if (Notification.permission === 'granted') {
-            showNotification('What is your Mood?');
+            showNotification('Notifications are now activated');
         }
         else {
             if (Notification.permission !== 'denied') {
