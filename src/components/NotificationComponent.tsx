@@ -1,66 +1,80 @@
-import Switch from "@mui/material/Switch"
-import { useState, useEffect } from 'react'
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Alert from "@mui/material/Alert"
-import IconButton from "@mui/material/IconButton"
-import CloseIcon from '@mui/icons-material/Close';
-import Box from "@mui/material/Box"
+import Switch from '@mui/material/Switch';
+import { useState, useEffect } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+// import Alert from '@mui/material/Alert';
+// import IconButton from '@mui/material/IconButton';
+// import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
+
+
+import { TextField } from '@mui/material';
 
 function NotificationComponent() {
+    const [notificationToggle, setNotificationToggle] = useState(false);
+    const [open, setOpen] = useState(false);
+    let notificationTimer = ["13:49","13:51"];
 
-    const [notificationToggle,] = useState(false)
-    const [open, setOpen] = useState(false)
+    const [timeTextfield, setTimeTextfield] = useState('14:10');
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTimeTextfield(event.target.value);
+    };
 
-    const now = new Date()
-    const eightOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0, 0).getTime() - now.getTime();
-    const twelveOClock = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0).getTime() - now.getTime();
-    const sixOClockPM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 21, 30, 0, 0).getTime() - now.getTime();
-
-
+    let intervalID: NodeJS.Timeout;
 
     useEffect(() => {
-        let timer1;
-        let timer2;
-        let timer3;
+        console.log("notificationToggle",notificationToggle);
         if (notificationToggle) {
-            timer1 = setTimeout(function () {
-                sendNotification()
-            }, eightOClock);
-            timer2 = setTimeout(function () { sendNotification() }, twelveOClock);
-            timer3 = setTimeout(function () { sendNotification() }, sixOClockPM);
+            
+            
+            console.log("timer running");
+            notificationTimer = [timeTextfield];
+            
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            intervalID = setInterval(() => {
+               //  console.log(intervalID);
+                notificationTimer.map((notificationTime) => {
 
-        } else {
-            clearTimeout(timer1)
-            clearTimeout(timer2)
-            clearTimeout(timer3)
+                    const now = new Date();
+                    const checkTime = now.getHours()+":"+now.getMinutes();
+                    
+                    console.log("check currentMinute", checkTime);
+                    console.log("notificationTime", notificationTime);
 
+                   
+
+                    if (checkTime === notificationTime) {
+                        // console.log("check time executed");
+                        sendNotification();
+                    }
+        
+                });
+            }, 60000);//check every minute
         }
-        // eslint-disable-next-line
-    }, [notificationToggle])
+        return () => clearInterval(intervalID);
+    }, [open]);
 
 
     const showNotification = async (body: any) => {
         const registration = await navigator.serviceWorker.getRegistration();
         const title = 'moodZ: Friendly Reminder.';
         const payload = {
-            body
+            body,
         };
         if (registration) {
             if ('showNotification' in registration) {
                 registration.showNotification(title, payload);
-            }
-            else {
+            } else {
                 new Notification(title, payload);
             }
         }
-    }
+    };
 
     const sendNotification = async () => {
+        console.log("sendNotification executed");
 
         if (Notification.permission === 'granted') {
             showNotification('What is your Mood?');
-        }
-        else {
+        } else {
             if (Notification.permission !== 'denied') {
                 const permission = await Notification.requestPermission();
 
@@ -71,47 +85,65 @@ function NotificationComponent() {
         }
     };
 
-
-
     return (
-        <Box>
+        <Box
 
+        sx={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+          
+          >
             <FormControlLabel
+            label="show notifications"
+            labelPlacement="start"
+            sx={{paddingBottom:2}}
                 control={
-                    <Switch name="notification-toggle" checked={open} onClick={() => {
-                        setOpen(!open)
-
-                        setTimeout(function () { setOpen(false) }, 4000);
-
-                    }} />
-
+                    <Switch
+                        name="notification-toggle"
+                        // checked={open}
+                        checked={notificationToggle}
+                        onClick={() => {
+                            setOpen(!open);
+                            setNotificationToggle(!notificationToggle)
+                        }}
+                        
+                    />
                 }
-                label="test notification alert "
+                
             />
-            {
-                (open) && (
-                    <Alert
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    setOpen(false);
-                                }}
-                            >
-                                <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                        }
-                        sx={{ mb: 2 }}
-                    >
-                        Notifications are set.
-                    </Alert>
+            <TextField
+        id="outlined-name"
+        label="send notification at"
+        value={timeTextfield}
+        onChange={handleChange}
+        
+        />
+      
 
-                )
-            }
+            {/* {open && (
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+               setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          Notifications are set.
+        </Alert>
+      )} */}
         </Box>
-    )
+    );
 }
 
-export default NotificationComponent
+export default NotificationComponent;
+
+
