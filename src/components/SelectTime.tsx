@@ -38,12 +38,15 @@ function SelectTime(props: any) {
 
             sx={{
                 display: 'flex',
-                justifyContent: 'center', alignItems: 'center', textAlign: 'center',
+                justifyContent: 'center', alignItems: 'center', textAlign: 'center',marginBottom:3.5,
             }}
-        // onChange={handleSelectChange}
+     
 
         >
-            <FormControl>
+            <FormControl
+            sx={{
+                paddingRight:1,
+            }}>
                 <InputLabel id="demo-simple-select-label">Hour</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -54,10 +57,10 @@ function SelectTime(props: any) {
                     onChange={handleHourChange}
                 >
 
-                    <MenuItem value={6}>6</MenuItem>
-                    <MenuItem value={7}>7</MenuItem>
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={9}>9</MenuItem>
+                    <MenuItem value={6}>06</MenuItem>
+                    <MenuItem value={7}>07</MenuItem>
+                    <MenuItem value={8}>08</MenuItem>
+                    <MenuItem value={9}>09</MenuItem>
                     <MenuItem value={10}>10</MenuItem>
                     <MenuItem value={11}>11</MenuItem>
                     <MenuItem value={12}>12</MenuItem>
@@ -92,7 +95,7 @@ function SelectTime(props: any) {
                     onChange={handleMinuteChange}
                 >
 
-                    <MenuItem value={0o0}>0</MenuItem>
+                    <MenuItem value={0o0}>00</MenuItem>
                     <MenuItem value={15}>15</MenuItem>
                     <MenuItem value={30}>30</MenuItem>
                     <MenuItem value={45}>45</MenuItem>
