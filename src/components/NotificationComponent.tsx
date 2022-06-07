@@ -1,59 +1,80 @@
 import Switch from '@mui/material/Switch';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 // import Alert from '@mui/material/Alert';
 // import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
+import SelectTime from './SelectTime';
 
-
-import { TextField } from '@mui/material';
 
 function NotificationComponent() {
+    const _ = require('lodash'); 
     const [notificationToggle, setNotificationToggle] = useState(false);
     const [open, setOpen] = useState(false);
-    let notificationTimer = ["13:49","13:51"];
 
-    const [timeTextfield, setTimeTextfield] = useState('14:10');
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTimeTextfield(event.target.value);
+
+    const initialNotifications = [{ hour: 8, minute: 30 }, { hour: 16, minute: 57 }, { hour: 20, minute: 0 }];
+    const [notificationTimer, setNotificationTimer] = useState(initialNotifications);
+
+    const [notifications, setNotifications] = useState(initialNotifications);
+    const handleSelectTimeChange = (props:any) => {
+       
+  
+        setOpen(false);
+        setNotificationToggle(false);
+
+
+        setNotifications({...notifications,[props.index]: {hour:props.hour,minute:props.minute}});
+
+        setNotificationTimer({ ...notifications, [props.index]: {hour:props.hour,minute:props.minute} });
+
     };
+
+
 
     let intervalID: NodeJS.Timeout;
 
     useEffect(() => {
-        console.log("notificationToggle",notificationToggle);
+        console.log("notificationToggle", notificationToggle);
         if (notificationToggle) {
-            
-            
-            console.log("timer running");
+            console.log("notificationTimer is running...");
+            console.table(notificationTimer);
+
+
+
+
+
             // eslint-disable-next-line react-hooks/exhaustive-deps
-            notificationTimer = [timeTextfield];
-            
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            intervalID = setInterval(() => {
-               //  console.log(intervalID);
+            intervalID = setInterval(() => {                    
+                console.log(notificationTimer);
                 // eslint-disable-next-line array-callback-return
-                notificationTimer.map((notificationTime) => {
-
+                Object.keys(notificationTimer).map((item, i) => {
                     const now = new Date();
-                    const checkTime = now.getHours()+":"+now.getMinutes();
-                    
-                    console.log("check currentMinute", checkTime);
-                    console.log("notificationTime", notificationTime);
+                    // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
+                    const checkTime = { hour: now.getHours(), minute: now.getMinutes() };
 
-                   
 
-                    if (checkTime === notificationTime) {
-                        // console.log("check time executed");
+
+                    console.log("compare current checkTime: "+Object.values(checkTime)+" with notificationTimer: "+ Object.values(notificationTimer[i]));
+  
+                  
+                    if (_.isEqual(checkTime, notificationTimer[i]) ) {
+                        console.log("send notification!");
                         sendNotification();
                     }
-        
+                    else{
+                        console.log("not the same time");
+                    }
+                    
+
                 });
-            }, 60000);//check every minute
+
+
+            }, 60000);//60000 = check every minute
         }
         return () => clearInterval(intervalID);
-    }, [open]);
+    }, [open,notifications]);
 
 
     const showNotification = async (body: any) => {
@@ -86,20 +107,22 @@ function NotificationComponent() {
             }
         }
     };
+       
 
     return (
         <Box
 
-        sx={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          
-          >
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center', alignItems: 'center', textAlign: 'center',
+            }}
+
+        >
             <FormControlLabel
-            label="show notifications"
-            labelPlacement="start"
-            sx={{paddingBottom:2}}
+                label="show notifications"
+                // labelPlacement="start"
+                sx={{ paddingBottom: 2 }}
                 control={
                     <Switch
                         name="notification-toggle"
@@ -109,23 +132,26 @@ function NotificationComponent() {
                             setOpen(!open);
                             setNotificationToggle(!notificationToggle)
                         }}
-                        
+
                     />
                 }
-                
+
             />
-            <TextField
-        id="outlined-name"
-        label="send notification at"
-        value={timeTextfield}
-        onChange={handleChange}
-        onClick={() => {
-            setOpen(false);
-            setNotificationToggle(false)
-        }}
-        
-        />
-      
+{Object.values(notificationTimer).map((timer,index) => (
+    <SelectTime 
+                index={index}
+                notificationValues={timer}
+                // onClick={handleTimeChange}
+                handleSelectTimeChange={handleSelectTimeChange}
+                    
+                value={timer} 
+                >
+                    {timer}
+                </SelectTime>
+
+                ))}
+
+
 
             {/* {open && (
         <Alert
