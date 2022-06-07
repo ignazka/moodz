@@ -79,7 +79,7 @@ function NotificationComponent() {
 
     const showNotification = async (body: any) => {
         const registration = await navigator.serviceWorker.getRegistration();
-        const title = 'moodZ: Friendly Reminder.';
+        const title = 'MOODZ: Friendly Reminder.';
         const payload = {
             body,
         };
@@ -96,7 +96,7 @@ function NotificationComponent() {
         console.log("sendNotification executed");
 
         if (Notification.permission === 'granted') {
-            showNotification('What is your Mood?');
+            showNotification('What is your Mood right now?');
         } else {
             if (Notification.permission !== 'denied') {
                 const permission = await Notification.requestPermission();
