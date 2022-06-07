@@ -14,7 +14,7 @@ function NotificationComponent() {
     const [open, setOpen] = useState(false);
 
 
-    const initialNotifications = [{ hour: 8, minute: 30 }, { hour: 16, minute: 57 }, { hour: 20, minute: 0 }];
+    const initialNotifications = [{ hour: 8, minute: 30 }, { hour: 15, minute: 0 }, { hour: 20, minute: 0 }];
     const [notificationTimer, setNotificationTimer] = useState(initialNotifications);
 
     const [notifications, setNotifications] = useState(initialNotifications);
