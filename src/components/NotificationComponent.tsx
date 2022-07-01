@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import SelectTime from './SelectTime';
 
-
+// https://codesandbox.io/s/toggle-interval-with-useref-spcs2b?file=/src/App.js:1230-2098
 function NotificationComponent(props: any) {
 
     const notifRef = useRef(props.notificationToggle.value||false);
