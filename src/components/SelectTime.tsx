@@ -57,24 +57,24 @@ function SelectTime(props: any) {
                     onChange={handleHourChange}
                 >
 
-                    <MenuItem value={6}>06</MenuItem>
-                    <MenuItem value={7}>07</MenuItem>
-                    <MenuItem value={8}>08</MenuItem>
-                    <MenuItem value={9}>09</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={11}>11</MenuItem>
-                    <MenuItem value={12}>12</MenuItem>
-                    <MenuItem value={13}>13</MenuItem>
-                    <MenuItem value={14}>14</MenuItem>
-                    <MenuItem value={15}>15</MenuItem>
-                    <MenuItem value={16}>16</MenuItem>
-                    <MenuItem value={17}>17</MenuItem>
-                    <MenuItem value={18}>18</MenuItem>
-                    <MenuItem value={19}>19</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={21}>21</MenuItem>
-                    <MenuItem value={22}>22</MenuItem>
-                    <MenuItem value={23}>23</MenuItem>
+                    <MenuItem value={6} key={6}>06</MenuItem>
+                    <MenuItem value={7} key={7}>07</MenuItem>
+                    <MenuItem value={8} key={8}>08</MenuItem>
+                    <MenuItem value={9} key={9}>09</MenuItem>
+                    <MenuItem value={10} key={10}>10</MenuItem>
+                    <MenuItem value={11} key={11}>11</MenuItem>
+                    <MenuItem value={12} key={12}>12</MenuItem>
+                    <MenuItem value={13} key={13}>13</MenuItem>
+                    <MenuItem value={14} key={14}>14</MenuItem>
+                    <MenuItem value={15} key={15}>15</MenuItem>
+                    <MenuItem value={16} key={16}>16</MenuItem>
+                    <MenuItem value={17} key={17}>17</MenuItem>
+                    <MenuItem value={18} key={18}>18</MenuItem>
+                    <MenuItem value={19} key={19}>19</MenuItem>
+                    <MenuItem value={20} key={20}>20</MenuItem>
+                    <MenuItem value={21} key={21}>21</MenuItem>
+                    <MenuItem value={22} key={22}>22</MenuItem>
+                    <MenuItem value={23} key={23}>23</MenuItem>
 
                     {/* {hours.map((hour) => (
                     <MenuItem value={hour}>
@@ -95,10 +95,10 @@ function SelectTime(props: any) {
                     onChange={handleMinuteChange}
                 >
 
-                    <MenuItem value={0o0}>00</MenuItem>
-                    <MenuItem value={15}>15</MenuItem>
-                    <MenuItem value={30}>30</MenuItem>
-                    <MenuItem value={45}>45</MenuItem>
+                    <MenuItem value={0o0} key={0}>00</MenuItem>
+                    <MenuItem value={15}  key={15}>15</MenuItem>
+                    <MenuItem value={30} key={30}>30</MenuItem>
+                    <MenuItem value={45} key={45}>45</MenuItem>
 
                     {/* {hourElements} */}
                 </Select>

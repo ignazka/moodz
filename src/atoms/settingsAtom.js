@@ -5,4 +5,9 @@ export const themeValue = atom({
     default: 0
 })
 
+export const notificationToggle = atom({
+    key: 'notificationToggle',
+    default: false
+})
+
 
