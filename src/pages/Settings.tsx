@@ -1,13 +1,39 @@
 import { Card } from '@mui/material';
-import { useState } from 'react';
-import { notificationToggle } from '../atoms/settingsAtom';
-import NotificationComponent from '../components/NotificationComponent'
+import { useRef } from 'react';
+import { useRecoilState } from 'recoil';
+import { notificationTimes } from '../atoms/settingsAtom';
+
+import NotificationComponent from '../components/NotificationComponent';
 import Theme from '../components/Theme';
 
 
+
 const Settings = (props: any): any => {
-    console.log({...props});
+    
+     const [notifTimes,setNotifTimes] = useRecoilState(notificationTimes);
+    // const settings = useRef({notificationToggle:notifRef});
+
+    // console.log({...props});
+    let val = {...props};
+    val=val.props;
+    console.log("val",val);
+    console.log("notificationTimes",notifTimes);
+    // const handleSettingsChange = () => props.handleSettingsChange;
+    // console.log("settings props handleSettingsChange",handleSettingsChange);
     const intervalIDArray:number[] = [];
+
+    
+    
+  const handleSettingsChange = (e: any) => {
+    console.log("++++++++++handleSettingsChange",e);
+    // const { name, value } = test;
+    val.setNotificationToggle(e);
+    // [...props].setNotificationToggle(e);
+    console.log("notifToggle",val.notificationToggle);
+    // settings.current = {notificationToggle:notifRef};
+    //  console.log("set new settings ",settings.current); 
+    // return (settings);
+  };
 
     const handleIntervalChange = (intervalID:number) =>{
         // const values = {intervalID};
@@ -34,9 +60,11 @@ const Settings = (props: any): any => {
                 style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', margin: 15, padding: 10, paddingTop: 20 }}>
                 <div className='settings-ctn'>
                     <NotificationComponent 
-                    notificationToggle={notificationToggle}
+                    notificationToggle={val.notificationToggle}
+                    notificationTimes={notifTimes}
                     handleIntervalChange={handleIntervalChange}
-                    handleSettingsChange={props.handleSettingsChange}/>
+                    handleSettingsChange={handleSettingsChange}
+                    />
                 </div>
             </Card >
 
@@ -45,3 +73,5 @@ const Settings = (props: any): any => {
 };
 
 export default Settings;
+
+
