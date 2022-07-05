@@ -11,6 +11,7 @@ import Theme from '../components/Theme';
 const Settings = (props: any): any => {
     
      const [notifTimes,setNotifTimes] = useRecoilState(notificationTimes);
+
     // const settings = useRef({notificationToggle:notifRef});
 
     // console.log({...props});
@@ -35,17 +36,17 @@ const Settings = (props: any): any => {
     // return (settings);
   };
 
-    const handleIntervalChange = (intervalID:number) =>{
-        // const values = {intervalID};
-        console.log("handleIntervalChange Values: ",intervalID);
+    // const handleIntervalChange = (intervalID:number) =>{
+    //     // const values = {intervalID};
+    //     console.log("handleIntervalChange Values: ",intervalID);
         
 
-        intervalIDArray.push(intervalID);
-        console.log(intervalIDArray);
-        // setIntervalIDArray();
-        //  setIntervalIDArray(...intervalIDArray.push(intervalID));
-        return (intervalIDArray)
-    };
+    //     intervalIDArray.push(intervalID);
+    //     console.log(intervalIDArray);
+    //     // setIntervalIDArray();
+    //     //  setIntervalIDArray(...intervalIDArray.push(intervalID));
+    //     return (intervalIDArray)
+    // };
 
     return (
         <div>
@@ -62,7 +63,7 @@ const Settings = (props: any): any => {
                     <NotificationComponent 
                     notificationToggle={val.notificationToggle}
                     notificationTimes={notifTimes}
-                    handleIntervalChange={handleIntervalChange}
+                    // handleIntervalChange={handleIntervalChange}
                     handleSettingsChange={handleSettingsChange}
                     />
                 </div>

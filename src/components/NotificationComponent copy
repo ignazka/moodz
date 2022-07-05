@@ -11,13 +11,13 @@ const delay = 1;
 // https://codesandbox.io/s/toggle-interval-with-useref-spcs2b?file=/src/App.js:1230-2098
 function NotificationComponent(props: any) {
     console.log("notifComp",props);
-let notifToggle = props.notificationToggle;
+    const notifToggle = props.notificationToggle;
    
 
     console.log("---------------------------FIRST RENDER--------------------------")
     const _ = require('lodash');
-    const notificationToggle = useRef(notifToggle);
-    // const [open, setOpen] = useState(false);
+    const [notificationToggle, setNotificationToggle] = useState(notifToggle);
+    const [open, setOpen] = useState(false);
 
 
     const initialNotifications = props.notificationTimes;
@@ -30,8 +30,8 @@ let notifToggle = props.notificationToggle;
     const handleSelectTimeChange = (props: any) => {
 
 
-        // setOpen(false);
-       
+        setOpen(false);
+        setNotificationToggle(false);
 
         setNotifications({ ...notifications, [props.index]: { hour: props.hour, minute: props.minute } });
 
@@ -40,76 +40,78 @@ let notifToggle = props.notificationToggle;
 
     };
 
-    const [toggleValue, setToggleValue]  = useState(notifToggle);
+    const [toggleValue, setToggleValue] = notifToggle;
     //we set toggleValue state to the same like toggleRef to force re-render
   
-    
+    let timer = useRef(NodeJS.Timeout); // save timer in useRef and pass it to child
     const [counter, setCounter] = useState(1);
 
     const intervalTimer = () => {
-        
-        notificationToggle.current = !notifToggle;
-        // notifToggle = !notifToggle;
-        console.log("useEffect notifToggle updated", notifToggle);
+        notifToggle.current = !notifToggle.current;
+        console.log("useEffect notifToggle updated", notifToggle.current);
         // useRef value stored in .current property
         if (notifToggle) {
-            Object.keys(notificationTimer).map((item, i) => {
-                const now = new Date();
-                // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
-                const checkTime = { hour: now.getHours(), minute: now.getMinutes() };
-
-
-
-                console.log("compare current checkTime: " + Object.values(checkTime) + " with notificationTimer: " + Object.values(notificationTimer[i]));
-
-
-                if (_.isEqual(checkTime, notificationTimer[i])) {
-                    console.log("send notification!");
-                    sendNotification();
-                }
-                else {
-                    console.log("not the same time");
-                }
-
-
-            });
-
           //get the latest value of state, not the value of first render
           setToggleValue((s: boolean) => (s = !s));
     
           //timer.current = setInterval(() => setCounter((c) => c + 1), delay * 1000);
-          props.timer = setInterval(() => {
+          timer.current = setInterval(() => {
             setCounter((c) => c + 1);
-            console.log("tick",props.timer);
+            console.log("tick");
           }, delay * 1000);
         } else {
           setCounter(0);
-          clearInterval(props.timer);
-          setCounter((c) => c + 1);
-            console.log("clear tick",props.timer);
+          clearInterval(timer.current);
           setToggleValue((s: boolean) => (s = false));
         }
-        setGlobalNotifications({"toggle":!notifToggle, "timer":props.timer});
       };
 
 
       // function Child({ counter, currentTimer }) {
-//   function Child({ notifToggle, currentTimer }) {
-//     // this will clearInterval in parent component after counter gets to 5
-//     useEffect(() => {
-//       //führe den clearInterval gar nicht erst aus, solange der counter nicht bei 5 ist
-//       // if (counter <= 5) return; //it is a loop condition so to speak
-//       if (toggleValue) return; //it is a loop condition so to speak
-//       //currentTimer is also updated because with every call the intervalID changes
-//       // setCounter(0);
-//       clearInterval(currentTimer); //currentTimer stores the intervalID
-//       //counter is the number which counts up with each call
-//       //}, [toggleRef, currentTimer]); change in toggleRef doesn't force a re-render
-//       //instead we need observe the toggleValue state change
-//     }, [notifToggle, currentTimer]);
+  function Child({ notifToggle, currentTimer }) {
+    // this will clearInterval in parent component after counter gets to 5
+    useEffect(() => {
+      //führe den clearInterval gar nicht erst aus, solange der counter nicht bei 5 ist
+      // if (counter <= 5) return; //it is a loop condition so to speak
+      if (toggleValue) return; //it is a loop condition so to speak
+      //currentTimer is also updated because with every call the intervalID changes
+      // setCounter(0);
+      clearInterval(currentTimer); //currentTimer stores the intervalID
+      //counter is the number which counts up with each call
+      //}, [toggleRef, currentTimer]); change in toggleRef doesn't force a re-render
+      //instead we need observe the toggleValue state change
+    }, [notifToggle, currentTimer]);
 
-//     return null;
-//   }
+    return null;
+  }
+
+    let intervalID: NodeJS.Timeout;
+    let intervalIDArray: any[] = [];
+
+    let lastSetTimeoutId: any = null;
+
+    const checkTimeAndStartLoop = (toggle: boolean) => {
+        console.log("toggle?", toggle);
+        if (toggle) {
+            try {
+                console.log("notificationToggle?", notificationToggle);
+                console.log("TICK", lastSetTimeoutId);
+                if (notifToggle) {
+                    console.log("toggle?", toggle);
+                    lastSetTimeoutId = setTimeout(checkTimeAndStartLoop, 3 * 1000);
+
+                }
+                else {
+                    console.log("clear TICK", lastSetTimeoutId);
+                    clearTimeout(lastSetTimeoutId);
+                }
+            }
+            catch (err) {
+                console.error("Error in checkTimeAndStartLoop: %o", err);
+            }
+        }
+    };
+
 
 
     const setGlobalNotifications = (test:any)  => {
@@ -121,7 +123,7 @@ let notifToggle = props.notificationToggle;
         // console.log("test",test);
         // props.handleSettingsChange{(e) => { props.onChange(e.target.value) }};
       
-        //   props.handleSettingsChange(test);
+        //  props.handleSettingsChange(test);
         
         // console.log("notifComp",props.handleSettingsChange({notificationToggle:notificationToggle}));
          props.handleSettingsChange(test);
@@ -134,36 +136,75 @@ let notifToggle = props.notificationToggle;
 
 
 
-          
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            const intervalID = setInterval(() => {
+                // intervalID = setInterval(() => {                    
+                console.log(notificationTimer);
+                // eslint-disable-next-line array-callback-return
+                Object.keys(notificationTimer).map((item, i) => {
+                    const now = new Date();
+                    // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
+                    const checkTime = { hour: now.getHours(), minute: now.getMinutes() };
 
 
+
+                    console.log("compare current checkTime: " + Object.values(checkTime) + " with notificationTimer: " + Object.values(notificationTimer[i]));
+
+
+                    if (_.isEqual(checkTime, notificationTimer[i])) {
+                        console.log("send notification!");
+                        sendNotification();
+                    }
+                    else {
+                        console.log("not the same time");
+                    }
+
+
+                });
+
+
+            }, 6000);//60000 = check every minute
+            console.log("intervalID", intervalID);
+            intervalIDArray = props.handleIntervalChange(intervalID);
+
+            // invervalIDArray.push(...invervalIDArray,intervalID);
+            // ...intervalIDArray,intervalID;
+            // intervalIDArray.push(intervalID);
+            // console.log(intervalIDArray);
+            // intervalIDArray.push(...intervalIDArray, intervalID);
+            return () => {
+                window.clearTimeout(lastSetTimeoutId);
+                // intervalIDArray.map((intervalID,index) => (
+                clearInterval(intervalID);
+
+
+            };
         }
 
 
     };
-
-    // let times: (number | NodeJS.Timeout | undefined)[]=[];
-    // let timerID: number | NodeJS.Timeout | undefined;
-    // const testTimer = () => {
+    let times: (number | NodeJS.Timeout | undefined)[]=[];
+    let timerID: number | NodeJS.Timeout | undefined;
+    const testTimer = () => {
         
-    //     console.log("testTimer toggle",notifToggle);
+        console.log("testTimer toggle",notifToggle);
         
 
-    //     if (notifToggle) {
-    //         timerID = setTimeout(function doSomething() {
-    //             console.log("3 seconds, ",timerID);
-    //             setTimeout(doSomething, 3000);
-    //         }, 3000);
-    //         console.log(timerID);
+        if (notifToggle) {
+            timerID = setTimeout(function doSomething() {
+                console.log("3 seconds, ",timerID);
+                setTimeout(doSomething, 3000);
+            }, 3000);
+            console.log(timerID);
             
-    //         return timerID;
-    //     } else {
-    //         clearTimeout(Number(timerID));
-    //     }
-    //     times.push(...times,timerID);
-    //         console.log(times);
-    //     return timerID;
-    // };
+            return timerID;
+        } else {
+            clearTimeout(Number(timerID));
+        }
+        times.push(...times,timerID);
+            console.log(times);
+        return timerID;
+    };
 
 
 
@@ -221,7 +262,7 @@ let notifToggle = props.notificationToggle;
                         checked={notifToggle}
                         onChange={intervalTimer}
                         onClick={() => {
-                            // setGlobalNotifications(!notifToggle);
+                            setGlobalNotifications(!notifToggle);
                             // setOpen(!open);
                             // setGlobalNotifications(!open);
                             // let nT = !notificationToggle;
@@ -246,12 +287,12 @@ let notifToggle = props.notificationToggle;
                 </SelectTime>
 
             ))}
-{/* 
+
 <Child
         
         currentTimer={timer.current}
         notifToggle={notifToggle}
-      /> */}
+      />
 
 
 

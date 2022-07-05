@@ -15,3 +15,8 @@ export const notificationTimes = atom({
     default: [{hour:8,minute:0},{hour:13,minute:0},{hour:20,minute:0}]
 })
 
+export const timer = atom({
+    key: 'timer',
+    default: 0
+})
+
