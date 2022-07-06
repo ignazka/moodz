@@ -1,7 +1,7 @@
 import { Card } from '@mui/material';
 import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { notificationTimes } from '../atoms/settingsAtom';
+import { notificationTimes,timer } from '../atoms/settingsAtom';
 
 import NotificationComponent from '../components/NotificationComponent';
 import Theme from '../components/Theme';
@@ -11,6 +11,7 @@ import Theme from '../components/Theme';
 const Settings = (props: any): any => {
     
      const [notifTimes,setNotifTimes] = useRecoilState(notificationTimes);
+     const [intervalTimer,setIntervalTimer] = useRecoilState(timer);
 
     // const settings = useRef({notificationToggle:notifRef});
 
@@ -19,6 +20,7 @@ const Settings = (props: any): any => {
     val=val.props;
     console.log("val",val);
     console.log("notificationTimes",notifTimes);
+    console.log("intervalTimer",intervalTimer);
     // const handleSettingsChange = () => props.handleSettingsChange;
     // console.log("settings props handleSettingsChange",handleSettingsChange);
     const intervalIDArray:number[] = [];
@@ -30,7 +32,7 @@ const Settings = (props: any): any => {
     // const { name, value } = test;
     val.setNotificationToggle(e);
     // [...props].setNotificationToggle(e);
-    console.log("notifToggle",val.notificationToggle);
+    // console.log("notifToggle",val.notificationToggle);
     // settings.current = {notificationToggle:notifRef};
     //  console.log("set new settings ",settings.current); 
     // return (settings);
@@ -63,7 +65,9 @@ const Settings = (props: any): any => {
                     <NotificationComponent 
                     notificationToggle={val.notificationToggle}
                     notificationTimes={notifTimes}
-                    // handleIntervalChange={handleIntervalChange}
+                    setNotifTimes={setNotifTimes}
+                    intervalTimer={intervalTimer}
+                    setIntervalTimer={setIntervalTimer} 
                     handleSettingsChange={handleSettingsChange}
                     />
                 </div>

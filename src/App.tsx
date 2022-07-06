@@ -5,7 +5,7 @@ import Header from './components/Header';
 import { AppRouter } from './router';
 import { themes } from './utils/theme'
 import { useRecoilState } from 'recoil'
-import { notificationToggle, themeValue,timer } from './atoms/settingsAtom'
+import { notificationToggle, themeValue } from './atoms/settingsAtom'
 
 
 
@@ -15,7 +15,7 @@ function App() {
   
   const [theme] = useRecoilState(themeValue);
   const [notifToggle,setNotifToggle] = useRecoilState(notificationToggle);
-  const [intervalTimer,setIntervalTimer] = useRecoilState(timer);
+
 
   // console.log("notifRef from SettingsAtom",notifRef); //funktioniert!
   // console.log("settings",settings);
@@ -61,8 +61,8 @@ function App() {
           // settings={settings}
            notificationToggle={notifToggle}
            setNotificationToggle={setNotifToggle}
-           intervalTimer={intervalTimer}
-           setIntervalTimer={setIntervalTimer}
+          //  intervalTimer={intervalTimer}
+          //  setIntervalTimer={setIntervalTimer}
           // handleSettingsChange={handleSettingsChange}
           // updates={updates}
         />
