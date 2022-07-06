@@ -113,7 +113,11 @@ function NotificationComponent(props: any) {
     };
 
     const showNotification = async (body: any) => {
+
         const registration = await navigator.serviceWorker.getRegistration();
+
+        
+
         const title = 'MOODZ: Friendly Reminder.';
         const img = '/android-icon-192x192.png';
 
@@ -130,9 +134,9 @@ function NotificationComponent(props: any) {
             //  dir: "ltr",
             // As part of the direct user experience we also have 
             // Audio- ....
-            // silent: "",
+             silent: false,
             // ... sensorial
-            vibrate: [200, 100, 200],
+            vibrate: [400, 100, 400],
             // onshow: () => console.log("We are showing a Notification"),
             // onerror: () => console.log("There was an error showing a Notification"),
             // onclose: () => console.log("Closing the Notification"),
@@ -156,11 +160,15 @@ function NotificationComponent(props: any) {
         if (registration) {
             if ('showNotification' in registration) {
                 registration.showNotification(title, notificationsProperties);
+                
             } else {
-                new Notification(title, notificationsProperties);
+                let not = new Notification(title, notificationsProperties);
+                not.onclick = function() { alert("onclick"); };
             }
         }
     };
+
+    
 
     const sendNotification = async () => {
         console.log("sendNotification executed");
