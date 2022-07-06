@@ -1,5 +1,5 @@
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import { useEffect, useRef, useState } from 'react';
+
 import BottomNav from './components/BottomNav';
 import Header from './components/Header';
 import { AppRouter } from './router';

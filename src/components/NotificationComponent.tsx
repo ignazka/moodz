@@ -1,5 +1,5 @@
 import Switch from '@mui/material/Switch';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useRef } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 // import Alert from '@mui/material/Alert';
 // import IconButton from '@mui/material/IconButton';
@@ -21,12 +21,8 @@ function NotificationComponent(props: any) {
     // console.log("---------------------------FIRST RENDER--------------------------")
     const _ = require('lodash');
     const notificationToggle = useRef(notifToggle);
-     console.log("notificationTimes",notificationTimes);
-    // const [open, setOpen] = useState(false);
+    console.log("notificationTimes",notificationTimes);
 
-
-
-    // const [intervalIDArray,setIntervalIDArray] = useState({});
 
 
     const handleSelectTimeChange = (times: any) => {
@@ -48,6 +44,7 @@ function NotificationComponent(props: any) {
 
     function checkTimes() {
         console.log("checktimes notificationTimes.current",notificationTimes);
+        // eslint-disable-next-line array-callback-return
         Object.keys(notificationTimes).map((item, i) => {
             const now = new Date();
             // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
@@ -102,7 +99,7 @@ function NotificationComponent(props: any) {
                 console.log("tick intervalTimer", intervalTimer.current);
                 checkTimes();
 
-            }, delay * 6000));
+            }, delay * 60000));
         } else {
 
             clearInterval(intervalTimer.current);

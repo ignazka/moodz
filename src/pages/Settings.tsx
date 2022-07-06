@@ -1,5 +1,4 @@
 import { Card } from '@mui/material';
-import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { notificationTimes,timer } from '../atoms/settingsAtom';
 
@@ -18,37 +17,20 @@ const Settings = (props: any): any => {
     // console.log({...props});
     let val = {...props};
     val=val.props;
-    console.log("val",val);
+    // console.log("val",val);
     console.log("notificationTimes",notifTimes);
     console.log("intervalTimer",intervalTimer);
-    // const handleSettingsChange = () => props.handleSettingsChange;
-    // console.log("settings props handleSettingsChange",handleSettingsChange);
-    const intervalIDArray:number[] = [];
+
 
     
     
   const handleSettingsChange = (e: any) => {
-    console.log("++++++++++handleSettingsChange",e);
+    console.log("setNotificationToggle",e);
     // const { name, value } = test;
     val.setNotificationToggle(e);
-    // [...props].setNotificationToggle(e);
-    // console.log("notifToggle",val.notificationToggle);
-    // settings.current = {notificationToggle:notifRef};
-    //  console.log("set new settings ",settings.current); 
-    // return (settings);
   };
 
-    // const handleIntervalChange = (intervalID:number) =>{
-    //     // const values = {intervalID};
-    //     console.log("handleIntervalChange Values: ",intervalID);
-        
 
-    //     intervalIDArray.push(intervalID);
-    //     console.log(intervalIDArray);
-    //     // setIntervalIDArray();
-    //     //  setIntervalIDArray(...intervalIDArray.push(intervalID));
-    //     return (intervalIDArray)
-    // };
 
     return (
         <div>
