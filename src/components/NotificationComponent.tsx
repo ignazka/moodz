@@ -137,7 +137,7 @@ function NotificationComponent(props: any) {
              silent: false,
             // ... sensorial
             vibrate: [400, 100, 400],
-            // onshow: () => console.log("We are showing a Notification"),
+            onshow: () => console.log("We are showing a Notification"),
             // onerror: () => console.log("There was an error showing a Notification"),
             // onclose: () => console.log("Closing the Notification"),
             // Informs the user if a notification replaced a previous one
@@ -163,7 +163,7 @@ function NotificationComponent(props: any) {
                 
             } else {
                 let not = new Notification(title, notificationsProperties);
-                not.onclick = function() { alert("onclick"); };
+                not.onclick = function() { alert("onclick"); console.log("bla bla "); };
             }
         }
     };
