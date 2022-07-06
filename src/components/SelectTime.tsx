@@ -30,11 +30,12 @@ function SelectTime(props: any) {
         const timer = { index: index, hour: hour, minute: minute };
 
         props.handleSelectTimeChange(timer);
+        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hour, minute]);
 
     return (
-        <Box
+        <Box onClick={props.onClick}
 
             sx={{
                 display: 'flex',
