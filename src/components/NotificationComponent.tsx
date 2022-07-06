@@ -120,7 +120,7 @@ function NotificationComponent(props: any) {
 
         const title = 'MOODZ: Friendly Reminder.';
         const img = '/android-icon-192x192.png';
-
+        const notAct = () => {console.log('code to show more images')};
 
         const notificationsProperties = {
             body,
@@ -147,11 +147,21 @@ function NotificationComponent(props: any) {
             // We'll get into actions later
             actions: [
                 
-                {action: 'like', title: '👍Like'},
+                {
+                    action: 'like', 
+                    title: '👍Like'},
+                
+                { action: ''+{notAct},
+                title: 'test'
+
+                },
+                
                 
                 ],
 
         };
+
+        
 
 
         // const payload = {
@@ -160,6 +170,7 @@ function NotificationComponent(props: any) {
         if (registration) {
             if ('showNotification' in registration) {
                 alert("show Notif true");
+                console.log("show notif");
                 registration.showNotification(title, notificationsProperties);
                 
             } else {
