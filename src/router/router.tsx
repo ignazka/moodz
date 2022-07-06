@@ -9,6 +9,9 @@ import PublicRoute from './PublicRoute';
 import List from '../pages/List';
 
 function router(props: any) {
+
+
+
   return (
     <Routes>
       <Route
@@ -16,7 +19,7 @@ function router(props: any) {
         element={
           <RequireAuth>
             <Home
-              handleSettingsChange={props.handleSettingsChange}
+              // handleSettingsChange={props.handleSettingsChange}
               settings={props.settings}
               handleSubmit={props.handleSubmit}
             />
@@ -29,8 +32,10 @@ function router(props: any) {
         element={
           <RequireAuth>
             <Settings
-              handleSettingsChange={props.handleSettingsChange}
-              settings={props.settings}
+              props={props}
+              // handleSettingsChange={props.handleSettingsChange}
+              // settings={props.settings}
+              // notificationToggle={props.notificationToggle}
             />
           </RequireAuth>
         }

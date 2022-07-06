@@ -1,5 +1,5 @@
 import Switch from '@mui/material/Switch';
-import React, { useState, useEffect } from 'react';
+import React, {useRef } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 // import Alert from '@mui/material/Alert';
 // import IconButton from '@mui/material/IconButton';
@@ -7,75 +7,110 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import SelectTime from './SelectTime';
 
-
-function NotificationComponent() {
-    const _ = require('lodash'); 
-    const [notificationToggle, setNotificationToggle] = useState(false);
-    const [open, setOpen] = useState(false);
-
-
-    const initialNotifications = [{ hour: 8, minute: 30 }, { hour: 15, minute: 0 }, { hour: 20, minute: 0 }];
-    const [notificationTimer, setNotificationTimer] = useState(initialNotifications);
-
-    const [notifications, setNotifications] = useState(initialNotifications);
-    const handleSelectTimeChange = (props:any) => {
-       
-  
-        setOpen(false);
-        setNotificationToggle(false);
+const delay = 1;
+// https://codesandbox.io/s/toggle-interval-with-useref-spcs2b?file=/src/App.js:1230-2098
+function NotificationComponent(props: any) {
+    console.log("notifComp", props);
+    let notifToggle = props.notificationToggle;
+    let intervalTimer = useRef(props.intervalTimer);
+    let notificationTimes = props.notificationTimes;
+    
+    // const setNotifTimes=props.setNotifTimes;
 
 
-        setNotifications({...notifications,[props.index]: {hour:props.hour,minute:props.minute}});
+    // console.log("---------------------------FIRST RENDER--------------------------")
+    const _ = require('lodash');
+    const notificationToggle = useRef(notifToggle);
+    console.log("notificationTimes",notificationTimes);
 
-        setNotificationTimer({ ...notifications, [props.index]: {hour:props.hour,minute:props.minute} });
+
+
+    const handleSelectTimeChange = (times: any) => {
+
+        console.log("set time change",times);
+        props.setNotifTimes( { ...notificationTimes, [times.index]: { hour: times.hour, minute: times.minute }});
+        console.log("notificationTimes changed",notificationTimes);
+
+        
 
     };
 
-
-
-    let intervalID: NodeJS.Timeout;
-
-    useEffect(() => {
-        console.log("notificationToggle", notificationToggle);
-        if (notificationToggle) {
-            console.log("notificationTimer is running...");
-            console.table(notificationTimer);
+   
+    // const [toggleValue, setToggleValue] = useState(notifToggle);
+    //we set toggleValue state to the same like toggleRef to force re-render
 
 
 
 
-
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            intervalID = setInterval(() => {                    
-                console.log(notificationTimer);
-                // eslint-disable-next-line array-callback-return
-                Object.keys(notificationTimer).map((item, i) => {
-                    const now = new Date();
-                    // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
-                    const checkTime = { hour: now.getHours(), minute: now.getMinutes() };
+    function checkTimes() {
+        console.log("checktimes notificationTimes.current",notificationTimes);
+        // eslint-disable-next-line array-callback-return
+        Object.keys(notificationTimes).map((item, i) => {
+            const now = new Date();
+            // const checkTime = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
+            const checkTime = { hour: now.getHours(), minute: now.getMinutes() };
 
 
 
-                    console.log("compare current checkTime: "+Object.values(checkTime)+" with notificationTimer: "+ Object.values(notificationTimer[i]));
-  
-                  
-                    if (_.isEqual(checkTime, notificationTimer[i]) ) {
-                        console.log("send notification!");
-                        sendNotification();
-                    }
-                    else{
-                        console.log("not the same time");
-                    }
-                    
-
-                });
+            console.log("compare current checkTime: " + Object.values(checkTime) + " with notificationTimer: " + Object.values(notificationTimes[i]));
 
 
-            }, 60000);//60000 = check every minute
+            if (_.isEqual(checkTime, notificationTimes[i])) {
+                console.log("send notification!");
+                sendNotification();
+            }
+            else {
+                console.log("not the same time");
+            }
+
+
+        });
+    }
+
+    const resetNotifications = ()=> {
+        notifToggle = false;
+        notificationToggle.current = notifToggle;
+        props.handleSettingsChange(notifToggle);
+        clearInterval(intervalTimer.current);
+       
+        console.log("reset notifications");
+    };
+
+
+    const setGlobalNotifications = () => {
+
+        console.log("notificationTimer is running...");
+        // console.table(notificationTimes.current);
+
+
+        notificationToggle.current = !notifToggle;
+        props.handleSettingsChange(notificationToggle.current);
+        // notifToggle = !notifToggle;
+        console.log("useEffect notifToggle updated to:", notificationToggle.current);
+        // useRef value stored in .current property
+        if (notificationToggle.current) {
+
+
+            //get the latest value of state, not the value of first render
+            // setToggleValue((s: boolean) => (s = !s));
+
+            props.setIntervalTimer(intervalTimer.current = setInterval(() => {
+
+                console.log("tick intervalTimer", intervalTimer.current);
+                checkTimes();
+
+            }, delay * 60000));
+        } else {
+
+            clearInterval(intervalTimer.current);
+
+            console.log("clear tick", intervalTimer.current);
+            // setToggleValue((s: boolean) => (s = false));
         }
-        return () => clearInterval(intervalID);
-    }, [open,notifications]);
 
+
+
+    };
 
     const showNotification = async (body: any) => {
         const registration = await navigator.serviceWorker.getRegistration();
@@ -107,7 +142,7 @@ function NotificationComponent() {
             }
         }
     };
-       
+
 
     return (
         <Box
@@ -126,32 +161,33 @@ function NotificationComponent() {
                 control={
                     <Switch
                         name="notification-toggle"
-                        // checked={open}
-                        checked={notificationToggle}
+                        checked={notifToggle}
+                        onChange={setGlobalNotifications}
                         onClick={() => {
-                            setOpen(!open);
-                            setNotificationToggle(!notificationToggle)
+                            console.log("switch toggle clicked");
+                            checkTimes();
                         }}
 
                     />
                 }
 
             />
-{Object.values(notificationTimer).map((timer,index) => (
-    <SelectTime 
-                index={index}
-                notificationValues={timer}
-                // onClick={handleTimeChange}
-                handleSelectTimeChange={handleSelectTimeChange}
-                    
-                value={timer} 
+            {Object.values(notificationTimes).map((timer, index) => (
+                <SelectTime 
+                    key={index}
+                    index={index}
+                    notificationValues={timer}
+                    handleSelectTimeChange={handleSelectTimeChange}
+                    value={timer}
+                    onClick={() => {
+                    resetNotifications();
+                }}
                 >
                     {timer}
                 </SelectTime>
 
-                ))}
-
-
+            ))}
+          
 
             {/* {open && (
         <Alert
