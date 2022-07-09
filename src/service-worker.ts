@@ -81,6 +81,8 @@ self.addEventListener('message', event => {
 // Any other custom service worker logic can go here.
 
 self.addEventListener('notificationclick', (event) => {
-  console.log('our user clicked on the notification!')
+  console.log('our user clicked on the notification!', window.location.href);
+  
   // Send user data analytics 🔥 🔥 🔥
 }, false);
+
