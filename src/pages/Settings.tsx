@@ -12,22 +12,62 @@ const Settings = (props: any): any => {
      const [notifTimes,setNotifTimes] = useRecoilState(notificationTimes);
      const [intervalTimer,setIntervalTimer] = useRecoilState(timer);
 
+    let currentNotificationTimes;
+    let currentIntervalTimer;
+    let currentNotificationToggle;
+
     // const settings = useRef({notificationToggle:notifRef});
 
     // console.log({...props});
     let val = {...props};
     val=val.props;
     // console.log("val",val);
-    console.log("notificationTimes",notifTimes);
+    console.log("...notifTimes",{...notifTimes});
     console.log("intervalTimer",intervalTimer);
 
 
-    
+    if(localStorage.getItem('notificationToggle')) {
+        
+        setSettings();
+
+      } else {
+        updateSettings();
+      }
+      
+      function updateSettings() {
+        console.log("set local storage");
+        localStorage.setItem('notificationTimes', JSON.stringify({...notifTimes}));
+        localStorage.setItem('intervalTimer', intervalTimer.toString());
+        let nT = !val.notificationToggle;
+        localStorage.setItem('notificationToggle', nT.toString());
+        // localStorage.setItem('image', document.getElementById('image').value);
+      
+       // setSettings();
+      }
+      
+      function setSettings() {
+      
+      
+        localStorage.setItem('notificationTimes', JSON.stringify({...notifTimes}));
+        localStorage.setItem('intervalTimer', intervalTimer.toString());
+        localStorage.setItem('notificationToggle', val.notificationToggle);
+
+        currentNotificationTimes = JSON.parse(localStorage.getItem('notificationTimes')!);
+        currentIntervalTimer = localStorage.getItem('intervalTimer')?.valueOf();
+        currentNotificationToggle = localStorage.getItem('notificationToggle')?.valueOf();
+
+        console.log("currentNotificationTimes",currentNotificationTimes);
+        console.log("currentIntervalTimer",currentIntervalTimer);
+        console.log("currentNotificationToggle",currentNotificationToggle);
+      
+      }
+      
     
   const handleSettingsChange = (e: any) => {
     console.log("setNotificationToggle",e);
     // const { name, value } = test;
     val.setNotificationToggle(e);
+    setSettings();
   };
 
 
@@ -46,9 +86,9 @@ const Settings = (props: any): any => {
                 <div className='settings-ctn'>
                     <NotificationComponent 
                     notificationToggle={val.notificationToggle}
-                    notificationTimes={notifTimes}
+                    notificationTimes={currentNotificationTimes}
                     setNotifTimes={setNotifTimes}
-                    intervalTimer={intervalTimer}
+                    intervalTimer={currentIntervalTimer}
                     setIntervalTimer={setIntervalTimer} 
                     handleSettingsChange={handleSettingsChange}
                     />
