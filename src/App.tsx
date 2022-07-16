@@ -5,7 +5,7 @@ import Header from './components/Header';
 import { AppRouter } from './router';
 import { themes } from './utils/theme'
 import { useRecoilState } from 'recoil'
-import { notificationToggle, themeValue } from './atoms/settingsAtom'
+import { themeValue } from './atoms/settingsAtom'
 
 
 
