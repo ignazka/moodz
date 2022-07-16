@@ -12,7 +12,7 @@ export const notificationToggle = atom({
 
 export const notificationTimes = atom({
     key: 'notificationTimes',
-    default: [{hour:8,minute:0},{hour:13,minute:0},{hour:20,minute:0}]
+    default: [{"hour":8,"minute":0},{"hour":13,"minute":0},{"hour":17,"minute":0},{"hour":19,"minute":0},{"hour":21,"minute":0}]
 })
 
 export const timer = atom({

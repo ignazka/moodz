@@ -1,5 +1,5 @@
 import Switch from '@mui/material/Switch';
-import React, {useRef } from 'react';
+import React, { useRef } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 // import Alert from '@mui/material/Alert';
 // import IconButton from '@mui/material/IconButton';
@@ -14,28 +14,28 @@ function NotificationComponent(props: any) {
     let notifToggle = props.notificationToggle;
     let intervalTimer = useRef(props.intervalTimer);
     let notificationTimes = props.notificationTimes;
-    
+
     // const setNotifTimes=props.setNotifTimes;
 
 
     // console.log("---------------------------FIRST RENDER--------------------------")
     const _ = require('lodash');
     const notificationToggle = useRef(notifToggle);
-    console.log("notificationTimes",notificationTimes);
+    console.log("notificationTimes", notificationTimes);
 
 
 
     const handleSelectTimeChange = (times: any) => {
 
-        console.log("set time change",times);
-        props.setNotifTimes( { ...notificationTimes, [times.index]: { hour: times.hour, minute: times.minute }});
-        console.log("notificationTimes changed",notificationTimes);
+        console.log("set time change", times);
+        props.setNotifTimes({ ...notificationTimes, [times.index]: { hour: times.hour, minute: times.minute } });
+        console.log("notificationTimes changed", notificationTimes);
 
-        
+
 
     };
 
-   
+
     // const [toggleValue, setToggleValue] = useState(notifToggle);
     //we set toggleValue state to the same like toggleRef to force re-render
 
@@ -43,7 +43,7 @@ function NotificationComponent(props: any) {
 
 
     function checkTimes() {
-        console.log("checktimes notificationTimes.current",notificationTimes);
+        console.log("checktimes notificationTimes.current", notificationTimes);
         // eslint-disable-next-line array-callback-return
         Object.keys(notificationTimes).map((item, i) => {
             const now = new Date();
@@ -67,12 +67,12 @@ function NotificationComponent(props: any) {
         });
     }
 
-    const resetNotifications = ()=> {
+    const resetNotifications = () => {
         notifToggle = false;
         notificationToggle.current = notifToggle;
         props.handleSettingsChange(notifToggle);
         clearInterval(intervalTimer.current);
-       
+
         console.log("reset notifications");
     };
 
@@ -113,25 +113,81 @@ function NotificationComponent(props: any) {
     };
 
     const showNotification = async (body: any) => {
+
         const registration = await navigator.serviceWorker.getRegistration();
+
+        
+
         const title = 'MOODZ: Friendly Reminder.';
-        const payload = {
+        const img = '/android-icon-192x192.png';
+        const notAct = () => {console.log('code to show more images')};
+
+        const notificationsProperties = {
             body,
+            icon: img,
+            image: "https://picsum.photos/400",
+            // A badge is an image we display
+            // when there is not enough space to display the notification
+            badge: "https://picsum.photos/300/200",
+            // Direction decides if the notification goes
+            // from left to right, right to left or let the browser decide
+            //  dir: "ltr",
+            // As part of the direct user experience we also have 
+            // Audio- ....
+             silent: false,
+            // ... sensorial
+            vibrate: [400, 100, 400],
+            onshow: () => console.log("We are showing a Notification"),
+            // onerror: () => console.log("There was an error showing a Notification"),
+            // onclose: () => console.log("Closing the Notification"),
+            // Informs the user if a notification replaced a previous one
+            // renotify: null,
+            // If set to true the notification will stick to the screen until the user interacts with it
+            requireInteraction: true,
+            // We'll get into actions later
+            actions: [
+                
+                {
+                    action: 'like', 
+                    title: '👍Like'},
+                
+                { action: ''+{notAct},
+                title: 'test'
+
+                },
+                
+                
+                ],
+
         };
+
+        
+
+
+        // const payload = {
+        //     body, icon: img,
+        // };
         if (registration) {
             if ('showNotification' in registration) {
-                registration.showNotification(title, payload);
+                alert("show Notif true");
+                console.log("show notif");
+                registration.showNotification(title, notificationsProperties);
+                
             } else {
-                new Notification(title, payload);
+                let not = new Notification(title, notificationsProperties);
+                alert("show Notif false");
+                not.onclick = function() { alert("onclick"); console.log("bla bla "); };
             }
         }
     };
+
+    
 
     const sendNotification = async () => {
         console.log("sendNotification executed");
 
         if (Notification.permission === 'granted') {
-            showNotification('What is your Mood right now?');
+            showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
         } else {
             if (Notification.permission !== 'denied') {
                 const permission = await Notification.requestPermission();
@@ -166,6 +222,7 @@ function NotificationComponent(props: any) {
                         onClick={() => {
                             console.log("switch toggle clicked");
                             checkTimes();
+                            sendNotification();
                         }}
 
                     />
@@ -173,21 +230,21 @@ function NotificationComponent(props: any) {
 
             />
             {Object.values(notificationTimes).map((timer, index) => (
-                <SelectTime 
+                <SelectTime
                     key={index}
                     index={index}
                     notificationValues={timer}
                     handleSelectTimeChange={handleSelectTimeChange}
                     value={timer}
                     onClick={() => {
-                    resetNotifications();
-                }}
+                        resetNotifications();
+                    }}
                 >
                     {timer}
                 </SelectTime>
 
             ))}
-          
+
 
             {/* {open && (
         <Alert

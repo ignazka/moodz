@@ -49,6 +49,13 @@ export function register(config?: Config) {
             'This web app is being served cache-first by a service ' +
               'worker. To learn more, visit https://cra.link/PWA'
           );
+
+          if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persist().then((granted) => {
+              // Optionally update your UI based on the granted state.
+              console.log("persistent storage active");
+            });
+          }
         });
       } else {
         // Is not localhost. Just register service worker
