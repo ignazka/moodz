@@ -169,14 +169,14 @@ function NotificationComponent(props: any) {
         // };
         if (registration) {
             if ('showNotification' in registration) {
-                alert("show Notif true");
+                // alert("show Notif true");
                 console.log("show notif");
                 registration.showNotification(title, notificationsProperties);
                 
             } else {
-                let not = new Notification(title, notificationsProperties);
-                alert("show Notif false");
-                not.onclick = function() { alert("onclick"); console.log("bla bla "); };
+                // let not = new Notification(title, notificationsProperties);
+                // alert("show Notif false");
+                // not.onclick = function() { alert("onclick"); console.log("bla bla "); };
             }
         }
     };
