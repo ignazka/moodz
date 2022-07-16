@@ -90,23 +90,26 @@ self.addEventListener('notificationclick', function (event)
 {
     //For root applications: just change "'./'" to "'/'"
     //Very important having the last forward slash on "new URL('./', location)..."
-    const rootUrl = new URL('/', self.location.href).href; 
+    // const rootUrl = new URL('/', self.location.href).href; 
     event.notification.close();
-    
-    event.waitUntil(
-        self.clients.matchAll().then(matchedClients =>
-        {
-            for (let client of matchedClients)
-            {
-                if (client.url.indexOf(rootUrl) >= 0)
-                {
-                  console.log("client.url",client.url);
-                    // return client.focus();
-                }
-            }
-            return self.clients.openWindow(rootUrl);
 
-            // return self.clients.openWindow(rootUrl).then(function (client) { client.focus(); });
-        })
-    );
+    // window.location.reload();
+    self.clients.openWindow('/');
+    
+    // event.waitUntil(
+    //     self.clients.matchAll().then(matchedClients =>
+    //     {
+    //         for (let client of matchedClients)
+    //         {
+    //             if (client.url.indexOf(rootUrl) >= 0)
+    //             {
+    //               console.log("client.url",client.url);
+    //                 // return client.focus();
+    //             }
+    //         }
+    //         return self.clients.openWindow(rootUrl);
+
+    //         // return self.clients.openWindow(rootUrl).then(function (client) { client.focus(); });
+    //     })
+    // );
 });

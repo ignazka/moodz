@@ -20,8 +20,8 @@ const Settings = (props: any): any => {
     // const settings = useRef({notificationToggle:notifRef});
 
     // console.log({...props});
-    let val = { ...props };
-    val = val.props;
+    // let val = { ...props };
+    // val = val.props;
     // console.log("val",val);
     console.log("...notifTimes", { ...notifTimes });
     console.log("intervalTimer", intervalTimer);

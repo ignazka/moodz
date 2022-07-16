@@ -14,7 +14,7 @@ function App() {
   // const [settings, setSettings] = 
   
   const [theme] = useRecoilState(themeValue);
-  const [notifToggle,setNotifToggle] = useRecoilState(notificationToggle);
+  // const [notifToggle,setNotifToggle] = useRecoilState(notificationToggle);
 
 
   // console.log("notifRef from SettingsAtom",notifRef); //funktioniert!
@@ -59,8 +59,8 @@ function App() {
         <Header />
         <AppRouter
           // settings={settings}
-           notificationToggle={notifToggle}
-           setNotificationToggle={setNotifToggle}
+          //  notificationToggle={notifToggle}
+          //  setNotificationToggle={setNotifToggle}
           //  intervalTimer={intervalTimer}
           //  setIntervalTimer={setIntervalTimer}
           // handleSettingsChange={handleSettingsChange}
