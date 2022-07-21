@@ -94,7 +94,7 @@ self.addEventListener('notificationclick', function (event)
     event.notification.close();
 
     // window.location.reload();
-    self.clients.openWindow('/');
+    //self.clients.openWindow('/');
     
     // event.waitUntil(
     //     self.clients.matchAll().then(matchedClients =>
@@ -112,4 +112,31 @@ self.addEventListener('notificationclick', function (event)
     //         // return self.clients.openWindow(rootUrl).then(function (client) { client.focus(); });
     //     })
     // );
+
+    const urlToOpen = new URL('/', self.location.origin).href;
+
+const promiseChain = self.clients
+  .matchAll({
+    type: 'window',
+    includeUncontrolled: true,
+  })
+  .then((windowClients) => {
+    let matchingClient = null;
+
+    for (let i = 0; i < windowClients.length; i++) {
+      const windowClient = windowClients[i];
+      if (windowClient.url === urlToOpen) {
+        matchingClient = windowClient;
+        break;
+      }
+    }
+
+    if (matchingClient) {
+      return matchingClient.focus();
+    } else {
+      return self.clients.openWindow(urlToOpen);
+    }
+  });
+
+event.waitUntil(promiseChain);
 });
