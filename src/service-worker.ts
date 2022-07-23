@@ -195,11 +195,14 @@ event.waitUntil(self.clients.matchAll({
       if (client && 'navigate' in client) {
           client.focus();
           event.notification.close();
-          // return client.navigate(data.WebUrl);
+           return client.navigate('/');
       }
       else {
+        //focus the progressive web app
+        
           client.focus();
           event.notification.close();
+          self.clients.openWindow('/');
           
           // if client doesn't have navigate function, try to open a new browser window
           // return self.clients.openWindow(data.WebUrl);
