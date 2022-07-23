@@ -86,15 +86,50 @@ self.addEventListener('message', event => {
 //   // Send user data analytics 🔥 🔥 🔥
 // }, false);
 
+// open the progressive web app if the user clicks on the notification
+// self.addEventListener('notificationclick', (event) => {  
+//   event.notification.close();
+//   event.waitUntil(
+//     clients.openWindow('https://progressive-web-app.com')
+//   );
+// }
+// , false);
+
+
+// self.addEventListener('notificationclick', (event) => {
+//   console.log('our user clicked on the notification!', window.location.href);
+//   event.notification.close();
+//   event.waitUntil(
+//     clients.openWindow('https://progressive-web-app.com')
+//   );
+// }
+// , false);
+
+
+// self.addEventListener('notificationclick', (event) => {
+
+
 self.addEventListener('notificationclick', function (event)
+
 {
+
+  // open the progressive web app if the user clicks on the notificatio
+  // if (event.action === 'open-app') {
+  //   event.notification.close();
+  //   event.waitUntil(clients.openWindow('/'));
+  // } else {  // otherwise just close the notification  🔥 🔥 🔥
+  //   event.notification.close(); // 🔥 🔥 🔥 
+  // } // 🔥 🔥 🔥
+
+  
+  
     //For root applications: just change "'./'" to "'/'"
     //Very important having the last forward slash on "new URL('./', location)..."
     // const rootUrl = new URL('/', self.location.href).href; 
-    event.notification.close();
+    // event.notification.close();
 
     // window.location.reload();
-    self.clients.openWindow('/');
+    //self.clients.openWindow('/');
     
     // event.waitUntil(
     //     self.clients.matchAll().then(matchedClients =>
@@ -112,4 +147,69 @@ self.addEventListener('notificationclick', function (event)
     //         // return self.clients.openWindow(rootUrl).then(function (client) { client.focus(); });
     //     })
     // );
+
+ /*   const urlToOpen = new URL('/', self.location.origin).href;
+
+const promiseChain = self.clients
+  .matchAll({
+    type: 'window',
+    includeUncontrolled: true,
+  })
+  .then((windowClients) => {
+    let matchingClient = null;
+
+    for (let i = 0; i < windowClients.length; i++) {
+      const windowClient = windowClients[i];
+      if (windowClient.url === urlToOpen) {
+        matchingClient = windowClient;
+        break;
+      }
+    }
+
+    if (matchingClient) {
+      return matchingClient.focus();
+    } else {
+      return self.clients.openWindow(urlToOpen);
+    }
+  });
+
+event.waitUntil(promiseChain);*/
+
+event.waitUntil(self.clients.matchAll({
+  type: "window",
+  includeUncontrolled: true
+}).then(function (clientList) {
+  // if (data.WebUrl) {
+      let client:any = null;
+
+      for (let i = 0; i < clientList.length; i++) {
+          let item = clientList[i];
+          console.log("item",item);
+
+          if (item.url) {
+              client = item;
+              break;
+          }
+      }
+
+      if (client && 'navigate' in client) {
+          client.focus();
+          event.notification.close();
+           return client.navigate('/');
+      }
+      else {
+        //focus the progressive web app
+        
+          client.focus();
+          event.notification.close();
+          return client.navigate('/');
+          
+          // if client doesn't have navigate function, try to open a new browser window
+          // return self.clients.openWindow(data.WebUrl);
+      }
+  // }
+}));
+
+
+
 });

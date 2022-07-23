@@ -222,7 +222,7 @@ function NotificationComponent(props: any) {
                         onClick={() => {
                             console.log("switch toggle clicked");
                             checkTimes();
-                            sendNotification();
+                            //sendNotification();
                         }}
 
                     />
