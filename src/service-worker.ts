@@ -202,7 +202,7 @@ event.waitUntil(self.clients.matchAll({
         
           client.focus();
           event.notification.close();
-          self.clients.openWindow('/');
+          return client.navigate('/');
           
           // if client doesn't have navigate function, try to open a new browser window
           // return self.clients.openWindow(data.WebUrl);
