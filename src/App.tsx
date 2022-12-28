@@ -23,29 +23,37 @@ function App() {
 // by chatbot 
 
 
-// Get the current time
-const currentTime: Date = new Date();
-
-// Set the time to show the notification to be 12:00 PM (noon)
-const timeToShowNotification: Date = new Date();
-timeToShowNotification.setHours(10);
-timeToShowNotification.setMinutes(30);
-
-// If the current time is before noon, set the notification to be shown
-// at noon today. If the current time is after noon, set the notification
-// to be shown at noon tomorrow.
-if (currentTime.getTime() < timeToShowNotification.getTime()) {
-  localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
-} else {
-  timeToShowNotification.setDate(timeToShowNotification.getDate() + 1);
-  localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
+// Check if the Push API is supported by the browser
+if ('PushManager' in window) {
+  // Check if the user has granted permission to show notifications
+  Notification.requestPermission().then((permission: any) => {
+    if (permission === 'granted') {
+      // Register the service worker
+      navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
+        // Get the current time
+        const currentTime: Date = new Date();
+  
+        // Set the time to show the notification to be 12:00 PM (noon)
+        const timeToShowNotification: Date = new Date();
+        timeToShowNotification.setHours(10);
+        timeToShowNotification.setMinutes(40);
+  
+        // If the current time is before noon, set the notification to be shown
+        // at noon today. If the current time is after noon, set the notification
+        // to be shown at noon tomorrow.
+        if (currentTime.getTime() < timeToShowNotification.getTime()) {
+          localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
+        } else {
+          timeToShowNotification.setDate(timeToShowNotification.getDate() + 1);
+          localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
+        }
+  
+        // Use the PushManager API to schedule the push event to be delivered at the specified time
+        registration.pushManager.schedulePush({}, timeToShowNotification.getTime() - currentTime.getTime());
+      });
+    }
+  });
 }
-
-// Wait for the service worker to be registered and ready to receive events
-navigator.serviceWorker.ready.then((registration: any) => {
-  // Use the PushManager API to schedule the push event to be delivered at the specified time
-  registration.pushManager.schedulePush({}, timeToShowNotification.getTime() - currentTime.getTime());
-});
 
 //-----------------
 
