@@ -17,6 +17,40 @@ function App() {
   const [notifToggle,setNotifToggle] = useRecoilState(notificationToggle);
 
 
+
+  
+
+// by chatbot 
+
+
+// Get the current time
+const currentTime: Date = new Date();
+
+// Set the time to show the notification to be 12:00 PM (noon)
+const timeToShowNotification: Date = new Date();
+timeToShowNotification.setHours(10);
+timeToShowNotification.setMinutes(5);
+
+// If the current time is before noon, set the notification to be shown
+// at noon today. If the current time is after noon, set the notification
+// to be shown at noon tomorrow.
+if (currentTime.getTime() < timeToShowNotification.getTime()) {
+  localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
+} else {
+  timeToShowNotification.setDate(timeToShowNotification.getDate() + 1);
+  localStorage.setItem('timeToShowNotification', timeToShowNotification.toString());
+}
+
+// Wait for the service worker to be registered and ready to receive events
+navigator.serviceWorker.ready.then((registration: any) => {
+  // Use the PushManager API to schedule the push event to be delivered at the specified time
+  registration.pushManager.schedulePush({}, timeToShowNotification.getTime() - currentTime.getTime());
+});
+
+//-----------------
+
+
+
   // console.log("notifRef from SettingsAtom",notifRef); //funktioniert!
   // console.log("settings",settings);
   // const updates = useRef([{updates:0,...settings}]);

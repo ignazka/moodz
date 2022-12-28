@@ -79,3 +79,36 @@ self.addEventListener('message', event => {
 });
 
 // Any other custom service worker logic can go here.
+
+
+
+//by chatbot
+
+// This is the service worker code that runs in the background
+// and listens for events
+self.addEventListener('push', (event: any) => {
+  // Get the time to show the notification from local storage,
+  // or use a default value if the value is not set or cannot be parsed
+  let timeToShowNotification: Date;
+  const localStorageValue: string | null = localStorage.getItem('timeToShowNotification');
+  if (localStorageValue) {
+    timeToShowNotification = new Date(Date.parse(localStorageValue));
+  } else {
+    timeToShowNotification = new Date();
+  }
+  
+  // Get the current time
+  const currentTime: Date = new Date();
+  
+  // If the current time is equal to the time to show the notification,
+  // show the notification
+  if (currentTime.getTime() === timeToShowNotification.getTime()) {
+    const title: string = 'Time for a notification!';
+    const options: any = {
+      body: 'This is your daily notification',
+      icon: '/images/notification-icon.png',
+      badge: '/images/notification-badge.png'
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
+  }
+});
