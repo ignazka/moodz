@@ -29,7 +29,7 @@ const currentTime: Date = new Date();
 // Set the time to show the notification to be 12:00 PM (noon)
 const timeToShowNotification: Date = new Date();
 timeToShowNotification.setHours(10);
-timeToShowNotification.setMinutes(15);
+timeToShowNotification.setMinutes(18);
 
 // If the current time is before noon, set the notification to be shown
 // at noon today. If the current time is after noon, set the notification
