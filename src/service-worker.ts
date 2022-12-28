@@ -87,6 +87,7 @@ self.addEventListener('message', event => {
 // This is the service worker code that runs in the background
 // and listens for events
 self.addEventListener('push', (event: any) => {
+  console.log('Push event received');
   // Get the time to show the notification from local storage,
   // or use a default value if the value is not set or cannot be parsed
   let timeToShowNotification: Date;
@@ -96,6 +97,8 @@ self.addEventListener('push', (event: any) => {
   } else {
     timeToShowNotification = new Date();
   }
+
+  console.log(`Notification scheduled for ${timeToShowNotification}`);
   
   // Get the current time
   const currentTime: Date = new Date();
