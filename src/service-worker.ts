@@ -110,6 +110,7 @@ self.addEventListener('message', event => {
               showNotification('test', 'body-test', '/');
             }
             console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
+            
           }, 1000); // 1000 milliseconds = 1 second
           
           // Use the PushManager API to schedule the push event to be delivered at the specified time
