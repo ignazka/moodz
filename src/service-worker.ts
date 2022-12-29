@@ -85,6 +85,9 @@ self.addEventListener('message', event => {
 //by chatbot
 
 // Check if the Push API is supported by the browser
+if (typeof window !== 'undefined') {
+  // Code that uses the window object goes here
+
 if ('PushManager' in window) {
   // Register the service worker
   navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
@@ -107,4 +110,5 @@ if ('PushManager' in window) {
   });
 } else {
   console.log('Push API not supported');
+}
 }
