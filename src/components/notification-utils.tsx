@@ -9,6 +9,7 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
   console.log(`Notification time changed to ${sheduleNotification}`);
 
   // Check if the Push API is supported by the browser
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showNotification = (title: string, body: string, imageUrl: string) => {
     // Check if the Push API and the Notification API are supported by the browser
     if ('PushManager' in window && 'Notification' in window) {
