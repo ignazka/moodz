@@ -13,9 +13,13 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
 
   // Check if the Push API is supported by the browser
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const showNotification = (title: string, body: string, imageUrl: string) => {
+  
+};
+
+export const showNotification = (title: string, body: string, imageUrl: string) => {
+
     // Check if the Push API and the Notification API are supported by the browser
-    if ('PushManager' in window && 'Notification' in window) {
+    // if ('PushManager' in window && 'Notification' in window) {
       // Check if the user has granted permission to show notifications
       Notification.requestPermission().then((permission: any) => {
         if (permission === 'granted') {
@@ -35,8 +39,8 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
           console.log('Notification permission denied');
         }
       });
-    } else {
-      console.log('Push and/or Notification API not supported');
-    }
+    // } else {
+    //   console.log('Push and/or Notification API not supported');
+    // }
   };
-};
+  console.log(showNotification);

@@ -8,11 +8,14 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
+import { title } from 'process';
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
+import {showNotification} from './components/notification-utils';
+
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -84,11 +87,8 @@ self.addEventListener('message', event => {
 
 //by chatbot
 
-// Check if the Push API is supported by the browser
-if (typeof window !== 'undefined') {
-  // Code that uses the window object goes here
 
-if ('PushManager' in window) {
+
   // Register the service worker
   navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
     console.log('Service worker registered');
@@ -99,16 +99,25 @@ if ('PushManager' in window) {
         // Check if there is a time stored in local storage
         const timeToShowNotification = localStorage.getItem('timeToShowNotification');
         if (timeToShowNotification) {
+          setInterval(() => {
+            // Get the stored time to show the notification from local storage
+            const storedTime = localStorage.getItem('timeToShowNotification');
+            // Get the current time
+            const currentTime = new Date();
+            // Check if the current time matches the stored time
+            if (currentTime.toLocaleTimeString() === storedTime) {
+              // Show the notification
+              showNotification('test', 'body-test', '/');
+            }
+          }, 1000); // 1000 milliseconds = 1 second
+          
           // Use the PushManager API to schedule the push event to be delivered at the specified time
-          registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
-          console.log(`Push event scheduled for ${timeToShowNotification}`);
+          // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
+          // console.log(`Push event scheduled for ${timeToShowNotification}`);
         }
       } else {
         console.log('Notification permission denied');
       }
     });
   });
-} else {
-  console.log('Push API not supported');
-}
-}
+
