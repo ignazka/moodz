@@ -90,7 +90,7 @@ self.addEventListener('message', event => {
 
 
   // Register the service worker
-  navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
+  navigator.serviceWorker.register('/').then((registration: any) => {
     console.log('Service worker registered by service-worker.tsx');
     // Check if the user has granted permission to show notifications
     Notification.requestPermission().then((permission: any) => {
