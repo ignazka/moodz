@@ -91,7 +91,7 @@ self.addEventListener('message', event => {
 
   // Register the service worker
   navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
-    console.log('Service worker registered');
+    console.log('Service worker registered by service-worker.tsx');
     // Check if the user has granted permission to show notifications
     Notification.requestPermission().then((permission: any) => {
       if (permission === 'granted') {
@@ -109,6 +109,7 @@ self.addEventListener('message', event => {
               // Show the notification
               showNotification('test', 'body-test', '/');
             }
+            console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
           }, 1000); // 1000 milliseconds = 1 second
           
           // Use the PushManager API to schedule the push event to be delivered at the specified time
