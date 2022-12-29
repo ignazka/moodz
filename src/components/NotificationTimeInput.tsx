@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, Box } from '@mui/material';
+import {showNotification} from './notification-utils';
 
 type Props = {
   onSave: (hours: number, minutes: number, seconds: number) => void;
@@ -13,6 +14,7 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
   const handleSave = () => {
     // Convert the values to numbers and call the onSave function
     onSave(Number(hours), Number(minutes), Number(seconds));
+    showNotification('moodz', 'settings saved', '/');
   };
 
   return (
