@@ -43,4 +43,4 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
     //   console.log('Push and/or Notification API not supported');
     // }
   };
-  console.log(showNotification);
+//   console.log(showNotification);
