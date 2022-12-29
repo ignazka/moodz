@@ -53,9 +53,7 @@ const Settings = (props: any): any => {
                     setIntervalTimer={setIntervalTimer} 
                     handleSettingsChange={handleSettingsChange}
                     /> */}
-                    <NotificationTimeInput onSave={function (hours: number, minutes: number, seconds: number): void {
-                        throw new Error('Function not implemented.');
-                    } } />
+                    <NotificationTimeInput onSave={onSave}/>
 
                 </div>
             </Card >
