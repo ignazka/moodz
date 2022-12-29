@@ -5,6 +5,9 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
   sheduleNotification.setHours(hours);
   sheduleNotification.setMinutes(minutes);
   sheduleNotification.setSeconds(seconds);
+//   console.log(sheduleNotification.toLocaleTimeString());
+
+  localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
   console.log(`Notification time changed to ${sheduleNotification}`);
 
