@@ -84,34 +84,27 @@ self.addEventListener('message', event => {
 
 //by chatbot
 
-// This is the service worker code that runs in the background
-// and listens for events
-self.addEventListener('push', (event: any) => {
-  console.log('Push event received');
-  // Get the time to show the notification from local storage,
-  // or use a default value if the value is not set or cannot be parsed
-  let timeToShowNotification: Date;
-  const localStorageValue: string | null = localStorage.getItem('timeToShowNotification');
-  if (localStorageValue) {
-    timeToShowNotification = new Date(Date.parse(localStorageValue));
-  } else {
-    timeToShowNotification = new Date();
-  }
-
-  console.log(`Notification scheduled for ${timeToShowNotification}`);
-  
-  // Get the current time
-  const currentTime: Date = new Date();
-  
-  // If the current time is equal to the time to show the notification,
-  // show the notification
-  if (currentTime.getTime() === timeToShowNotification.getTime()) {
-    const title: string = 'Time for a notification!';
-    const options: any = {
-      body: 'This is your daily notification',
-      icon: '/images/notification-icon.png',
-      badge: '/images/notification-badge.png'
-    };
-    event.waitUntil(self.registration.showNotification(title, options));
-  }
-});
+// Check if the Push API is supported by the browser
+if ('PushManager' in window) {
+  // Register the service worker
+  navigator.serviceWorker.register('/service-worker.js').then((registration: any) => {
+    console.log('Service worker registered');
+    // Check if the user has granted permission to show notifications
+    Notification.requestPermission().then((permission: any) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted');
+        // Check if there is a time stored in local storage
+        const timeToShowNotification = localStorage.getItem('timeToShowNotification');
+        if (timeToShowNotification) {
+          // Use the PushManager API to schedule the push event to be delivered at the specified time
+          registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
+          console.log(`Push event scheduled for ${timeToShowNotification}`);
+        }
+      } else {
+        console.log('Notification permission denied');
+      }
+    });
+  });
+} else {
+  console.log('Push API not supported');
+}

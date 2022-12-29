@@ -7,8 +7,11 @@ import { ROUTES } from '.';
 import RequireAuth from './RequireAuth';
 import PublicRoute from './PublicRoute';
 import List from '../pages/List';
+import NotificationTimeInput from '../components/NotificationTimeInput';
+import { onSave } from '../components/notification-utils';
 
 function router(props: any) {
+
 
 
 
@@ -36,7 +39,12 @@ function router(props: any) {
               // handleSettingsChange={props.handleSettingsChange}
               // settings={props.settings}
               // notificationToggle={props.notificationToggle}
-            />
+              
+            >
+            <NotificationTimeInput onSave={onSave} />
+
+            </Settings>
+            
           </RequireAuth>
         }
       />

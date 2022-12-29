@@ -1,68 +1,47 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { FormControl, InputLabel, Input, Button, Box } from '@mui/material';
 
-interface Props {
-  // Callback function to be called when the values are saved
+type Props = {
   onSave: (hours: number, minutes: number, seconds: number) => void;
-}
+};
 
-interface State {
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
+const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
+  const [hours, setHours] = useState<number | string>('');
+  const [minutes, setMinutes] = useState<number | string>('');
+  const [seconds, setSeconds] = useState<number | string>('');
 
-class NotificationTimeInput extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      hours: 0,
-      minutes: 0,
-      seconds: 0
-    };
-  }
+  const handleSave = () => {
+    // Convert the values to numbers and call the onSave function
+    onSave(Number(hours), Number(minutes), Number(seconds));
+  };
 
-  // Event handler for the hours input field
-  handleHoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ hours: parseInt(event.target.value, 10) });
-  }
+  return (
+    <Box
 
-  // Event handler for the minutes input field
-  handleMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ minutes: parseInt(event.target.value, 10) });
-  }
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center', alignItems: 'center', textAlign: 'center',
+            }}
 
-  // Event handler for the seconds input field
-  handleSecondsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ seconds: parseInt(event.target.value, 10) });
-  }
-
-  // Event handler for the save button
-  handleSave = () => {
-    this.props.onSave(this.state.hours, this.state.minutes, this.state.seconds);
-  }
-
-  render() {
-    return (
-      <div>
-        <label>
-          Hours:
-          <input type="number" value={this.state.hours} onChange={this.handleHoursChange} />
-        </label>
-        <br />
-        <label>
-          Minutes:
-          <input type="number" value={this.state.minutes} onChange={this.handleMinutesChange} />
-        </label>
-        <br />
-        <label>
-          Seconds:
-          <input type="number" value={this.state.seconds} onChange={this.handleSecondsChange} />
-        </label>
-        <br />
-        <button onClick={this.handleSave}>Save</button>
-      </div>
-    );
-  }
-}
+        >
+      <FormControl sx={{ paddingBottom: 2 }}>
+        <InputLabel htmlFor="hours">Hours</InputLabel>
+        <Input id="hours" value={hours} onChange={(e) => setHours(e.target.value)} type="number" />
+      </FormControl>
+      <FormControl sx={{ paddingBottom: 2 }}>
+        <InputLabel htmlFor="minutes">Minutes</InputLabel>
+        <Input id="minutes" value={minutes} onChange={(e) => setMinutes(e.target.value)} type="number" />
+      </FormControl>
+      <FormControl sx={{ paddingBottom: 2 }}>
+        <InputLabel htmlFor="seconds">Seconds</InputLabel>
+        <Input id="seconds" value={seconds} onChange={(e) => setSeconds(e.target.value)} type="number" />
+      </FormControl>
+      <Button variant="contained" color="primary" onClick={handleSave}>
+        Save
+      </Button>
+    </Box>
+  );
+};
 
 export default NotificationTimeInput;
