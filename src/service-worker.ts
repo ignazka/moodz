@@ -117,10 +117,18 @@ self.addEventListener('notificationclick', function (event)
 });
 
 
+
 //by chatbot
 
 
-
+self.addEventListener('activate', (event) => {
+  console.log('Service worker activated');
+  localStorage.setItem('timeToShowNotification', '12:00:00');
+  console.log('local storage set');
+  setInterval(() => {
+    console.log('Logging message every second');
+  }, 1000);
+});
 
 
   // Register the service worker
@@ -133,7 +141,7 @@ self.addEventListener('notificationclick', function (event)
     //     // Check if there is a time stored in local storage
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    localStorage.setItem('timeToShowNotification', '12:00:00');
+    
     setInterval(() => {
       console.log('Hello from the service worker!')
       
@@ -159,7 +167,7 @@ self.addEventListener('notificationclick', function (event)
           localStorage.setItem('timeToShowNotification', currentTime.toLocaleTimeString());
         };
 
-    }, 1000)
+    }, 1000);
 
 
 
