@@ -133,29 +133,52 @@ self.addEventListener('notificationclick', function (event)
     //     // Check if there is a time stored in local storage
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const checkTimes = ()=>{
-        const timeToShowNotification = localStorage.getItem('timeToShowNotification');
-        if (timeToShowNotification) {
-          setInterval(() => {
-            // Get the stored time to show the notification from local storage
-            const storedTime = localStorage.getItem('timeToShowNotification');
-            // Get the current time
-            const currentTime = new Date();
-            // Check if the current time matches the stored time
-            if (currentTime.toLocaleTimeString() === storedTime) {
-              // Show the notification
-              showNotification('test', 'body-test', '/');
-            }
-            console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
+    setInterval(() => {
+      console.log('Hello from the service worker!')
+    }, 1000)
+
+
+
+
+
+    // const checkTimes = ()=>{
+    //     const timeToShowNotification = localStorage.getItem('timeToShowNotification');
+    //     if (timeToShowNotification) {
+    //       setInterval(() => {
+    //         // Get the stored time to show the notification from local storage
+    //         const storedTime = localStorage.getItem('timeToShowNotification');
+    //         // Get the current time
+    //         const currentTime = new Date();
+    //         // Check if the current time matches the stored time
+    //         if (currentTime.toLocaleTimeString() === storedTime) {
+    //           // Show the notification
+    //           showNotification('test', 'body-test', '/');
+    //         }
+    //         console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
             
-          }, 1000); // 1000 milliseconds = 1 second
-        }
-        else{
-          console.log('no time stored in local storage!');
-          const currentTime = new Date();
-          localStorage.setItem('timeToShowNotification',currentTime.toLocaleTimeString());
-        };
-      };  
+    //       }, 1000); // 1000 milliseconds = 1 second
+    //     }
+    //     else{
+    //       console.log('no time stored in local storage!');
+    //       const currentTime = new Date();
+    //       localStorage.setItem('timeToShowNotification',currentTime.toLocaleTimeString());
+    //     };
+    //   };  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           // Use the PushManager API to schedule the push event to be delivered at the specified time
           // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
           // console.log(`Push event scheduled for ${timeToShowNotification}`);
