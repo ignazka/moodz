@@ -14,7 +14,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-//import {showNotification} from './components/notification-utils';
+import {showNotification} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -135,6 +135,29 @@ self.addEventListener('notificationclick', function (event)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setInterval(() => {
       console.log('Hello from the service worker!')
+
+      const timeToShowNotification = localStorage.getItem('timeToShowNotification');
+        if (timeToShowNotification) {
+          // setInterval(() => {
+            // Get the stored time to show the notification from local storage
+            const storedTime = localStorage.getItem('timeToShowNotification');
+            // Get the current time
+            const currentTime = new Date();
+            // Check if the current time matches the stored time
+            if (currentTime.toLocaleTimeString() === storedTime) {
+              // Show the notification
+              showNotification('test', 'body-test', '/');
+            }
+            console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
+            
+          // }, 1000); // 1000 milliseconds = 1 second
+        }
+        else{
+          console.log('no time stored in local storage!');
+          const currentTime = new Date();
+          localStorage.setItem('timeToShowNotification',currentTime.toLocaleTimeString());
+        };
+
     }, 1000)
 
 
