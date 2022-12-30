@@ -121,14 +121,16 @@ self.addEventListener('notificationclick', function (event)
 
 
 
+
+
   // Register the service worker
   // navigator.serviceWorker.register('/').then((registration: any) => {
-    console.log('Service worker registered by service-worker.tsx');
-    // Check if the user has granted permission to show notifications
-    Notification.requestPermission().then((permission: any) => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted');
-        // Check if there is a time stored in local storage
+    // console.log('Service worker registered by service-worker.tsx');
+    // // Check if the user has granted permission to show notifications
+    // Notification.requestPermission().then((permission: any) => {
+    //   if (permission === 'granted') {
+    //     console.log('Notification permission granted');
+    //     // Check if there is a time stored in local storage
         const timeToShowNotification = localStorage.getItem('timeToShowNotification');
         if (timeToShowNotification) {
           setInterval(() => {
@@ -144,14 +146,15 @@ self.addEventListener('notificationclick', function (event)
             console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
             
           }, 1000); // 1000 milliseconds = 1 second
+        };
           
           // Use the PushManager API to schedule the push event to be delivered at the specified time
           // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
           // console.log(`Push event scheduled for ${timeToShowNotification}`);
-        }
-      } else {
-        console.log('Notification permission denied');
-      }
-    });
-  // });
+  //       }
+  //     } else {
+  //       console.log('Notification permission denied');
+  //     }
+  //   });
+  // // });
 
