@@ -149,10 +149,11 @@ setInterval(async () => {
     // Make sure notificationTime is an instance of Date
     if (notificationTime instanceof Date) {
       // Compare the current time with the notification time
-      
+      console.log('# compare: '+ currentTime +' with: '+ notificationTime.getTime());
       if (currentTime.getTime() >= notificationTime.getTime()) {
         // Show the notification if it's time
         showNotification('test', 'body-test', '/');
+        console.log("########## show notification ##########");
       }
     }
   } catch (error) {
