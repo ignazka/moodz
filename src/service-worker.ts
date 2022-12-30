@@ -136,32 +136,32 @@ self.addEventListener('activate', (event) => {
 
 
 setInterval(async () => {
-  const currentTime = new Date();
   try {
     // Open the IndexedDB
+    console.log('Opening IndexedDB');
     const db = await openDB('notification-db', 1);
 
     // Get the notification time from the store
+    console.log('Retrieving notification time from store');
     const tx = db.transaction('notification-time', 'readonly');
-    const notificationTime = tx.store.get('time');
+    const notificationTime = await tx.store.get('time');
     await tx.done;
-    console.log('compare: '+ currentTime +' with: '+ notificationTime);
-    // Make sure notificationTime is an instance of Date
-    if (notificationTime instanceof Date) {
-      // Compare the current time with the notification time
-      console.log('# compare: '+ currentTime +' with: '+ notificationTime.getTime());
-      if (currentTime.getTime() >= notificationTime.getTime()) {
-        // Show the notification if it's time
-        showNotification('test', 'body-test', '/');
-        console.log("########## show notification ##########");
-      }
+
+    console.log(`Retrieved notification time: ${notificationTime}`);
+
+    // Compare the current time with the notification time
+    const currentTime = new Date();
+    if (currentTime.getHours() >= notificationTime.getHours() && currentTime.getMinutes() >= notificationTime.getMinutes()) {
+      // Show the notification if it's time
+      showNotification('test', 'body-test', '/');
     }
   } catch (error) {
     console.error(error);
     // Display an error message to the user here, if desired
   }
-  
 }, 1000); // Check every minute
+
+
 
 
 
