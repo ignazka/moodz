@@ -14,7 +14,8 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-import {showNotification} from './components/notification-utils';
+import { openDB } from 'idb';
+import {showNotification, setNotificationTime} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -123,12 +124,43 @@ self.addEventListener('notificationclick', function (event)
 
 self.addEventListener('activate', (event) => {
   console.log('Service worker activated');
-  window.localStorage.setItem('timeToShowNotification', '12:00:00');
+  
+  setNotificationTime(new Date());
   console.log('local storage set');
-  setInterval(() => {
-    console.log('Logging message every second');
-  }, 1000);
+ 
 });
+
+
+
+// Check the notification time every minute
+
+
+setInterval(async () => {
+  try {
+    // Open the IndexedDB
+    const db = await openDB('notification-db', 1);
+
+    // Get the notification time from the store
+    const tx = db.transaction('notification-time', 'readonly');
+    const notificationTime = tx.store.get('time');
+    await tx.done;
+
+    // Make sure notificationTime is an instance of Date
+    if (notificationTime instanceof Date) {
+      // Compare the current time with the notification time
+      const currentTime = new Date();
+      if (currentTime.getTime() >= notificationTime.getTime()) {
+        // Show the notification if it's time
+        showNotification('test', 'body-test', '/');
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    // Display an error message to the user here, if desired
+  }
+}, 60000); // Check every minute
+
+
 
 
   // Register the service worker
@@ -141,7 +173,9 @@ self.addEventListener('activate', (event) => {
     //     // Check if there is a time stored in local storage
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    
+
+
+    /* -----------
     setInterval(() => {
       console.log('Hello from the service worker!')
       
@@ -169,7 +203,7 @@ self.addEventListener('activate', (event) => {
 
     }, 1000);
 
-
+*/
 
 
 

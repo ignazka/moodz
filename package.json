@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.14",
     "axios": "^0.26.1",
     "firebase": "^9.6.11",
+    "idb": "^7.1.1",
     "postcss": "^8.4.12",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^7.4.3",

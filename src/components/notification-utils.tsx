@@ -1,4 +1,10 @@
+import { openDB } from 'idb';
+
+
 // Function to be called when the values are saved
+
+
+
 export const onSave = (hours: number, minutes: number, seconds: number) => {
   // Set the time to show the notification
   const sheduleNotification: Date = new Date();
@@ -6,6 +12,7 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
   sheduleNotification.setMinutes(minutes);
   sheduleNotification.setSeconds(seconds);
 //   console.log(sheduleNotification.toLocaleTimeString());
+setNotificationTime(sheduleNotification);
 
   localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
@@ -32,6 +39,20 @@ export const onSave = (hours: number, minutes: number, seconds: number) => {
 //         }
 //     }
 //   };
+
+export async function setNotificationTime(notificationTime: Date) {
+    const db = await openDB('notification-db', 1, {
+      upgrade(db) {
+        // Create a store for the notification time
+        db.createObjectStore('notification-time');
+      },
+    });
+  
+    // Save the notification time to the store
+    const tx = db.transaction('notification-time', 'readwrite');
+    tx.store.put(notificationTime, 'time');
+    await tx.done;
+  }
 
 
 export const showNotification = (title: string, body: string, imageUrl: string) => {
