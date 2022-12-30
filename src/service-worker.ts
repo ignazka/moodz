@@ -158,7 +158,7 @@ setInterval(async () => {
     console.error(error);
     // Display an error message to the user here, if desired
   }
-}, 60000); // Check every minute
+}, 1000); // Check every minute
 
 
 
