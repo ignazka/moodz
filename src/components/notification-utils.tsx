@@ -40,48 +40,45 @@ setNotificationTime(sheduleNotification);
 //     }
 //   };
 
-export async function setNotificationTime(notificationTime: Date) {
-    const db = await openDB('notification-db', 1, {
-      upgrade(db) {
-        // Create a store for the notification time
-        db.createObjectStore('notification-time');
-      },
-    });
-  
-    // Save the notification time to the store
-    const tx = db.transaction('notification-time', 'readwrite');
-    tx.store.put(notificationTime, 'time');
-    await tx.done;
-  }
 
+export const setNotificationTime = async (time: Date) => {
+    try {
+      // Open the IndexedDB
+      const db = await openDB('notification-db', 1, {
+        upgrade(db) {
+          // Create the 'notification-time' object store
+          db.createObjectStore('notification-time');
+        },
+      });
+  
+      // Add the notification time to the store
+      const tx = db.transaction('notification-time', 'readwrite');
+      tx.store.put('time', time);
+      await tx.done;
+    } catch (error) {
+      console.error(error);
+      // Display an error message to the user here, if desired
+    }
+  };
 
 export const showNotification = (title: string, body: string, imageUrl: string) => {
-
-    // Check if the Push API and the Notification API are supported by the browser
-    // if ('PushManager' in window && 'Notification' in window) {
-      // Check if the user has granted permission to show notifications
-    //   const permission = await Notification.requestPermission();
-      Notification.requestPermission().then((permission: any) => {
-        console.log('permission',permission);
-        if (permission === 'granted') {
-          console.log('Notification permission granted' );
-          // Define the options for the notification
-          const notificationOptions = {
-            body: body,
-            vibrate: [200, 100, 200],
-            image: imageUrl,
-            data: {
-              url: '/', // The URL to open when the user clicks on the notification
-            },
-          };
-          // Create the notification
-          new Notification(title, notificationOptions);
-        } else {
-          console.log('Notification permission denied');
-        }
-      });
-    // } else {
-    //   console.log('Push and/or Notification API not supported');
-    // }
-  };
-//   console.log(showNotification);
+  Notification.requestPermission().then((permission: any) => {
+    console.log('permission',permission);
+    if (permission === 'granted') {
+      console.log('Notification permission granted' );
+      // Define the options for the notification
+      const notificationOptions = {
+        body: body,
+        vibrate: [200, 100, 200],
+        image: imageUrl,
+        data: {
+          url: '/', // The URL to open when the user clicks on the notification
+        },
+      };
+      // Create the notification
+      new Notification(title, notificationOptions);
+    } else {
+      console.log('Notification permission denied');
+    }
+  });
+};

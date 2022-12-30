@@ -99,22 +99,7 @@ self.addEventListener('notificationclick', function (event)
     // window.location.reload();
     self.clients.openWindow('/');
     
-    // event.waitUntil(
-    //     self.clients.matchAll().then(matchedClients =>
-    //     {
-    //         for (let client of matchedClients)
-    //         {
-    //             if (client.url.indexOf(rootUrl) >= 0)
-    //             {
-    //               console.log("client.url",client.url);
-    //                 // return client.focus();
-    //             }
-    //         }
-    //         return self.clients.openWindow(rootUrl);
-
-    //         // return self.clients.openWindow(rootUrl).then(function (client) { client.focus(); });
-    //     })
-    // );
+ 
 });
 
 
@@ -122,139 +107,34 @@ self.addEventListener('notificationclick', function (event)
 //by chatbot
 
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', () => {
   console.log('Service worker activated');
+
+  // Set the notification time to 12:00:00 every day
+  setNotificationTime(new Date('12:00:00'));
+
+  // Check every minute if it's time to show the notification
+  setInterval(async () => {
+    try {
+      // Open the IndexedDB
+      const db = await openDB('notification-db', 1);
   
-  setNotificationTime(new Date());
-  console.log('local storage set');
- 
-});
-
-
-
-// Check the notification time every minute
-
-
-setInterval(async () => {
-  try {
-    // Open the IndexedDB
-    console.log('Opening IndexedDB');
-    const db = await openDB('notification-db', 1);
-
-    // Get the notification time from the store
-    console.log('Retrieving notification time from store');
-    const tx = db.transaction('notification-time', 'readonly');
-    const notificationTime = await tx.store.get('time');
-    await tx.done;
-
-    console.log(`Retrieved notification time: ${notificationTime}`);
-
-    // Compare the current time with the notification time
-    const currentTime = new Date();
-    if (currentTime.getHours() >= notificationTime.getHours() && currentTime.getMinutes() >= notificationTime.getMinutes()) {
-      // Show the notification if it's time
-      showNotification('test', 'body-test', '/');
+      // Get the notification time from the store
+      const tx = db.transaction('notification-time', 'readonly');
+      const notificationTime = await tx.store.get('time');
+      await tx.done;
+  
+      // Compare the current time with the notification time
+      const currentTime = new Date();
+      const [notificationHour, notificationMinute] = notificationTime.split(':');
+      if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
+        // Show the notification if it's time
+        showNotification('test', 'body-test', '/');
+      }
+    } catch (error) {
+      console.error(error);
+      // Display an error message to the user here, if desired
     }
-  } catch (error) {
-    console.error(error);
-    // Display an error message to the user here, if desired
-  }
-}, 1000); // Check every minute
-
-
-
-
-
-
-  // Register the service worker
-  // navigator.serviceWorker.register('/').then((registration: any) => {
-    // console.log('Service worker registered by service-worker.tsx');
-    // // Check if the user has granted permission to show notifications
-    // Notification.requestPermission().then((permission: any) => {
-    //   if (permission === 'granted') {
-    //     console.log('Notification permission granted');
-    //     // Check if there is a time stored in local storage
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-
-    /* -----------
-    setInterval(() => {
-      console.log('Hello from the service worker!')
-      
-      const timeToShowNotification = window.localStorage.getItem('timeToShowNotification');
-        if (timeToShowNotification) {
-          // setInterval(() => {
-            // Get the stored time to show the notification from local storage
-            const storedTime = window.localStorage.getItem('timeToShowNotification');
-            // Get the current time
-            const currentTime = new Date();
-            // Check if the current time matches the stored time
-            if (currentTime.toLocaleTimeString() === storedTime) {
-              // Show the notification
-              showNotification('test', 'body-test', '/');
-            }
-            console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
-            
-          // }, 1000); // 1000 milliseconds = 1 second
-        }
-        else{
-          console.log('no time stored in local storage!');
-          const currentTime = new Date();
-          window.localStorage.setItem('timeToShowNotification', currentTime.toLocaleTimeString());
-        };
-
-    }, 1000);
-
-*/
-
-
-
-    // const checkTimes = ()=>{
-    //     const timeToShowNotification = localStorage.getItem('timeToShowNotification');
-    //     if (timeToShowNotification) {
-    //       setInterval(() => {
-    //         // Get the stored time to show the notification from local storage
-    //         const storedTime = localStorage.getItem('timeToShowNotification');
-    //         // Get the current time
-    //         const currentTime = new Date();
-    //         // Check if the current time matches the stored time
-    //         if (currentTime.toLocaleTimeString() === storedTime) {
-    //           // Show the notification
-    //           showNotification('test', 'body-test', '/');
-    //         }
-    //         console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
-            
-    //       }, 1000); // 1000 milliseconds = 1 second
-    //     }
-    //     else{
-    //       console.log('no time stored in local storage!');
-    //       const currentTime = new Date();
-    //       localStorage.setItem('timeToShowNotification',currentTime.toLocaleTimeString());
-    //     };
-    //   };  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          // Use the PushManager API to schedule the push event to be delivered at the specified time
-          // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
-          // console.log(`Push event scheduled for ${timeToShowNotification}`);
-  //       }
-  //     } else {
-  //       console.log('Notification permission denied');
-  //     }
-  //   });
-  // // });
-
+  }, 60000); // Check every minute
+  
+});
