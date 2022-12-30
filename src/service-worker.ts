@@ -14,7 +14,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-//import {showNotification} from './components/notification-utils';
+import {showNotification} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -115,3 +115,43 @@ self.addEventListener('notificationclick', function (event)
     //     })
     // );
 });
+
+
+//by chatbot
+
+
+
+  // Register the service worker
+  // navigator.serviceWorker.register('/').then((registration: any) => {
+    console.log('Service worker registered by service-worker.tsx');
+    // Check if the user has granted permission to show notifications
+    Notification.requestPermission().then((permission: any) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted');
+        // Check if there is a time stored in local storage
+        const timeToShowNotification = localStorage.getItem('timeToShowNotification');
+        if (timeToShowNotification) {
+          setInterval(() => {
+            // Get the stored time to show the notification from local storage
+            const storedTime = localStorage.getItem('timeToShowNotification');
+            // Get the current time
+            const currentTime = new Date();
+            // Check if the current time matches the stored time
+            if (currentTime.toLocaleTimeString() === storedTime) {
+              // Show the notification
+              showNotification('test', 'body-test', '/');
+            }
+            console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
+            
+          }, 1000); // 1000 milliseconds = 1 second
+          
+          // Use the PushManager API to schedule the push event to be delivered at the specified time
+          // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
+          // console.log(`Push event scheduled for ${timeToShowNotification}`);
+        }
+      } else {
+        console.log('Notification permission denied');
+      }
+    });
+  // });
+
