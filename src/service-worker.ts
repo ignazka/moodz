@@ -131,6 +131,9 @@ self.addEventListener('notificationclick', function (event)
     //   if (permission === 'granted') {
     //     console.log('Notification permission granted');
     //     // Check if there is a time stored in local storage
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const checkTimes = ()=>{
         const timeToShowNotification = localStorage.getItem('timeToShowNotification');
         if (timeToShowNotification) {
           setInterval(() => {
@@ -146,8 +149,13 @@ self.addEventListener('notificationclick', function (event)
             console.log('compare: '+currentTime.toLocaleTimeString()+' with: '+ storedTime);
             
           }, 1000); // 1000 milliseconds = 1 second
+        }
+        else{
+          console.log('no time stored in local storage!');
+          const currentTime = new Date();
+          localStorage.setItem('timeToShowNotification',currentTime.toLocaleTimeString());
         };
-          
+      };  
           // Use the PushManager API to schedule the push event to be delivered at the specified time
           // registration.pushManager.schedulePush({}, new Date(timeToShowNotification).getTime());
           // console.log(`Push event scheduled for ${timeToShowNotification}`);
