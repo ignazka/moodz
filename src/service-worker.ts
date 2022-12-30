@@ -123,7 +123,7 @@ self.addEventListener('notificationclick', function (event)
 
 self.addEventListener('activate', (event) => {
   console.log('Service worker activated');
-  localStorage.setItem('timeToShowNotification', '12:00:00');
+  window.localStorage.setItem('timeToShowNotification', '12:00:00');
   console.log('local storage set');
   setInterval(() => {
     console.log('Logging message every second');
@@ -145,11 +145,11 @@ self.addEventListener('activate', (event) => {
     setInterval(() => {
       console.log('Hello from the service worker!')
       
-      const timeToShowNotification = localStorage.getItem('timeToShowNotification');
+      const timeToShowNotification = window.localStorage.getItem('timeToShowNotification');
         if (timeToShowNotification) {
           // setInterval(() => {
             // Get the stored time to show the notification from local storage
-            const storedTime = localStorage.getItem('timeToShowNotification');
+            const storedTime = window.localStorage.getItem('timeToShowNotification');
             // Get the current time
             const currentTime = new Date();
             // Check if the current time matches the stored time
@@ -164,7 +164,7 @@ self.addEventListener('activate', (event) => {
         else{
           console.log('no time stored in local storage!');
           const currentTime = new Date();
-          localStorage.setItem('timeToShowNotification', currentTime.toLocaleTimeString());
+          window.localStorage.setItem('timeToShowNotification', currentTime.toLocaleTimeString());
         };
 
     }, 1000);
