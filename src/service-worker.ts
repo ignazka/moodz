@@ -133,9 +133,10 @@ self.addEventListener('notificationclick', function (event)
     //     // Check if there is a time stored in local storage
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    localStorage.setItem('timeToShowNotification', '12:00:00');
     setInterval(() => {
       console.log('Hello from the service worker!')
-      localStorage.setItem('timeToShowNotification', '12:00:00');
+      
       const timeToShowNotification = localStorage.getItem('timeToShowNotification');
         if (timeToShowNotification) {
           // setInterval(() => {
