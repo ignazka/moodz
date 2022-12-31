@@ -122,6 +122,8 @@ self.addEventListener('activate', () => {
       // Get the notification time from the store
       const tx = db.transaction('notification-time', 'readonly');
       const notificationTime = await tx.store.get('time');
+      
+      console.log('notificationTime',notificationTime);
       await tx.done;
   
       // Compare the current time with the notification time

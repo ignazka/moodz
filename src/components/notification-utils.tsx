@@ -57,7 +57,7 @@ export const setNotificationTime = async (time: any) => {
       // Add the notification time to the store
       console.log('write into db');
       const tx = db.transaction('notification-time', 'readwrite');
-      tx.store.put('time', time);
+      tx.store.put(time,'time');
       console.log('write ', time, 'into db');
       await tx.done;
       console.log('time saved');
