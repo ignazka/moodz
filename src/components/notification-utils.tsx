@@ -92,16 +92,32 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 //   });
 };*/
 
-export const showNotification = (_title: string, _body: string, _imageUrl: string) => {
-    // Define the options for the notification
-    /*const notificationOptions = {
-      body: body,
-      vibrate: [200, 100, 200],
-      imageUrl: imageUrl,
-      data: {
-        url: '/', // The URL to open when the user clicks on the notification
-      },
-    };*/
-    // Show the notification
-    showNotification('bla','test','/');
+// export const showNotification = (_title: string, _body: string, _imageUrl: string) => {
+//     // Define the options for the notification
+//     /*const notificationOptions = {
+//       body: body,
+//       vibrate: [200, 100, 200],
+//       imageUrl: imageUrl,
+//       data: {
+//         url: '/', // The URL to open when the user clicks on the notification
+//       },
+//     };*/
+//     // Show the notification
+//     showNotification('bla','test','/');
+//   };
+
+export const showNotification = async (_title: string, _body: string, _imageUrl: string) => {
+    console.log("sendNotification executed");
+  
+    if (Notification.permission === 'granted') {
+      showNotification('MOODZ', 'what is your mood right now?', '/');
+    } else {
+        if (Notification.permission !== 'denied') {
+            const permission = await Notification.requestPermission();
+  
+            if (permission === 'granted') {
+                showNotification('bla','test','/');
+            }
+        }
+    }
   };
