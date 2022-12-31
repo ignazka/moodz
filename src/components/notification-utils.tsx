@@ -68,9 +68,12 @@ export const setNotificationTime = async (time: any) => {
   };
 
 export const showNotification = (title: string, body: string, imageUrl: string) => {
-  Notification.requestPermission((permission) => {
+    Notification.requestPermission().then((permission) => {
     console.log('permission',permission);
-    if (permission === 'granted') {
+    // If the user accepts, let's create a notification
+    if (permission === "granted") {
+        new Notification("Hi there!");
+    
       console.log('Notification permission granted' );
       // Define the options for the notification
       const notificationOptions = {
