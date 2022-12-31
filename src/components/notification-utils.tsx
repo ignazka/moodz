@@ -66,7 +66,7 @@ export const setNotificationTime = async (time: any) => {
       // Display an error message to the user here, if desired
     }
   };
-
+/*
 export const showNotification = (title: string, body: string, imageUrl: string) => {
     // Notification.requestPermission().then((permission) => {
     // console.log('permission',permission);
@@ -90,4 +90,18 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
     //   console.log('Notification permission denied');
     // }
 //   });
-};
+};*/
+
+export const showNotification = (title: string, body: string, imageUrl: string) => {
+    // Define the options for the notification
+    const notificationOptions = {
+      body: body,
+      vibrate: [200, 100, 200],
+      imageUrl: imageUrl,
+      data: {
+        url: '/', // The URL to open when the user clicks on the notification
+      },
+    };
+    // Show the notification
+    showNotification('bla','/',notificationOptions);
+  };

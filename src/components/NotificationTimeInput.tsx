@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, Box } from '@mui/material';
-import {showNotification,setNotificationTime} from './notification-utils';
+import {showNotification, setNotificationTime} from './notification-utils';
 
 // type Props = {
 //   onSave: (hours: number, minutes: number, seconds: number) => void;
@@ -53,6 +53,10 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
       </FormControl>
       <Button variant="contained" color="primary" onClick={handleSave}>
         Save
+      </Button>
+
+      <Button variant="contained" color="secondary" onClick={() => showNotification}>
+        show notification
       </Button>
     </Box>
   );
