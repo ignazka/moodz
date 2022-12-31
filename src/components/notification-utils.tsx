@@ -94,14 +94,14 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 
 export const showNotification = (title: string, body: string, imageUrl: string) => {
     // Define the options for the notification
-    const notificationOptions = {
+    /*const notificationOptions = {
       body: body,
       vibrate: [200, 100, 200],
       imageUrl: imageUrl,
       data: {
         url: '/', // The URL to open when the user clicks on the notification
       },
-    };
+    };*/
     // Show the notification
-    showNotification('bla','/',notificationOptions);
+    showNotification('bla','test','/');
   };

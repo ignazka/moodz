@@ -15,7 +15,7 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { openDB } from 'idb';
-import {showNotification, setNotificationTime} from './components/notification-utils';
+import {setNotificationTime} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
