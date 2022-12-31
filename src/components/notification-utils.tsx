@@ -109,7 +109,7 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 export const showNotification = async (_title: string, _body: string, _imageUrl: string) => {
     console.log("sendNotification executed");
   
-    if (Notification.permission === 'granted') {
+    if ( Notification.permission === 'granted') {
       showNotification('MOODZ', 'what is your mood right now?', '/');
     } else {
         if (Notification.permission !== 'denied') {
