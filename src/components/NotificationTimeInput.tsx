@@ -24,8 +24,8 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
     sheduleNotification.setMinutes(Number(minutes));
     sheduleNotification.setSeconds(Number(seconds));
     console.log(sheduleNotification.toLocaleTimeString());
-    await setNotificationTime(sheduleNotification);
-    
+    await setNotificationTime(sheduleNotification.toLocaleTimeString());
+
     showNotification('moodz', 'settings saved', '/');
   };
 

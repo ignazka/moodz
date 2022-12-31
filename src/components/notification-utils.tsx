@@ -12,7 +12,7 @@ export const onSave = (hours: String, minutes: String, seconds: String) => {
     sheduleNotification.setMinutes(Number(minutes));
     sheduleNotification.setSeconds(Number(seconds));
     console.log(sheduleNotification.toLocaleTimeString());
-    setNotificationTime(sheduleNotification);
+    setNotificationTime(sheduleNotification.toLocaleTimeString());
 
     localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
@@ -41,7 +41,7 @@ export const onSave = (hours: String, minutes: String, seconds: String) => {
 //   };
 
 
-export const setNotificationTime = async (time: Date) => {
+export const setNotificationTime = async (time: any) => {
     console.log('time',time);
     try {
       // Open the IndexedDB
