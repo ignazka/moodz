@@ -92,7 +92,7 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 //   });
 };*/
 
-export const showNotification = (title: string, body: string, imageUrl: string) => {
+export const showNotification = (_title: string, _body: string, _imageUrl: string) => {
     // Define the options for the notification
     /*const notificationOptions = {
       body: body,
