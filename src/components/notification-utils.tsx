@@ -5,18 +5,18 @@ import { openDB } from 'idb';
 
 
 
-export const onSave = (hours: number, minutes: number, seconds: number) => {
+export const onSave = (hours: String, minutes: String, seconds: String) => {
   // Set the time to show the notification
-  const sheduleNotification: Date = new Date();
-  sheduleNotification.setHours(hours);
-  sheduleNotification.setMinutes(minutes);
-  sheduleNotification.setSeconds(seconds);
-//   console.log(sheduleNotification.toLocaleTimeString());
-setNotificationTime(sheduleNotification);
+    const sheduleNotification: Date = new Date();
+    sheduleNotification.setHours(Number(hours));
+    sheduleNotification.setMinutes(Number(minutes));
+    sheduleNotification.setSeconds(Number(seconds));
+    console.log(sheduleNotification.toLocaleTimeString());
+    setNotificationTime(sheduleNotification);
 
-  localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
+    localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
-  console.log(`Notification time changed to ${sheduleNotification}`);
+    console.log(`Notification time changed to ${sheduleNotification}`);
 
   // Check if the Push API is supported by the browser
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,19 +42,25 @@ setNotificationTime(sheduleNotification);
 
 
 export const setNotificationTime = async (time: Date) => {
+    console.log('time',time);
     try {
       // Open the IndexedDB
+      console.log('open db');
       const db = await openDB('notification-db', 1, {
         upgrade(db) {
           // Create the 'notification-time' object store
           db.createObjectStore('notification-time');
+          console.log('db created');
         },
       });
   
       // Add the notification time to the store
+      console.log('write into db');
       const tx = db.transaction('notification-time', 'readwrite');
       tx.store.put('time', time);
+      console.log('write ', time, 'into db');
       await tx.done;
+      console.log('time saved');
     } catch (error) {
       console.error(error);
       // Display an error message to the user here, if desired

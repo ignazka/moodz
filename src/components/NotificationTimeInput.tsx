@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, Box } from '@mui/material';
-import {showNotification} from './notification-utils';
+import {showNotification,setNotificationTime} from './notification-utils';
 
+// type Props = {
+//   onSave: (hours: number, minutes: number, seconds: number) => void;
+// };
 type Props = {
-  onSave: (hours: number, minutes: number, seconds: number) => void;
-};
+    onSave: (hours: String, minutes: String, seconds: String) => void;
+  };
 
 const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
-  const [hours, setHours] = useState<number | string>('');
-  const [minutes, setMinutes] = useState<number | string>('');
-  const [seconds, setSeconds] = useState<number | string>('');
+  const [hours, setHours] = useState<string>('');
+  const [minutes, setMinutes] = useState<string>('');
+  const [seconds, setSeconds] = useState<string>('');
 
-  const handleSave = () => {
+   const handleSave = async () => {
     // Convert the values to numbers and call the onSave function
-    onSave(Number(hours), Number(minutes), Number(seconds));
+    // onSave(Number(hours), Number(minutes), Number(seconds));
+    // onSave(hours, minutes, seconds);
+    
+    const sheduleNotification: Date = new Date();
+    sheduleNotification.setHours(Number(hours));
+    sheduleNotification.setMinutes(Number(minutes));
+    sheduleNotification.setSeconds(Number(seconds));
+    console.log(sheduleNotification.toLocaleTimeString());
+    await setNotificationTime(sheduleNotification);
+    
     showNotification('moodz', 'settings saved', '/');
   };
 
