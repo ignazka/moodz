@@ -131,7 +131,8 @@ self.addEventListener('activate', () => {
       const [notificationHour, notificationMinute] = notificationTime.split(':');
       if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
         // Show the notification if it's time
-        showNotification('test', 'body-test', '/');
+       
+        self.registration.showNotification('test');
       }
     } catch (error) {
       console.error(error);
