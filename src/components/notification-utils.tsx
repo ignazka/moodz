@@ -11,10 +11,12 @@ export const onSave = (hours: String, minutes: String, seconds: String) => {
     sheduleNotification.setHours(Number(hours));
     sheduleNotification.setMinutes(Number(minutes));
     sheduleNotification.setSeconds(Number(seconds));
-    console.log(sheduleNotification.toLocaleTimeString());
+
+    console.log('sheduleNotification.toLocaleTimeString()',sheduleNotification.toLocaleTimeString());
+
     setNotificationTime(sheduleNotification.toLocaleTimeString());
 
-    localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
+    // localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
     console.log(`Notification time changed to ${sheduleNotification}`);
 

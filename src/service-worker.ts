@@ -134,7 +134,7 @@ self.addEventListener('activate', () => {
       if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
         // Show the notification if it's time
        
-        self.registration.showNotification('test');
+        // self.registration.showNotification('test');
         showNotification('sw title','blabla body','/');
       }
     } catch (error) {
