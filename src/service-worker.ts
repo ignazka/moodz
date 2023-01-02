@@ -122,15 +122,15 @@ const title = 'How is your MOOD level?';
 const payload = {
   body
 }
-  if ('showNotification' in registration) {
+  // if ('showNotification' in registration) {
       self.registration.showNotification(title, payload);
       // console.log(count)
 
-  } else {
+  // } else {
       new Notification(title, payload);
       // console.log(count)
 
-  }
+  // }
 }
 
 
