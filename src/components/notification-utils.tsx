@@ -156,6 +156,7 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 //   };
 
 const showNotification = async (body: any) => {
+  console.log("showNotification");
 
     const registration = await navigator.serviceWorker.getRegistration();
 

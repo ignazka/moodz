@@ -57,7 +57,7 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
         Save
       </Button>
 
-      <Button variant="contained" color="secondary" onClick={() => {sendNotification(); console.log('show notif');}}>
+      <Button variant="contained" color="secondary" onClick={() => {sendNotification()}}>
         show notification
       </Button>
     </Box>
