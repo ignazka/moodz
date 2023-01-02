@@ -16,7 +16,7 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 // import { openDB } from 'idb';
-import {getNotificationTime, setNotificationTime} from './components/notification-utils';
+import {checkNotificationTime, setNotificationTime} from './components/notification-utils';
 
 
 declare const self: ServiceWorkerGlobalScope;
@@ -114,8 +114,8 @@ self.addEventListener('activate', async () => {
 
   // Check every minute if it's time to show the notification
   setInterval(async () => {
-    const notificationTime = await getNotificationTime();
-    console.log(`The notification time is: ${notificationTime}`);
+    await checkNotificationTime();
+    console.log(`service-worker tick`);
   }, 5000);
 });
 
