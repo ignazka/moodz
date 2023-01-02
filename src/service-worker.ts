@@ -110,14 +110,11 @@ async function showNotification(body: any) {
   const registration = self.registration;
 
     if (registration) {
-      
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-          showNotification('granted');
-          // setCount(count + 1)
 
-     
-const title = 'How is your MOOD level?';
+      await Notification.requestPermission().then((permission: NotificationPermission) => {
+        if (permission === 'granted') {
+          console.log('The user granted permission to show notifications');
+          const title = 'How is your MOOD level?';
 
 
 const payload = {
@@ -125,14 +122,26 @@ const payload = {
 };
   // if ('showNotification' in registration) {
       registration.showNotification(title, payload);
-      // console.log(count)
+        } else {
+          console.log('The user did not grant permission to show notifications');
+        }
+      });
+      
+//       const permission = await Notification.requestPermission();
+//       if ( permission === 'granted') {
+//           showNotification('granted');
+//           // setCount(count + 1)
 
-  // } else {
-      new Notification(title, payload);
-      // console.log(count)
+     
 
-  // }
-}
+//       // console.log(count)
+
+//   // } else {
+//       // new Notification(title, payload);
+//       // console.log(count)
+
+//   // }
+// }
 
     }
 };
