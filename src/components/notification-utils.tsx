@@ -13,9 +13,13 @@ export async function setNotificationTime(time: string) {
       db.createObjectStore('notification-time');
     }
 
-    // Save the notification time to the store
+    // Start a "readwrite" transaction
     const tx = db.transaction('notification-time', 'readwrite');
+
+    // Save the notification time to the store
     tx.store.put(time, 'time');
+
+    // Wait for the transaction to complete before returning
     await tx.done;
   } catch (error) {
     console.error(error);
