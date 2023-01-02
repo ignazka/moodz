@@ -1,5 +1,5 @@
 import { openDB, IDBPDatabase } from 'idb';
-import { showNotification } from '../service-worker';
+
 
 // create a function to save the notification time to the IndexedDB
 export async function setNotificationTime(time: string) {
@@ -64,7 +64,7 @@ export async function checkNotificationTime() {
     if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
       // Show the notification if it's time
       // sendNotification();
-      showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+    return true;
     }
   } catch (error) {
     console.error(error);

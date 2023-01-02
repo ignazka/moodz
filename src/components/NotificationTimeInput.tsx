@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, Box } from '@mui/material';
 import {setNotificationTime} from './notification-utils';
-import { showNotification } from '../service-worker';
 
 // type Props = {
 //   onSave: (hours: number, minutes: number, seconds: number) => void;
@@ -58,7 +57,7 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
         Save
       </Button>
 
-      <Button variant="contained" color="secondary" onClick={() => {showNotification('It is time for your notification!', { body: 'This is the body of the notification' });}}>
+      <Button variant="contained" color="secondary" onClick={() => {console.log("button click");}}>
         show notification
       </Button>
     </Box>
