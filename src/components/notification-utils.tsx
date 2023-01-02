@@ -223,7 +223,7 @@ const showNotification = async (body: any) => {
         }
     }
 };
-
+/*
   export const sendNotification = () => {
     console.log("sendNotification executed");
 
@@ -232,7 +232,7 @@ const showNotification = async (body: any) => {
         if (result === 'granted') {
             showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
         }else { 
-            if (Notification.permission !== 'denied') {
+            if (result !== 'denied') {
                 const permission = await Notification.requestPermission();
     
                 if (permission === 'granted') {
@@ -244,6 +244,28 @@ const showNotification = async (body: any) => {
         
     });
 
+};*/
+
+//v2
+
+export const sendNotification = () => {
+  // Check if notifications are supported and the user has granted permission
+  if (!('Notification' in window)) {
+    console.error('This browser does not support notifications');
+  } else if (Notification.permission === 'granted') {
+    // Show the notification
+    new Notification('Its time for your notification!');
+  } else {
+    // Request permission from the user
+    Notification.requestPermission().then((permission: NotificationPermission) => {
+      if (permission === 'granted') {
+        // Show the notification if permission is granted
+        new Notification('Its time for your notification!');
+      } else {
+        console.error('The user did not grant permission to show a notification');
+      }
+    });
+  }
 };
 
    
