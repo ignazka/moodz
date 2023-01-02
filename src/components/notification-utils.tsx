@@ -177,25 +177,28 @@ const showNotification = async (body: any) => {
     }
 };
 
-  export const sendNotification = async () => {
+  export const sendNotification = () => {
     console.log("sendNotification executed");
 
-    Notification.requestPermission().then((result) => {
+    Notification.requestPermission().then(async (result) => {
+
         if (result === 'granted') {
-            showNotification('Notifications are now activated');
-        }
-      });
-
-    if (Notification.permission === 'granted') {
-        showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
-    } else {
-        if (Notification.permission !== 'denied') {
-            const permission = await Notification.requestPermission();
-
-            if (permission === 'granted') {
-                showNotification('Notifications are now activated');
+            showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
+        }else { 
+            if (Notification.permission !== 'denied') {
+                const permission = await Notification.requestPermission();
+    
+                if (permission === 'granted') {
+                    showNotification('Notifications are now activated');
+                }
             }
         }
-    }
+        
+        
+    });
+
 };
+
+   
+
 
