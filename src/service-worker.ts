@@ -136,12 +136,15 @@ self.addEventListener('activate', () => {
        
       // First, check if the browser supports notifications and service workers
       if ('Notification' in self && 'serviceWorker' in navigator) {
+        console.log('Request permission to show notifications');
         // Request permission to show notifications
         Notification.requestPermission().then((permission) => {
           // If the user accepts, show the notification
+          console.log('If the user accepts, show the notification');
           if (permission === 'granted') {
+            console.log('permission granted, show the notification');
             // Define the options for the notification
-            showNotification();
+            showNotification('service worker notification call');
           }
         }).catch((error) => {
           // If an error occurs, log it to the console
