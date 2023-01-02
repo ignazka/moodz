@@ -6,12 +6,14 @@ import { openDB, IDBPDatabase } from 'idb';
 export async function setNotificationTime(time: string) {
   try {
     // Open the IndexedDB
-    const db: IDBPDatabase<any> = await openDB('notification-db', 1);
-
-    // Create the 'notification-time' object store if it doesn't already exist
-    if (!db.objectStoreNames.contains('notification-time')) {
-      db.createObjectStore('notification-time');
-    }
+    const db: IDBPDatabase<any> = await openDB('notification-db', 1, {
+      upgrade(db) {
+        // Create the 'notification-time' object store if it doesn't already exist
+        if (!db.objectStoreNames.contains('notification-time')) {
+          db.createObjectStore('notification-time');
+        }
+      },
+    });
 
     // Start a "readwrite" transaction
     const tx = db.transaction('notification-time', 'readwrite');
