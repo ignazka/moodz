@@ -6,13 +6,15 @@ import {sendNotification, setNotificationTime} from './notification-utils';
 //   onSave: (hours: number, minutes: number, seconds: number) => void;
 // };
 type Props = {
-    onSave: (hours: String, minutes: String, seconds: String) => void;
+   
+    onSave: (hours: String, minutes: String) => void;
+    
   };
 
 const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
   const [hours, setHours] = useState<string>('');
   const [minutes, setMinutes] = useState<string>('');
-  const [seconds, setSeconds] = useState<string>('');
+//   const [seconds, setSeconds] = useState<string>('');
 
    const handleSave = async () => {
     // Convert the values to numbers and call the onSave function
@@ -22,7 +24,7 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
     const sheduleNotification: Date = new Date();
     sheduleNotification.setHours(Number(hours));
     sheduleNotification.setMinutes(Number(minutes));
-    sheduleNotification.setSeconds(Number(seconds));
+    // sheduleNotification.setSeconds(Number(seconds));
     console.log(sheduleNotification.toLocaleTimeString());
     await setNotificationTime(sheduleNotification.toLocaleTimeString());
 
@@ -47,15 +49,15 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
         <InputLabel htmlFor="minutes">Minutes</InputLabel>
         <Input id="minutes" value={minutes} onChange={(e) => setMinutes(e.target.value)} type="number" />
       </FormControl>
-      <FormControl sx={{ paddingBottom: 2 }}>
+      {/* <FormControl sx={{ paddingBottom: 2 }}>
         <InputLabel htmlFor="seconds">Seconds</InputLabel>
         <Input id="seconds" value={seconds} onChange={(e) => setSeconds(e.target.value)} type="number" />
-      </FormControl>
+      </FormControl> */}
       <Button variant="contained" color="primary" onClick={handleSave}>
         Save
       </Button>
 
-      <Button variant="contained" color="secondary" onClick={() => sendNotification}>
+      <Button variant="contained" color="secondary" onClick={() => {sendNotification(); console.log('show notif');}}>
         show notification
       </Button>
     </Box>
