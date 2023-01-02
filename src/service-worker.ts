@@ -106,63 +106,98 @@ self.addEventListener('notificationclick', function (event)
 
 //by chatbot
 
-function showNotification (title:string, body: string, imageUrl?: string) {
-  const notificationOptions = {
-      
-      body: body,
-      vibrate: [200, 100, 200],
-      image: imageUrl,
-      data: {
-        url: '/', // The URL to open when the user clicks on the notification
-      },
-    };
+const showNotification = async (body: any) => {
 
-   Notification.requestPermission().then((permission) => {
-   console.log('permission',permission);
-  // If the user accepts, let's create a notification
-   if (permission === "granted") {
-    new Notification(title, notificationOptions);
+  const registration = await navigator.serviceWorker.getRegistration();
+
   
-    console.log('Notification permission granted' );
-    // Define the options for the notification
-    // const notificationOptions = {
-    //   title: title,
-    //   body: body,
-    //   vibrate: [200, 100, 200],
-    //   image: imageUrl,
-    //   data: {
-    //     url: '/', // The URL to open when the user clicks on the notification
-    //   },
-    // };
-    // Create the notification
-    // new Notification(title);
-  } else {
-    console.log('Notification permission denied');
-  }
-  })
-}
 
-// const sendNotification = async () => {
-//       console.log("sendNotification executed");
-    
-//       if (Notification.permission === 'granted') {
-//         sendNotification('MOODZ', 'what is your mood right now?', '/');
-//       } else {
-//           if (Notification.permission !== 'denied') {
-//               const permission = await Notification.requestPermission();
-    
-//               if (permission === 'granted') {
-//                 sendNotification('test', 'Notifications enabled', '/');
-//               }
-//           }
-//       }
-//     };
+  const title = 'MOODZ: Friendly Reminder.';
+  const img = '/android-icon-192x192.png';
+  const notAct = () => {console.log('code to show more images')};
+
+  const notificationsProperties = {
+      body,
+      icon: img,
+      image: "https://picsum.photos/400",
+      // A badge is an image we display
+      // when there is not enough space to display the notification
+      badge: "https://picsum.photos/300/200",
+      // Direction decides if the notification goes
+      // from left to right, right to left or let the browser decide
+      //  dir: "ltr",
+      // As part of the direct user experience we also have 
+      // Audio- ....
+       silent: false,
+      // ... sensorial
+      vibrate: [400, 100, 400],
+      onshow: () => console.log("We are showing a Notification"),
+      // onerror: () => console.log("There was an error showing a Notification"),
+      // onclose: () => console.log("Closing the Notification"),
+      // Informs the user if a notification replaced a previous one
+      // renotify: null,
+      // If set to true the notification will stick to the screen until the user interacts with it
+      requireInteraction: true,
+      // We'll get into actions later
+      actions: [
+          
+          {
+              action: 'like', 
+              title: '👍Like'},
+          
+          { action: ''+{notAct},
+          title: 'test'
+
+          },
+          
+          
+          ],
+
+  };
+
+  
+
+
+  // const payload = {
+  //     body, icon: img,
+  // };
+  if (registration) {
+      if ('showNotification' in registration) {
+          // alert("show Notif true");
+          console.log("show notif");
+          registration.showNotification(title, notificationsProperties);
+          
+      } else {
+          // let not = new Notification(title, notificationsProperties);
+          // alert("show Notif false");
+          // not.onclick = function() { alert("onclick"); console.log("bla bla "); };
+      }
+  }
+};
+
+
+
+const sendNotification = async () => {
+  console.log("sendNotification executed");
+
+  if (Notification.permission === 'granted') {
+      showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
+  } else {
+      if (Notification.permission !== 'denied') {
+          const permission = await Notification.requestPermission();
+
+          if (permission === 'granted') {
+              showNotification('Notifications are now activated');
+          }
+      }
+  }
+};
 
 
 self.addEventListener('activate', async () => {
 
   // Use the showNotification function to show a notification
-  showNotification("title","body");
+  sendNotification();
 
   console.log('Service worker activated');
   setNotificationTime('10:00');
@@ -170,7 +205,7 @@ self.addEventListener('activate', async () => {
   // Check every minute if it's time to show the notification
   setInterval(async () => {
     if (await checkNotificationTime()){
-      showNotification("It's time","for MOODZ");
+      sendNotification();
     }
     console.log(`service-worker tick`);
   }, 5000);
