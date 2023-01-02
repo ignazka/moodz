@@ -108,22 +108,14 @@ self.addEventListener('notificationclick', function (event)
 
 function showNotification(title: string, options: NotificationOptions) {
   // Check if the Notification API is available
-  if (typeof Notification !== 'undefined') {
+  if (typeof self.registration !== 'undefined') {
     // Check if the user has granted permission to show notifications
-    navigator.permissions.query({name: 'notifications'}).then((permissionStatus: PermissionStatus) => {
-      if (permissionStatus.state === 'granted') {
-        // Create a new notification if permission is granted
-        new Notification(title, options);
-      } else if (permissionStatus.state === 'denied') {
-        console.error('The user has denied permission to show notifications');
+    Notification.requestPermission().then((permission: NotificationPermission) => {
+      if (permission === 'granted') {
+        // Show the notification if permission is granted
+        self.registration.showNotification(title, options);
       } else {
-        // Request permission from the user
-        permissionStatus.onchange = function() {
-          if (permissionStatus.state === 'granted') {
-            // Create a new notification if permission is granted
-            new Notification(title, options);
-          }
-        }
+        console.error('The user did not grant permission to show notifications');
       }
     });
   } else {
