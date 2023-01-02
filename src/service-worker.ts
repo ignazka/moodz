@@ -16,7 +16,7 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 // import { openDB } from 'idb';
-import {setNotificationTime} from './components/notification-utils';
+import {getNotificationTime, setNotificationTime} from './components/notification-utils';
 
 
 declare const self: ServiceWorkerGlobalScope;
@@ -107,18 +107,30 @@ self.addEventListener('notificationclick', function (event)
 
 //by chatbot
 
+
 self.addEventListener('activate', async () => {
   console.log('Service worker activated');
   setNotificationTime('10:00');
 
   // Check every minute if it's time to show the notification
-  setTimeout(async () => {
-    
-    // await checkNotificationTime();
-    // Set the timeout to run again in one minute
-    setTimeout(async () => {
-      console.log("tick");
-    //  await checkNotificationTime();
-    }, 5000);
+  setInterval(async () => {
+    const notificationTime = await getNotificationTime();
+    console.log(`The notification time is: ${notificationTime}`);
   }, 5000);
 });
+
+// self.addEventListener('activate', async () => {
+//   console.log('Service worker activated');
+//   setNotificationTime('10:00');
+
+//   // Check every minute if it's time to show the notification
+//   setTimeout(async () => {
+    
+//     // await checkNotificationTime();
+//     // Set the timeout to run again in one minute
+//     setTimeout(async () => {
+//       console.log("tick");
+//     //  await checkNotificationTime();
+//     }, 5000);
+//   }, 5000);
+// });
