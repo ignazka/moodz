@@ -108,7 +108,7 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 //     showNotification('bla','test','/');
 //   };
 
-export const showNotification = async (_title: string, _body: string, _imageUrl: string) => {
+export const showNotification = async (_title?: string, _body?: string, _imageUrl?: string) => {
     console.log("sendNotification executed");
   
     if ( Notification.permission === 'granted') {

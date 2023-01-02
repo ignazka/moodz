@@ -141,12 +141,7 @@ self.addEventListener('activate', () => {
           // If the user accepts, show the notification
           if (permission === 'granted') {
             // Define the options for the notification
-            const notificationOptions = {
-              body: 'This is the body of the notification',
-              vibrate: [200, 100, 200],
-            };
-            // Create the notification
-            new Notification('Hello, world!', notificationOptions);
+            showNotification();
           }
         }).catch((error) => {
           // If an error occurs, log it to the console
@@ -155,7 +150,7 @@ self.addEventListener('activate', () => {
       }
 
 
-      
+
       }
     } catch (error) {
       console.error(error);
