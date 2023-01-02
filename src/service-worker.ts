@@ -118,7 +118,7 @@ async function showNotification(body: any) {
   const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
   if (permissionState === 'granted') {
     console.log('The user has already granted permission to show notifications');
-    registration.showNotification(title, payload);
+    new Notification(title, payload);
   } else {
     // Request permission to show notifications
     const subscription = await self.registration.pushManager.subscribe({
