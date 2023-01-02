@@ -28,7 +28,7 @@ export async function setNotificationTime(time: string) {
   }
 }
 
-setNotificationTime('10:00');
+
 
 // get the notification time from the IndexedDB
 export async function getNotificationTime() {

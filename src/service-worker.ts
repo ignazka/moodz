@@ -14,7 +14,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { checkNotificationTime} from './components/notification-utils';
+import { checkNotificationTime,setNotificationTime} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -144,7 +144,7 @@ async function showNotification(body: any) {
 
 self.addEventListener('activate', async () => {
 
-
+  setNotificationTime('10:00');
   // Use the showNotification function to show a notification
 showNotification('moodz');
 
