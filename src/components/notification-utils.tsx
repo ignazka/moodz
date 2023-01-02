@@ -180,6 +180,12 @@ const showNotification = async (body: any) => {
   export const sendNotification = async () => {
     console.log("sendNotification executed");
 
+    Notification.requestPermission().then((result) => {
+        if (result === 'granted') {
+            showNotification('Notifications are now activated');
+        }
+      });
+
     if (Notification.permission === 'granted') {
         showNotification('What is your Mood right now? \n Click on this Notification to add a new MOODZ value');
     } else {
@@ -192,3 +198,4 @@ const showNotification = async (body: any) => {
         }
     }
 };
+
