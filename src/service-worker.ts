@@ -14,7 +14,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { checkNotificationTime, setNotificationTime } from './components/notification-utils';
+import { checkNotificationTime} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -107,10 +107,11 @@ self.addEventListener('notificationclick', function (event)
 
 
 function showNotification() {
+  
   Notification.requestPermission((result) => {
     if (result === "granted") {
       navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification("Vibration Sample", {
+        self.registration.showNotification("Vibration Sample", {
           body: "Buzz! Buzz!",
           icon: "../images/touch/chrome-touch-icon-192x192.png",
           vibrate: [200, 100, 200, 100, 200, 100, 200],
@@ -129,15 +130,17 @@ self.addEventListener('activate', async () => {
 showNotification();
 
   console.log('Service worker activated');
-  setNotificationTime('10:00');
+  
 
   // Check every minute if it's time to show the notification
   setInterval(async () => {
+    console.log("setInterval start");
     if (await checkNotificationTime()===true){
+      console.log({checkNotificationTime});
       // Use the showNotification function to show a notification
       showNotification();
     }
-    console.log(`service-worker tick`);
+    console.log("setInterval end");
   }, 5000);
 });
 

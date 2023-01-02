@@ -28,6 +28,8 @@ export async function setNotificationTime(time: string) {
   }
 }
 
+setNotificationTime('10:00');
+
 // get the notification time from the IndexedDB
 export async function getNotificationTime() {
   try {
@@ -49,6 +51,7 @@ export async function getNotificationTime() {
 
 export async function checkNotificationTime() {
   try {
+    console.log("checkNotificationTime");
     // Get the notification time from the IndexedDB
     const notificationTime: any = await getNotificationTime();
 
