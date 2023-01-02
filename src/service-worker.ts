@@ -106,21 +106,19 @@ self.addEventListener('notificationclick', function (event)
 //by chatbot
 
 
-function showNotification(title: string, options: NotificationOptions) {
-  // Check if the Notification API is available
-  if (typeof self.registration !== 'undefined') {
-    // Check if the user has granted permission to show notifications
-    Notification.requestPermission().then((permission: NotificationPermission) => {
-      if (permission === 'granted') {
-        // Show the notification if permission is granted
-        self.registration.showNotification(title, options);
-      } else {
-        console.error('The user did not grant permission to show notifications');
-      }
-    });
-  } else {
-    console.error('The Notification API is not available in this context');
-  }
+function showNotification() {
+  Notification.requestPermission((result) => {
+    if (result === "granted") {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification("Vibration Sample", {
+          body: "Buzz! Buzz!",
+          icon: "../images/touch/chrome-touch-icon-192x192.png",
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: "vibration-sample",
+        });
+      });
+    }
+  });
 }
 
 
@@ -128,7 +126,7 @@ self.addEventListener('activate', async () => {
 
 
   // Use the showNotification function to show a notification
-showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+showNotification();
 
   console.log('Service worker activated');
   setNotificationTime('10:00');
@@ -137,7 +135,7 @@ showNotification('It is time for your notification!', { body: 'This is the body 
   setInterval(async () => {
     if (await checkNotificationTime()===true){
       // Use the showNotification function to show a notification
-      showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+      showNotification();
     }
     console.log(`service-worker tick`);
   }, 5000);
