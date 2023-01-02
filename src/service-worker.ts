@@ -108,7 +108,7 @@ self.addEventListener('notificationclick', function (event)
 
 async function showNotification(body: any) {
   navigator.serviceWorker.getRegistration().then(async (registration) => {
-    if (registration) {
+    if (await registration) {
       
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
