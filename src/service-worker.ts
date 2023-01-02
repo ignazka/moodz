@@ -134,8 +134,28 @@ self.addEventListener('activate', () => {
       if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
         // Show the notification if it's time
        
-        // self.registration.showNotification('test');
-        showNotification('sw title','blabla body','/');
+      // First, check if the browser supports notifications and service workers
+      if ('Notification' in self && 'serviceWorker' in navigator) {
+        // Request permission to show notifications
+        Notification.requestPermission().then((permission) => {
+          // If the user accepts, show the notification
+          if (permission === 'granted') {
+            // Define the options for the notification
+            const notificationOptions = {
+              body: 'This is the body of the notification',
+              vibrate: [200, 100, 200],
+            };
+            // Create the notification
+            new Notification('Hello, world!', notificationOptions);
+          }
+        }).catch((error) => {
+          // If an error occurs, log it to the console
+          console.error(error);
+        });
+      }
+
+
+      
       }
     } catch (error) {
       console.error(error);
