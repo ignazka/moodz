@@ -7,53 +7,46 @@ export async function setNotificationTime(time: string) {
   try {
     // Open the IndexedDB
     const db: IDBPDatabase<any> = await openDB('notification-db', 1);
+
     // Create the 'notification-time' object store if it doesn't already exist
     if (!db.objectStoreNames.contains('notification-time')) {
       db.createObjectStore('notification-time');
-      setNotificationTime('12:00');
-    } else {
-      // Save the notification time to the store
-      const tx = db.transaction('notification-time', 'readwrite');
-      tx.store.put(time, 'time');
-      await tx.done;
     }
+
+    // Save the notification time to the store
+    const tx = db.transaction('notification-time', 'readwrite');
+    tx.store.put(time, 'time');
+    await tx.done;
   } catch (error) {
     console.error(error);
     // Display an error message to the user here, if desired
   }
 }
 
-// Finally, create a function to retrieve the notification time from the IndexedDB
-const getNotificationTime = async () => {
-  let notificationTime='';
+// get the notification time from the IndexedDB
+export async function getNotificationTime() {
   try {
     // Open the IndexedDB
-    const db:any = await openDB('notification-db', 1).then( async () => {
-      
-      // if (T === 'onsuccess'){
-      const tx = db.transaction('notification-time', 'readonly');
-      notificationTime =  tx.store.get('time');
-      await tx.done;
-      return notificationTime;
-    // }
-    }
-    );
+    const db: IDBPDatabase<any> = await openDB('notification-db', 1);
 
     // Get the notification time from the store
-   
+    const tx = db.transaction('notification-time', 'readonly');
+    const notificationTime =  tx.store.get('time');
+    await tx.done;
 
-    // return notificationTime;
+    return notificationTime;
   } catch (error) {
     console.error(error);
     // Display an error message to the user here, if desired
     return undefined;
   }
-};
+}
+  
 
 
 export async function checkNotificationTime() {
   try {
-    // get the NotificationTime from the IndexDB
+    // Get the notification time from the IndexedDB
     const notificationTime: any = await getNotificationTime();
 
     // Compare the current time with the notification time
