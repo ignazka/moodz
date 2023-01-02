@@ -104,24 +104,28 @@ self.addEventListener('notificationclick', function (event)
 
 
 //by chatbot
+
+
 function showNotification(title: string, options: NotificationOptions) {
   // Check if the Notification API is available
   if (typeof Notification !== 'undefined') {
     // Check if the user has granted permission to show notifications
-    if (Notification.permission === 'granted') {
-      // Create a new notification
-      new Notification(title, options);
-    } else {
-      // Request permission from the user
-      Notification.requestPermission().then((permission: NotificationPermission) => {
-        if (permission === 'granted') {
-          // Create a new notification if permission is granted
-          new Notification(title, options);
-        } else {
-          console.error('The user did not grant permission to show a notification');
+    navigator.permissions.query({name: 'notifications'}).then((permissionStatus: PermissionStatus) => {
+      if (permissionStatus.state === 'granted') {
+        // Create a new notification if permission is granted
+        new Notification(title, options);
+      } else if (permissionStatus.state === 'denied') {
+        console.error('The user has denied permission to show notifications');
+      } else {
+        // Request permission from the user
+        permissionStatus.onchange = function() {
+          if (permissionStatus.state === 'granted') {
+            // Create a new notification if permission is granted
+            new Notification(title, options);
+          }
         }
-      });
-    }
+      }
+    });
   } else {
     console.error('The Notification API is not available in this context');
   }
@@ -139,9 +143,9 @@ showNotification('It is time for your notification!', { body: 'This is the body 
 
   // Check every minute if it's time to show the notification
   setInterval(async () => {
-    if (await checkNotificationTime()){
+    if (await checkNotificationTime()===true){
       // Use the showNotification function to show a notification
-showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+      showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
     }
     console.log(`service-worker tick`);
   }, 5000);
