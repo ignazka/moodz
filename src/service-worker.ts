@@ -107,42 +107,33 @@ self.addEventListener('notificationclick', function (event)
 
 
 async function showNotification(body: any) {
+  const title = 'How is your MOOD level?';
+  const payload = {
+    body
+  };
   const registration = self.registration;
 
-    if (registration) {
+  if (registration) {
 
-      await Notification.requestPermission().then((permission: NotificationPermission) => {
-        if (permission === 'granted') {
-          console.log('The user granted permission to show notifications');
-          const title = 'How is your MOOD level?';
+  const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
+  if (permissionState === 'granted') {
+    console.log('The user has already granted permission to show notifications');
+    registration.showNotification(title, payload);
+  } else {
+    // Request permission to show notifications
+    const subscription = await self.registration.pushManager.subscribe({
+      userVisibleOnly: true,
+    }
+    
+    );
 
+    
+    console.log('The user granted permission to show notifications',subscription);
+  }
 
-const payload = {
-  body
-};
-  // if ('showNotification' in registration) {
-      registration.showNotification(title, payload);
-        } else {
-          console.log('The user did not grant permission to show notifications');
-        }
-      });
-      
-//       const permission = await Notification.requestPermission();
-//       if ( permission === 'granted') {
-//           showNotification('granted');
-//           // setCount(count + 1)
+   
 
-     
-
-//       // console.log(count)
-
-//   // } else {
-//       // new Notification(title, payload);
-//       // console.log(count)
-
-//   // }
-// }
-
+  
     }
 };
   
