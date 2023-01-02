@@ -107,33 +107,39 @@ self.addEventListener('notificationclick', function (event)
 
 
 async function showNotification(body: any) {
-  const registration = await navigator.serviceWorker.getRegistration();
-  
-  if (registration) {
+  navigator.serviceWorker.getRegistration().then(async (registration) => {
+    if (registration) {
+      
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+          showNotification('granted');
+          // setCount(count + 1)
 
-    const permission = await Notification.requestPermission();
-          if (permission === 'granted') {
-              showNotification('granted');
-              // setCount(count + 1)
-
-         
-  const title = 'How is your MOOD level?';
+     
+const title = 'How is your MOOD level?';
 
 
-  const payload = {
-      body
-  }
-      if ('showNotification' in registration) {
-          registration.showNotification(title, payload);
-          // console.log(count)
+const payload = {
+  body
+}
+  if ('showNotification' in registration) {
+      self.registration.showNotification(title, payload);
+      // console.log(count)
 
-      } else {
-          new Notification(title, payload);
-          // console.log(count)
+  } else {
+      new Notification(title, payload);
+      // console.log(count)
 
-      }
   }
 }
+
+
+
+
+    }
+  });
+  
+ 
 
 
 }
