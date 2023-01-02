@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { openDB, IDBPDatabase } from 'idb';
 
 // create a function to save the notification time to the IndexedDB
