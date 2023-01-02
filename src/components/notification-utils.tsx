@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { openDB, IDBPDatabase } from 'idb';
+import { showNotification } from '../service-worker';
 
 // create a function to save the notification time to the IndexedDB
 export async function setNotificationTime(time: string) {
@@ -63,7 +63,8 @@ export async function checkNotificationTime() {
     const [notificationHour, notificationMinute] = notificationTime.split(':');
     if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
       // Show the notification if it's time
-      sendNotification();
+      // sendNotification();
+      showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
     }
   } catch (error) {
     console.error(error);
@@ -155,6 +156,7 @@ export const showNotification = (title: string, body: string, imageUrl: string) 
 //     showNotification('bla','test','/');
 //   };
 
+/*
 const showNotification = async (body: any) => {
   console.log("showNotification");
 
@@ -224,6 +226,10 @@ const showNotification = async (body: any) => {
         }
     }
 };
+
+
+*/
+
 /*
   export const sendNotification = () => {
     console.log("sendNotification executed");
@@ -248,27 +254,34 @@ const showNotification = async (body: any) => {
 };*/
 
 //v2
+/*
+export function sendNotification() {
+  // Declare the self variable with the correct type and the const keyword, and assign it the value of the global self object
+  const self: ServiceWorkerGlobalScope = null;
 
-export const sendNotification = () => {
-  // Check if notifications are supported and the user has granted permission
-  if (!('Notification' in window)) {
-    console.error('This browser does not support notifications');
-  } else if (Notification.permission === 'granted') {
+  // Check if the service worker is running in a context where the Notification API is not available
+  if (typeof self === 'undefined' || !self.registration) {
+    console.error('The Notification API is not available in this context');
+    return;
+  }
+
+  // Check if the user has granted permission to show notifications
+  if (Notification.permission === 'granted') {
     // Show the notification
-    new Notification('Its time for your notification!');
+    self.registration.showNotification('Its time for your notification!');
   } else {
     // Request permission from the user
     Notification.requestPermission().then((permission: NotificationPermission) => {
       if (permission === 'granted') {
         // Show the notification if permission is granted
-        new Notification('Its time for your notification!');
+        self.registration.showNotification('Its time for your notification!');
       } else {
         console.error('The user did not grant permission to show a notification');
       }
     });
   }
-};
-
+}
+*/
    
 
 

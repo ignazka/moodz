@@ -1,5 +1,6 @@
 
 /// <reference lib="webworker" />
+
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -8,6 +9,7 @@
 // code you'd like.
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
+
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
@@ -107,8 +109,31 @@ self.addEventListener('notificationclick', function (event)
 
 //by chatbot
 
+export function showNotification(title: string, options: any) {
+  // Check if the user has granted permission to show notifications
+  if (Notification.permission === 'granted') {
+    // Show the notification
+    self.registration.showNotification(title, options);
+  } else {
+    // Request permission from the user
+    Notification.requestPermission().then((permission: NotificationPermission) => {
+      if (permission === 'granted') {
+        // Show the notification if permission is granted
+        self.registration.showNotification(title, options);
+      } else {
+        console.error('The user did not grant permission to show a notification');
+      }
+    });
+  }
+}
+
 
 self.addEventListener('activate', async () => {
+
+  // Use the showNotification function to show a notification
+  showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+
+
   console.log('Service worker activated');
   setNotificationTime('10:00');
 
