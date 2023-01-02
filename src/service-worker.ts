@@ -117,7 +117,7 @@ self.addEventListener('activate', async () => {
     // Set the timeout to run again in one minute
     setTimeout(async () => {
       console.log("tick");
-      await checkNotificationTime();
+    //  await checkNotificationTime();
     }, 5000);
   }, 5000);
 });
