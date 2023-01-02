@@ -122,7 +122,7 @@ self.addEventListener('activate', () => {
   
       // Get the notification time from the store
       const tx = db.transaction('notification-time', 'readonly');
-      setNotificationTime('12:00:00');
+      setNotificationTime('12:00');
       const notificationTime = await tx.store.get('time');
       
       console.log('notificationTime',notificationTime);

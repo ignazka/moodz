@@ -21,12 +21,12 @@ const NotificationTimeInput: React.FC<Props> = ({ onSave }) => {
     // onSave(Number(hours), Number(minutes), Number(seconds));
     // onSave(hours, minutes, seconds);
     
-    const sheduleNotification: Date = new Date();
-    sheduleNotification.setHours(Number(hours));
-    sheduleNotification.setMinutes(Number(minutes));
+    // const sheduleNotification: Date = new Date();
+    // sheduleNotification.setHours(Number(hours));
+    // sheduleNotification.setMinutes(Number(minutes));
     // sheduleNotification.setSeconds(Number(seconds));
-    console.log(sheduleNotification.toLocaleTimeString());
-    await setNotificationTime(sheduleNotification.toLocaleTimeString());
+    console.log(hours+':'+minutes);
+    await setNotificationTime(hours+':'+minutes);
 
 //    await showNotification('moodz', 'settings saved', '/');
   };
