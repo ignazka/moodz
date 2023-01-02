@@ -108,12 +108,12 @@ self.addEventListener('notificationclick', function (event)
 //by chatbot
 
 
-self.addEventListener('activate', () => {
+self.addEventListener('activate', async () => {
   console.log('Service worker activated');
 
   // Set the notification time to 12:00:00 every day
-  
-
+  const notificationTime:any = await getNotificationTime();
+  console.log('notificationTime',notificationTime);
   // Check every minute if it's time to show the notification
   setInterval(async () => {
     try {
@@ -123,9 +123,9 @@ self.addEventListener('activate', () => {
       // Get the notification time from the store
       // const tx = db.transaction('notification-time', 'readonly');
       // setNotificationTime('12:00');
-      const notificationTime:any = await getNotificationTime();
       
-      console.log('notificationTime',notificationTime);
+      
+      
       // await tx.done;
   
       // Compare the current time with the notification time

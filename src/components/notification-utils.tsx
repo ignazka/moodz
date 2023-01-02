@@ -54,17 +54,25 @@ export const setNotificationTime = async (time: string) => {
 
 
 // Finally, create a function to retrieve the notification time from the IndexedDB
-export const getNotificationTime = async (): Promise<string | undefined> => {
+export const getNotificationTime = async () => {
+  let notificationTime='';
   try {
     // Open the IndexedDB
-    const db = await openDB('notification-db', 1);
+    const db:any = await openDB('notification-db', 1).then( async () => {
+      
+      // if (T === 'onsuccess'){
+      const tx = db.transaction('notification-time', 'readonly');
+      notificationTime =  tx.store.get('time');
+      await tx.done;
+      return notificationTime;
+    // }
+    }
+    );
 
     // Get the notification time from the store
-    const tx = db.transaction('notification-time', 'readonly');
-    const notificationTime = await tx.store.get('time');
-    await tx.done;
+   
 
-    return notificationTime;
+    // return notificationTime;
   } catch (error) {
     console.error(error);
     // Display an error message to the user here, if desired
