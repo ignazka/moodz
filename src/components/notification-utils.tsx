@@ -5,12 +5,12 @@ import { openDB } from 'idb';
 
 
 
-export const onSave = (hours: String, minutes: String, seconds: String) => {
+export const onSave = (hours: String, minutes: String) => {
   // Set the time to show the notification
     const sheduleNotification: Date = new Date();
     sheduleNotification.setHours(Number(hours));
     sheduleNotification.setMinutes(Number(minutes));
-    sheduleNotification.setSeconds(Number(seconds));
+    // sheduleNotification.setSeconds(Number(seconds));
 
     console.log('sheduleNotification.toLocaleTimeString()',sheduleNotification.toLocaleTimeString());
 
