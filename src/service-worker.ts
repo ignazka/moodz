@@ -17,7 +17,7 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { openDB } from 'idb';
 import {setNotificationTime} from './components/notification-utils';
-import { showNotification } from './components/notification-utils';
+import { sendNotification } from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 clientsClaim();
@@ -134,23 +134,9 @@ self.addEventListener('activate', () => {
       if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
         // Show the notification if it's time
        
-      // First, check if the browser supports notifications and service workers
-      // if ('Notification' in self && 'serviceWorker' in navigator) {
-        console.log('Request permission to show notifications');
-        // Request permission to show notifications
-        Notification.requestPermission().then((permission) => {
-          // If the user accepts, show the notification
-          console.log('If the user accepts, show the notification');
-          if (permission === 'granted') {
-            console.log('permission granted, show the notification');
-            // Define the options for the notification
-            showNotification('service worker notification call');
-          }
-        }).catch((error) => {
-          // If an error occurs, log it to the console
-          console.error(error);
-        });
-      // }
+
+            sendNotification();
+        
 
 
 
