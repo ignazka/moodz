@@ -16,7 +16,7 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 // import { openDB } from 'idb';
-import {getNotificationTime, sendNotification} from './components/notification-utils';
+import {checkNotificationTime} from './components/notification-utils';
 
 
 declare const self: ServiceWorkerGlobalScope;
@@ -107,45 +107,15 @@ self.addEventListener('notificationclick', function (event)
 
 //by chatbot
 
-
 self.addEventListener('activate', async () => {
   console.log('Service worker activated');
 
-  // Set the notification time to 12:00:00 every day
-  const notificationTime:any = await getNotificationTime();
-  console.log('notificationTime',notificationTime);
   // Check every minute if it's time to show the notification
-  setInterval(async () => {
-    try {
-      // Open the IndexedDB
-      // const db = await openDB('notification-db', 1);
-  
-      // Get the notification time from the store
-      // const tx = db.transaction('notification-time', 'readonly');
-      // setNotificationTime('12:00');
-      
-      
-      
-      // await tx.done;
-  
-      // Compare the current time with the notification time
-      const currentTime = new Date();
-      const [notificationHour, notificationMinute] = notificationTime.split(':');
-      console.log('current'+currentTime.getHours()+':'+currentTime.getMinutes()+' with '+notificationHour+':'+notificationMinute);
-      if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
-        // Show the notification if it's time
-       
-
-            sendNotification();
-        
-
-
-
-      }
-    } catch (error) {
-      console.error(error);
-      // Display an error message to the user here, if desired
-    }
-  }, 5000); // Check every minute
-  
+  setTimeout(async () => {
+    await checkNotificationTime();
+    // Set the timeout to run again in one minute
+    setTimeout(async () => {
+      await checkNotificationTime();
+    }, 5000);
+  }, 5000);
 });

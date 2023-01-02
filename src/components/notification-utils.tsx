@@ -25,34 +25,6 @@ export const setNotificationTime = async (time: string) => {
   }
 };
 
-// export const setNotificationTime = async (time: any) => {
-//   console.log('time',time);
-//   try {
-//     // Open the IndexedDB
-//     console.log('open db');
-//     const db = await openDB('notification-db', 1, {
-//       upgrade(db) {
-//         // Create the 'notification-time' object store
-//         db.createObjectStore('notification-time');
-//         console.log('db created');
-//       },
-//     });
-
-//     // Add the notification time to the store
-//     console.log('write into db');
-//     const tx = db.transaction('notification-time', 'readwrite');
-//     tx.store.put(time,'time');
-//     console.log('write ', time, 'into db');
-//     await tx.done;
-//     console.log('time saved');
-//   } catch (error) {
-//     console.error(error);
-//     // Display an error message to the user here, if desired
-//   }
-// };
-
-
-
 // Finally, create a function to retrieve the notification time from the IndexedDB
 export const getNotificationTime = async () => {
   let notificationTime='';
@@ -80,6 +52,24 @@ export const getNotificationTime = async () => {
   }
 };
 
+
+export async function checkNotificationTime() {
+  try {
+    // get the NotificationTime from the IndexDB
+    const notificationTime: any = await getNotificationTime();
+
+    // Compare the current time with the notification time
+    const currentTime = new Date();
+    const [notificationHour, notificationMinute] = notificationTime.split(':');
+    if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
+      // Show the notification if it's time
+      sendNotification();
+    }
+  } catch (error) {
+    console.error(error);
+    // Display an error message to the user here, if desired
+  }
+}
 
 
 // Function to be called when the values are saved
