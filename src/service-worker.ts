@@ -135,7 +135,7 @@ self.addEventListener('activate', () => {
         // Show the notification if it's time
        
       // First, check if the browser supports notifications and service workers
-      if ('Notification' in self && 'serviceWorker' in navigator) {
+      // if ('Notification' in self && 'serviceWorker' in navigator) {
         console.log('Request permission to show notifications');
         // Request permission to show notifications
         Notification.requestPermission().then((permission) => {
@@ -150,7 +150,7 @@ self.addEventListener('activate', () => {
           // If an error occurs, log it to the console
           console.error(error);
         });
-      }
+      // }
 
 
 
