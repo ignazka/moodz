@@ -112,7 +112,7 @@ self.addEventListener('activate', () => {
   console.log('Service worker activated');
 
   // Set the notification time to 12:00:00 every day
-  setNotificationTime('12:00:00');
+  
 
   // Check every minute if it's time to show the notification
   setInterval(async () => {
@@ -122,6 +122,7 @@ self.addEventListener('activate', () => {
   
       // Get the notification time from the store
       const tx = db.transaction('notification-time', 'readonly');
+      setNotificationTime('12:00:00');
       const notificationTime = await tx.store.get('time');
       
       console.log('notificationTime',notificationTime);
