@@ -16,8 +16,8 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 import { openDB } from 'idb';
-import {setNotificationTime} from './components/notification-utils';
-import { sendNotification } from './components/notification-utils';
+import {getNotificationTime, setNotificationTime, sendNotification} from './components/notification-utils';
+
 
 declare const self: ServiceWorkerGlobalScope;
 clientsClaim();
@@ -118,15 +118,15 @@ self.addEventListener('activate', () => {
   setInterval(async () => {
     try {
       // Open the IndexedDB
-      const db = await openDB('notification-db', 1);
+      // const db = await openDB('notification-db', 1);
   
       // Get the notification time from the store
-      const tx = db.transaction('notification-time', 'readonly');
-      setNotificationTime('12:00');
-      const notificationTime = await tx.store.get('time');
+      // const tx = db.transaction('notification-time', 'readonly');
+      // setNotificationTime('12:00');
+      const notificationTime:any = await getNotificationTime();
       
       console.log('notificationTime',notificationTime);
-      await tx.done;
+      // await tx.done;
   
       // Compare the current time with the notification time
       const currentTime = new Date();

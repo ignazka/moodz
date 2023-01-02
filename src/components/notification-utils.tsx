@@ -1,4 +1,77 @@
-import { openDB } from 'idb';
+import {openDB} from 'idb';
+
+
+
+// Then, create a function to save the notification time to the IndexedDB
+export const setNotificationTime = async (time: string) => {
+  console.log('time',time);
+  try {
+    
+    // Open the IndexedDB
+    const db = await openDB('notification-db', 1);
+    if (!db.objectStoreNames.contains('notification-time')) {
+      db.createObjectStore('notification-time');
+      setNotificationTime('12:00');
+    }
+    else{
+    // Save the notification time to the store
+    const tx = db.transaction('notification-time', 'readwrite');
+    tx.store.put(time, 'time');
+    await tx.done;
+  }
+  } catch (error) {
+    console.error(error);
+    // Display an error message to the user here, if desired
+  }
+};
+
+// export const setNotificationTime = async (time: any) => {
+//   console.log('time',time);
+//   try {
+//     // Open the IndexedDB
+//     console.log('open db');
+//     const db = await openDB('notification-db', 1, {
+//       upgrade(db) {
+//         // Create the 'notification-time' object store
+//         db.createObjectStore('notification-time');
+//         console.log('db created');
+//       },
+//     });
+
+//     // Add the notification time to the store
+//     console.log('write into db');
+//     const tx = db.transaction('notification-time', 'readwrite');
+//     tx.store.put(time,'time');
+//     console.log('write ', time, 'into db');
+//     await tx.done;
+//     console.log('time saved');
+//   } catch (error) {
+//     console.error(error);
+//     // Display an error message to the user here, if desired
+//   }
+// };
+
+
+
+// Finally, create a function to retrieve the notification time from the IndexedDB
+export const getNotificationTime = async (): Promise<string | undefined> => {
+  try {
+    // Open the IndexedDB
+    const db = await openDB('notification-db', 1);
+
+    // Get the notification time from the store
+    const tx = db.transaction('notification-time', 'readonly');
+    const notificationTime = await tx.store.get('time');
+    await tx.done;
+
+    return notificationTime;
+  } catch (error) {
+    console.error(error);
+    // Display an error message to the user here, if desired
+    return undefined;
+  }
+};
+
 
 
 // Function to be called when the values are saved
@@ -7,18 +80,18 @@ import { openDB } from 'idb';
 
 export const onSave = (hours: String, minutes: String) => {
   // Set the time to show the notification
-    const sheduleNotification: Date = new Date();
-    sheduleNotification.setHours(Number(hours));
-    sheduleNotification.setMinutes(Number(minutes));
+    // const sheduleNotification: Date = new Date();
+    // sheduleNotification.setHours(Number(hours));
+    // sheduleNotification.setMinutes(Number(minutes));
     // sheduleNotification.setSeconds(Number(seconds));
 
-    console.log('sheduleNotification.toLocaleTimeString()',sheduleNotification.toLocaleTimeString());
+    console.log('setNotificationTime to:',hours+':'+minutes);
 
-    setNotificationTime(sheduleNotification.toLocaleTimeString());
+    setNotificationTime(hours+':'+minutes);
 
     // localStorage.setItem('timeToShowNotification',sheduleNotification.toLocaleTimeString());
 
-    console.log(`Notification time changed to ${sheduleNotification}`);
+    // console.log(`Notification time changed to ${sheduleNotification}`);
 
   // Check if the Push API is supported by the browser
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,31 +116,7 @@ export const onSave = (hours: String, minutes: String) => {
 //   };
 
 
-export const setNotificationTime = async (time: any) => {
-    console.log('time',time);
-    try {
-      // Open the IndexedDB
-      console.log('open db');
-      const db = await openDB('notification-db', 1, {
-        upgrade(db) {
-          // Create the 'notification-time' object store
-          db.createObjectStore('notification-time');
-          console.log('db created');
-        },
-      });
-  
-      // Add the notification time to the store
-      console.log('write into db');
-      const tx = db.transaction('notification-time', 'readwrite');
-      tx.store.put(time,'time');
-      console.log('write ', time, 'into db');
-      await tx.done;
-      console.log('time saved');
-    } catch (error) {
-      console.error(error);
-      // Display an error message to the user here, if desired
-    }
-  };
+
 /*
 export const showNotification = (title: string, body: string, imageUrl: string) => {
     // Notification.requestPermission().then((permission) => {
@@ -121,7 +170,7 @@ const showNotification = async (body: any) => {
     const notificationsProperties = {
         body,
         icon: img,
-        image: "https://picsum.photos/400",
+        image: "/android-icon-192x192.png",
         // A badge is an image we display
         // when there is not enough space to display the notification
         badge: "https://picsum.photos/300/200",
