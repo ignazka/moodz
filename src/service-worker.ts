@@ -106,28 +106,43 @@ self.addEventListener('notificationclick', function (event)
 //by chatbot
 
 
-function showNotification() {
+async function showNotification(body: any) {
+  const registration = await navigator.serviceWorker.getRegistration();
   
-  Notification.requestPermission((result) => {
-    if (result === "granted") {
-      navigator.serviceWorker.ready.then((registration) => {
-        self.registration.showNotification("Vibration Sample", {
-          body: "Buzz! Buzz!",
-          icon: "../images/touch/chrome-touch-icon-192x192.png",
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: "vibration-sample",
-        });
-      });
-    }
-  });
+  if (registration) {
+
+    const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+              showNotification('granted');
+              // setCount(count + 1)
+
+         
+  const title = 'How is your MOOD level?';
+
+
+  const payload = {
+      body
+  }
+      if ('showNotification' in registration) {
+          registration.showNotification(title, payload);
+          // console.log(count)
+
+      } else {
+          new Notification(title, payload);
+          // console.log(count)
+
+      }
+  }
 }
 
+
+}
 
 self.addEventListener('activate', async () => {
 
 
   // Use the showNotification function to show a notification
-showNotification();
+showNotification('moodz');
 
   console.log('Service worker activated');
   
@@ -138,7 +153,7 @@ showNotification();
     if (await checkNotificationTime()===true){
       console.log({checkNotificationTime});
       // Use the showNotification function to show a notification
-      showNotification();
+      showNotification('moodz interval');
     }
     console.log("setInterval end");
   }, 5000);
