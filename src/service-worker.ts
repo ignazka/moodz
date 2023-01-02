@@ -15,8 +15,8 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-import { openDB } from 'idb';
-import {getNotificationTime, setNotificationTime, sendNotification} from './components/notification-utils';
+// import { openDB } from 'idb';
+import {getNotificationTime, sendNotification} from './components/notification-utils';
 
 
 declare const self: ServiceWorkerGlobalScope;
