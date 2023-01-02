@@ -1,32 +1,30 @@
-import {openDB} from 'idb';
+import { openDB, IDBPDatabase } from 'idb';
 
 
 
-// Then, create a function to save the notification time to the IndexedDB
-export const setNotificationTime = async (time: string) => {
-  console.log('time',time);
+// create a function to save the notification time to the IndexedDB
+export async function setNotificationTime(time: string) {
   try {
-    
     // Open the IndexedDB
-    const db = await openDB('notification-db', 1);
+    const db: IDBPDatabase<any> = await openDB('notification-db', 1);
+    // Create the 'notification-time' object store if it doesn't already exist
     if (!db.objectStoreNames.contains('notification-time')) {
       db.createObjectStore('notification-time');
       setNotificationTime('12:00');
+    } else {
+      // Save the notification time to the store
+      const tx = db.transaction('notification-time', 'readwrite');
+      tx.store.put(time, 'time');
+      await tx.done;
     }
-    else{
-    // Save the notification time to the store
-    const tx = db.transaction('notification-time', 'readwrite');
-    tx.store.put(time, 'time');
-    await tx.done;
-  }
   } catch (error) {
     console.error(error);
     // Display an error message to the user here, if desired
   }
-};
+}
 
 // Finally, create a function to retrieve the notification time from the IndexedDB
-export const getNotificationTime = async () => {
+const getNotificationTime = async () => {
   let notificationTime='';
   try {
     // Open the IndexedDB
