@@ -1,7 +1,5 @@
 import { openDB, IDBPDatabase } from 'idb';
 
-
-
 // create a function to save the notification time to the IndexedDB
 export async function setNotificationTime(time: string) {
   try {
@@ -37,7 +35,7 @@ export async function getNotificationTime() {
 
     // Get the notification time from the store
     const tx = db.transaction('notification-time', 'readonly');
-    const notificationTime =  tx.store.get('time');
+    const notificationTime = await tx.store.get('time');
     await tx.done;
 
     return notificationTime;
@@ -47,13 +45,17 @@ export async function getNotificationTime() {
     return undefined;
   }
 }
-  
-
 
 export async function checkNotificationTime() {
   try {
     // Get the notification time from the IndexedDB
     const notificationTime: any = await getNotificationTime();
+
+    // Check that the notification time is defined
+    if (!notificationTime) {
+      console.error('The notification time is not defined');
+      return;
+    }
 
     // Compare the current time with the notification time
     const currentTime = new Date();
