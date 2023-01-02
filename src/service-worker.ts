@@ -112,6 +112,7 @@ self.addEventListener('activate', async () => {
 
   // Check every minute if it's time to show the notification
   setTimeout(async () => {
+    console.log("tick");
     await checkNotificationTime();
     // Set the timeout to run again in one minute
     setTimeout(async () => {
