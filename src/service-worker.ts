@@ -105,29 +105,81 @@ self.addEventListener('notificationclick', function (event)
 
 //by chatbot
 
-function showNotification(title: string, options: any) {
-  // Check if the user has granted permission to show notifications
-  if (Notification.permission === 'granted') {
-    // Show the notification
-    self.registration.showNotification(title, options);
-  } else {
-    // Request permission from the user
-    Notification.requestPermission().then((permission: NotificationPermission) => {
-      if (permission === 'granted') {
-        // Show the notification if permission is granted
-        self.registration.showNotification(title, options);
-      } else {
-        console.error('The user did not grant permission to show a notification');
-      }
-    });
-  }
-}
+const showNotification = async (body: any) => {
+  console.log("showNotification");
+
+    const registration = await navigator.serviceWorker.getRegistration();
+
+    
+
+    const title = 'MOODZ: Friendly Reminder.';
+    const img = '/android-icon-192x192.png';
+    const notAct = () => {console.log('code to show more images')};
+
+    const notificationsProperties = {
+        body,
+        icon: img,
+        image: "/android-icon-192x192.png",
+        // A badge is an image we display
+        // when there is not enough space to display the notification
+        badge: "https://picsum.photos/300/200",
+        // Direction decides if the notification goes
+        // from left to right, right to left or let the browser decide
+        //  dir: "ltr",
+        // As part of the direct user experience we also have 
+        // Audio- ....
+         silent: false,
+        // ... sensorial
+        vibrate: [400, 100, 400],
+        onshow: () => console.log("We are showing a Notification"),
+        // onerror: () => console.log("There was an error showing a Notification"),
+        // onclose: () => console.log("Closing the Notification"),
+        // Informs the user if a notification replaced a previous one
+        // renotify: null,
+        // If set to true the notification will stick to the screen until the user interacts with it
+        requireInteraction: true,
+        // We'll get into actions later
+        actions: [
+            
+            {
+                action: 'like', 
+                title: '👍Like'},
+            
+            { action: ''+{notAct},
+            title: 'test'
+
+            },
+            
+            
+            ],
+
+    };
+
+    
+
+
+    // const payload = {
+    //     body, icon: img,
+    // };
+    if (registration) {
+        if ('showNotification' in registration) {
+            // alert("show Notif true");
+            console.log("show notif");
+            registration.showNotification(title, notificationsProperties);
+            
+        } else {
+            // let not = new Notification(title, notificationsProperties);
+            // alert("show Notif false");
+            // not.onclick = function() { alert("onclick"); console.log("bla bla "); };
+        }
+    }
+};
 
 
 self.addEventListener('activate', async () => {
 
   // Use the showNotification function to show a notification
-  showNotification('It is time for your notification!', { body: 'This is the body of the notification' });
+  showNotification({title: 'It is time for your notification!',  body: 'This is the body of the notification' });
 
 
   console.log('Service worker activated');
@@ -136,7 +188,7 @@ self.addEventListener('activate', async () => {
   // Check every minute if it's time to show the notification
   setInterval(async () => {
     if (await checkNotificationTime()){
-      showNotification('MOODZ!', { body: 'this is the time of the notification from the indexdb' });
+      showNotification({title: 'MOODZ!',  body: 'this is the time of the notification from the indexdb' });
     }
     console.log(`service-worker tick`);
   }, 5000);
