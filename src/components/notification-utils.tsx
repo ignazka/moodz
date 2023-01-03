@@ -58,8 +58,8 @@ export const checkNotificationTime = async () =>{
     // Check that the notification time is defined
     if (!notificationTime) {
       console.error('The notification time is not defined and will be set to 12:00');
-      setNotificationTime('12:00');
-      // return;
+      // setNotificationTime('12:00');
+       return;
     }
 
     // Compare the current time with the notification time
