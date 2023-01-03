@@ -49,7 +49,7 @@ export async function getNotificationTime() {
   }
 }
 
-export async function checkNotificationTime() {
+export const checkNotificationTime = async () =>{
   try {
     console.log("checkNotificationTime");
     // Get the notification time from the IndexedDB

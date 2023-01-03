@@ -163,6 +163,9 @@ showNotification('moodz');
       showNotification('moodz interval');
       
     }
+    else{
+      console.log("sw-checktime false, now show notification!", checkNotificationTime());
+    }
     console.log("setInterval end");
   }, 5000);
 });
