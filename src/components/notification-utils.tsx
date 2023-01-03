@@ -49,15 +49,16 @@ export async function getNotificationTime() {
   }
 }
 
-export const checkNotificationTime = async () =>{
+export const checkNotificationTime = () =>{
   try {
     console.log("checkNotificationTime");
     // Get the notification time from the IndexedDB
-    const notificationTime: any = await getNotificationTime();
+    const notificationTime: any = getNotificationTime();
 
     // Check that the notification time is defined
     if (!notificationTime) {
-      console.error('The notification time is not defined');
+      console.error('The notification time is not defined and will be set to 12:00');
+      setNotificationTime('12:00');
       return;
     }
 

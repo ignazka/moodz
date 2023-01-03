@@ -155,8 +155,8 @@ showNotification('moodz');
   // Check every minute if it's time to show the notification
   setInterval(async () => {
     console.log("setInterval start");
-    if (await checkNotificationTime()===true){
-      console.log({checkNotificationTime});
+    if (await checkNotificationTime()=== true){
+      console.log('{checkNotificationTime}');
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
       self.registration.showNotification('test-title');
@@ -164,7 +164,7 @@ showNotification('moodz');
       
     }
     else{
-      console.log("sw-checktime false, now show notification!", await checkNotificationTime());
+      console.log("sw-checktime false, now show notification!", undefined);
     }
     console.log("setInterval end");
   }, 5000);
