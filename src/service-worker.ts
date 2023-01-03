@@ -164,7 +164,7 @@ showNotification('moodz');
       
     }
     else{
-      console.log("sw-checktime false, now show notification!", checkNotificationTime());
+      console.log("sw-checktime false, now show notification!", await checkNotificationTime());
     }
     console.log("setInterval end");
   }, 5000);
