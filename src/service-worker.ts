@@ -158,7 +158,10 @@ showNotification('moodz');
     if (await checkNotificationTime()===true){
       console.log({checkNotificationTime});
       // Use the showNotification function to show a notification
+      console.log("sw-checktime true, now show notification!");
+      self.registration.showNotification('test-title');
       showNotification('moodz interval');
+      
     }
     console.log("setInterval end");
   }, 5000);

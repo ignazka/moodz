@@ -67,6 +67,7 @@ export async function checkNotificationTime() {
     if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
       // Show the notification if it's time
       // sendNotification();
+      console.log("checkNotificationTime",true);
     return true;
     }
   } catch (error) {
