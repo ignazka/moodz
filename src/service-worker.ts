@@ -132,13 +132,13 @@ showNotification('moodz');
       console.log('{checkNotificationTime}');
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
-      self.registration.showNotification('test-title');
+      // self.registration.showNotification('test-title');
       showNotification('moodz interval');
       
     }
     else{
       console.log("sw-checktime false, now show notification!", undefined);
-      self.registration.showNotification('test-title');
+      // self.registration.showNotification('test-title');
       showNotification('moodz interval');
     }
     console.log("setInterval end");

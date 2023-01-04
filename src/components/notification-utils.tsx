@@ -84,7 +84,7 @@ export async function showNotification(body: any) {
   const payload = {
     body
   };
-  navigator.serviceWorker.getRegistration().then(async (registration) => {
+  await navigator.serviceWorker.getRegistration().then(async (registration) => {
     if (registration) {
      
  
@@ -106,14 +106,27 @@ export async function showNotification(body: any) {
 };
 
 export const requestNotificationPermission = async() => {
-  Notification.requestPermission().then((result) => {
-    if (result === 'granted') {
-      showNotification('random notif');
-      return 'granted';
-    }
-  });
+  if (!("Notification" in window)) {
+    // Check if the browser supports notifications
+    alert("This browser does not support desktop notification");
+  } else if (Notification.permission === "granted") {
+    // Check whether notification permissions have already been granted;
+    // if so, create a notification
+    showNotification("Hi there!");
+    // …
+    return 'granted'
+  } else if (Notification.permission !== "denied") {
+    // We need to ask the user for permission
+    Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        showNotification("Hi there!");
+        // …
+      }
+    });
   return '';
-}
+}};
+
 
 // Function to be called when the values are saved
 export const onSave = (hours: String, minutes: String) => {
