@@ -14,7 +14,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { checkNotificationTime,setNotificationTime} from './components/notification-utils';
+import { checkNotificationTime,requestNotificationPermission,setNotificationTime, showNotification} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -106,37 +106,7 @@ self.addEventListener('notificationclick', function (event)
 //by chatbot
 
 
-async function showNotification(body: any) {
-  const title = 'How is your MOOD level?';
-  const payload = {
-    body
-  };
-  self.registration.showNotification(title, payload);
-  const registration = self.registration;
 
-  if (registration) {
-
-  const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
-  if (permissionState === 'granted') {
-    console.log('The user has already granted permission to show notifications');
-    self.registration.showNotification(title, payload);
-  } else {
-    // Request permission to show notifications
-    const subscription = await self.registration.pushManager.subscribe({
-      userVisibleOnly: true,
-    }
-    
-    );
-
-    
-    console.log('The user granted permission to show notifications',subscription);
-  }
-
-   
-
-  
-    }
-};
   
  
 
@@ -150,12 +120,15 @@ self.addEventListener('activate', async () => {
 showNotification('moodz');
 
   console.log('Service worker activated');
-  
+  const reqNotif = await requestNotificationPermission();
+
+  console.log('reqNotif',reqNotif);
+
 
   // Check every minute if it's time to show the notification
   setInterval(async () => {
     console.log("setInterval start");
-    if (await checkNotificationTime()=== true){
+    if (reqNotif === 'granted' && await checkNotificationTime()=== true){
       console.log('{checkNotificationTime}');
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
@@ -171,6 +144,7 @@ showNotification('moodz');
     console.log("setInterval end");
   }, 5000);
 });
+
 
 // self.addEventListener('activate', async () => {
 //   console.log('Service worker activated');

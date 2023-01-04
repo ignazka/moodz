@@ -78,10 +78,44 @@ export const checkNotificationTime = async () =>{
 }
 
 
+
+export async function showNotification(body: any) {
+  const title = 'How is your MOOD level?';
+  const payload = {
+    body
+  };
+  navigator.serviceWorker.getRegistration().then(async (registration) => {
+    if (registration) {
+     
+ 
+  // const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
+  if (await requestNotificationPermission() === 'granted') {
+      registration.showNotification(title, payload);
+  } else {
+    
+
+  requestNotificationPermission() ;
+    console.log('The user granted permission to show notifications');
+  }
+
+   
+
+  
+    }
+  })
+};
+
+export const requestNotificationPermission = async() => {
+  Notification.requestPermission().then((result) => {
+    if (result === 'granted') {
+      showNotification('random notif');
+      return 'granted';
+    }
+  });
+  return '';
+}
+
 // Function to be called when the values are saved
-
-
-
 export const onSave = (hours: String, minutes: String) => {
   // Set the time to show the notification
     // const sheduleNotification: Date = new Date();
