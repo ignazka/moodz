@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { openDB, IDBPDatabase } from 'idb';
 
 
@@ -77,44 +78,50 @@ export const checkNotificationTime = async () =>{
   }
 }
 
-export const requestNotificationPermission = async () => {
-  if (!("Notification" in window)) {
-    console.log("This browser does not support desktop notification");
-    return "unsupported";
-  }
-  if (Notification.permission === "granted") {
-    console.log("Notification permissions have already been granted");
-    return "granted";
-  }
-  if (Notification.permission === "denied") {
-    console.log("Notification permissions have been denied");
-    return "denied";
-  }
 
-  // We need to ask the user for permission
-  const permission = await Notification.requestPermission();
-  console.log(`User granted permission to show notifications: ${permission}`);
-  return permission;
-};
+
+export const requestNotificationPermission = async () => {
+  if (!("Notification" in self)) {
+    // Check if the browser supports notifications
+    alert("This browser does not support desktop notification");
+  } else if (self.Notification.permission === "granted") {
+    // Check whether notification permissions have already been granted;
+    // if so, create a notification
+    showNotification("Hi there!");
+    // …
+    return 'granted';
+  } else if (self.Notification.permission !== "denied") {
+    // We need to ask the user for permission
+    self.Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        showNotification("Hi there!");
+        // …
+      }
+    });
+    return '';
+  }
+}
 
 export async function showNotification(body: any) {
   const title = 'How is your MOOD level?';
-  const payload = { body };
-
-  const permission = await requestNotificationPermission();
-  if (permission !== "granted") {
-    console.log("Not showing notification because permission was not granted");
-    return;
+  const payload = {
+    body
+  };
+  try {
+    const registration = await navigator.serviceWorker.getRegistration();
+    if (registration) {
+      if (await requestNotificationPermission() === 'granted') {
+        registration.showNotification(title, payload);
+      } else {
+        requestNotificationPermission();
+        console.log('The user granted permission to show notifications');
+      }
+    }
+  } catch (error) {
+    console.error(error);
   }
-
-  const registration = await navigator.serviceWorker.getRegistration();
-  if (!registration) {
-    console.log("No service worker registration found");
-    return;
-  }
-
-  registration.showNotification(title, payload);
-};
+}
 
 
 
