@@ -107,7 +107,9 @@ self.addEventListener('notificationclick', function (event)
 
 
 
-  
+self.addEventListener('register', () => {
+  console.log('Service worker registered');
+});
  
 
 

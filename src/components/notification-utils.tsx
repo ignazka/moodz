@@ -84,25 +84,37 @@ export async function showNotification(body: any) {
   const payload = {
     body
   };
-  await navigator.serviceWorker.getRegistration().then(async (registration) => {
-    if (registration) {
+  navigator.serviceWorker.addEventListener('register', () => {
+    navigator.serviceWorker.getRegistration().then(async (registration) => {
+     
+      
+      if (registration) {
      
  
-  // const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
-  if (await requestNotificationPermission() === 'granted') {
-      registration.showNotification(title, payload);
-  } else {
+        // const permissionState = await self.registration.pushManager.permissionState({ userVisibleOnly: true });
+        if (await requestNotificationPermission() === 'granted') {
+            registration.showNotification(title, payload);
+        } else {
+          
+      
+        requestNotificationPermission() ;
+          console.log('The user granted permission to show notifications');
+        }
+      
+         
+      
+        
+          }
+
+
+
+    });
+  });
+
+
+
     
-
-  requestNotificationPermission() ;
-    console.log('The user granted permission to show notifications');
-  }
-
-   
-
   
-    }
-  })
 };
 
 export const requestNotificationPermission = async() => {
