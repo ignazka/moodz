@@ -1,6 +1,22 @@
 /* eslint-disable no-restricted-globals */
 import { openDB, IDBPDatabase } from 'idb';
 
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../service-worker.ts')
+  .then((serviceWorkerRegistration) => {
+    console.log('service worker registered', serviceWorkerRegistration);
+
+    navigator.serviceWorker.addEventListener('message', ({data}) => {
+      const message = data.msg;
+
+      console.log(`FROM SW:`, message);
+    });
+  })
+  .catch((err) => {
+    console.log('error registering service worker', err);
+  });
+}
+
 
 // create a function to save the notification time to the IndexedDB
 export async function setNotificationTime(time: string) {
