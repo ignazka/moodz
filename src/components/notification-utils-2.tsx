@@ -68,7 +68,7 @@ export const checkNotificationTime = async () =>{
     const [notificationHour, notificationMinute] = notificationTime.split(':');
     if (currentTime.getHours() === Number(notificationHour) && currentTime.getMinutes() === Number(notificationMinute)) {
       // Show the notification if it's time
-      sendNotification();
+      // sendNotification();
       console.log("checkNotificationTime",true);
     return true;
     }
@@ -79,56 +79,50 @@ export const checkNotificationTime = async () =>{
 }
 
 
-// const notification = document.querySelector('#notification');
-// const sendButton = document.querySelector('#send');
-
-
-const sendNotification = async () => {
-  const registration = await navigator.serviceWorker.getRegistration();
-  if(registration && Notification.permission === 'granted') {
-    showNotification('granted');
-  }
-  else {
-    if(Notification.permission !== 'denied') {
-      const permission = await Notification.requestPermission();
-  
-      if(permission === 'granted') {
-        showNotification('granted2');
-      }
-    }
-  }
-  };
-  
-  const showNotification = async (body: any) => {
-  navigator.serviceWorker.getRegistration().then((registration) => {
-
-    const title = 'What PWA Can Do Today';
-  
-    const payload = {
-      body
-    };
-    try {
-      if(registration) {
-        registration.showNotification(title, payload);
-      }
-      else {
-        new Notification(title, payload);
-      }
-    } catch (error) {
-      
-    }
-
-  });
-  
-  
-};
 
 export const requestNotificationPermission = async () => {
-  navigator.serviceWorker.getRegistration().then((registration) => {
+  if (!("Notification" in self)) {
+    // Check if the browser supports notifications
+    alert("This browser does not support desktop notification");
+  } else if (self.Notification.permission === "granted") {
+    // Check whether notification permissions have already been granted;
+    // if so, create a notification
+    showNotification("Hi there!");
+    // …
     return 'granted';
-  })
-};
-    
+  } else if (self.Notification.permission !== "denied") {
+    // We need to ask the user for permission
+    self.Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        showNotification("Hi there!");
+        // …
+      }
+    });
+    return '';
+  }
+}
+
+export async function showNotification(body: any) {
+  const title = 'How is your MOOD level?';
+  const payload = {
+    body
+  };
+  try {
+    const registration = await navigator.serviceWorker.getRegistration();
+    if (registration) {
+      if (await requestNotificationPermission() === 'granted') {
+        registration.showNotification(title, payload);
+      } else {
+        requestNotificationPermission();
+        console.log('The user granted permission to show notifications');
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 
 // Function to be called when the values are saved
