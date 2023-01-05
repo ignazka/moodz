@@ -117,7 +117,9 @@ self.addEventListener('register', () => {
 
 self.addEventListener('activate', async () => {
 
-  setNotificationTime('10:00');
+  let i = 0;
+
+  // setNotificationTime('10:00');
   // Use the showNotification function to show a notification
   // showNotification('moodz interval');
 
@@ -128,7 +130,9 @@ self.addEventListener('activate', async () => {
 
 
   // Check every minute if it's time to show the notification
+  
   setInterval(async () => {
+    while (i < 5){
     console.log("setInterval start");
     if (await checkNotificationTime()=== true){
       console.log('{checkNotificationTime}');
@@ -144,7 +148,10 @@ self.addEventListener('activate', async () => {
       showNotification('moodz interval');
     }
     console.log("setInterval end");
+    i++;
+  }
   }, 5000);
+
 });
 
 
