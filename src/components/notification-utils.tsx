@@ -124,9 +124,26 @@ const sendNotification = async () => {
 };
 
 export const requestNotificationPermission = async () => {
-  navigator.serviceWorker.getRegistration().then((registration) => {
+  if (!("Notification" in self)) {
+    // Check if the browser supports notifications
+    alert("This browser does not support desktop notification");
+  } else if (self.Notification.permission === "granted") {
+    // Check whether notification permissions have already been granted;
+    // if so, create a notification
+    showNotification("Hi there!");
+    // …
     return 'granted';
-  })
+  } else if (self.Notification.permission !== "denied") {
+    // We need to ask the user for permission
+    self.Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        showNotification("Hi there!");
+        // …
+      }
+    });
+    return '';
+  }
 };
     
 
