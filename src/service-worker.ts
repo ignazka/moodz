@@ -117,7 +117,7 @@ self.addEventListener('notificationclick', function (event)
 
 self.addEventListener('activate', async () => {
 
-  let i = 0;
+  // let i = 0;
 
   // setNotificationTime('10:00');
   // Use the showNotification function to show a notification
@@ -148,7 +148,7 @@ self.addEventListener('activate', async () => {
       showNotification('moodz interval');
     }
     console.log("setInterval end");
-    i++;
+    // i++;
   
   }, 5000);
   // }
