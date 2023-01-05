@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import { openDB, IDBPDatabase } from 'idb';
 
+
 if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../service-worker.ts')
+  navigator.serviceWorker.register('./service-worker.ts')
   .then((serviceWorkerRegistration) => {
     console.log('service worker registered', serviceWorkerRegistration);
 
