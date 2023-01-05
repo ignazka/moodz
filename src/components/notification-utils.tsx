@@ -100,7 +100,7 @@ const sendNotification = async () => {
   };
   
   export const showNotification = async (body: any) => {
-  navigator.serviceWorker.getRegistration().then((registration) => {
+  await navigator.serviceWorker.getRegistration().then((registration) => {
 
     const title = 'What PWA Can Do Today';
   
