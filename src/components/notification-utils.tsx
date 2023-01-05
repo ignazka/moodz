@@ -100,45 +100,37 @@ export const checkNotificationTime = async () =>{
 // const sendButton = document.querySelector('#send');
 
 
-const sendNotification = async () => {
+const showNotification = async (body: any) => {
   const registration = await navigator.serviceWorker.getRegistration();
-  if(registration && Notification.permission === 'granted') {
-    showNotification('granted');
-  }
-  else {
-    if(Notification.permission !== 'denied') {
-      const permission = await Notification.requestPermission();
-  
-      if(permission === 'granted') {
-        showNotification('granted2');
-      }
-    }
-  }
+  const title = 'MOODZ: Friendly Reminder.';
+  const payload = {
+      body,
   };
-  
-  export const showNotification = async (body: any) => {
-  await navigator.serviceWorker.getRegistration().then((registration) => {
-
-    const title = 'What PWA Can Do Today';
-  
-    const payload = {
-      body
-    };
-    try {
-      if(registration) {
-        registration.showNotification(title, payload);
+  if (registration) {
+      if ('showNotification' in registration) {
+          registration.showNotification(title, payload);
+      } else {
+          new Notification(title, payload);
       }
-      else {
-        new Notification(title, payload);
-      }
-    } catch (error) {
-      
-    }
-
-  });
-  
-  
+  }
 };
+
+export const sendNotification = async () => {
+  console.log("sendNotification executed");
+
+  if (Notification.permission === 'granted') {
+      showNotification('What is your Mood right now?');
+  } else {
+      if (Notification.permission !== 'denied') {
+          const permission = await Notification.requestPermission();
+
+          if (permission === 'granted') {
+              showNotification('Notifications are now activated');
+          }
+      }
+  }
+};
+
 
 export const requestNotificationPermission = async () => {
   if (!("Notification" in self)) {

@@ -14,7 +14,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { checkNotificationTime,requestNotificationPermission,showNotification} from './components/notification-utils';
+import { checkNotificationTime,requestNotificationPermission,sendNotification} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -139,13 +139,13 @@ self.addEventListener('activate', async () => {
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
       // self.registration.showNotification('test-title');
-      showNotification('moodz interval');
+      sendNotification();
       
     }
     else{
       console.log("sw-checktime false, now show notification!", undefined);
       // self.registration.showNotification('test-title');
-      showNotification('moodz interval');
+      sendNotification();
     }
     console.log("setInterval end");
     // i++;
