@@ -119,7 +119,7 @@ self.addEventListener('activate', async () => {
 
   setNotificationTime('10:00');
   // Use the showNotification function to show a notification
-  showNotification('moodz interval');
+  // showNotification('moodz interval');
 
   console.log('Service worker activated');
   const reqNotif = await requestNotificationPermission();
