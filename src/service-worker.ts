@@ -130,9 +130,9 @@ self.addEventListener('activate', async () => {
 
 
   // Check every minute if it's time to show the notification
-  
+  while (i < 5){
   setInterval(async () => {
-    while (i < 5){
+    
     console.log("setInterval start");
     if (await checkNotificationTime()=== true){
       console.log('{checkNotificationTime}');
@@ -149,9 +149,9 @@ self.addEventListener('activate', async () => {
     }
     console.log("setInterval end");
     i++;
-  }
+  
   }, 5000);
-
+  }
 });
 
 
