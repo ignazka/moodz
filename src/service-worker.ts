@@ -124,9 +124,9 @@ self.addEventListener('activate', async () => {
   // showNotification('moodz interval');
 
   console.log('Service worker activated');
-  const reqNotif = await requestNotificationPermission();
+  // const reqNotif = await requestNotificationPermission();
 
-  console.log('reqNotif',reqNotif);
+  // console.log('reqNotif',reqNotif);
 
 
   // Check every minute if it's time to show the notification

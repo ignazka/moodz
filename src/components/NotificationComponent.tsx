@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 // import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import SelectTime from './SelectTime';
+import { requestNotificationPermission } from './notification-utils';
 
 const delay = 1;
 // https://codesandbox.io/s/toggle-interval-with-useref-spcs2b?file=/src/App.js:1230-2098
@@ -164,8 +165,9 @@ function NotificationComponent(props: any) {
                         checked={notifToggle}
                         onChange={setGlobalNotifications}
                         onClick={() => {
+                            requestNotificationPermission();
                             console.log("switch toggle clicked");
-                            checkTimes();
+                            // checkTimes();
                         }}
 
                     />
