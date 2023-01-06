@@ -6,7 +6,10 @@ import { openDB, IDBPDatabase } from 'idb';
 if('serviceWorker' in navigator) {
   // register();
   // .then((serviceWorkerRegistration: any) => {
+    const registration = window.self.navigator.serviceWorker;
+    console.log({registration});
     console.log('service worker registered', ServiceWorkerRegistration);
+    
 
     // navigator.serviceWorker.addEventListener('message', ({data}) => {
     //   const message = data.msg;
