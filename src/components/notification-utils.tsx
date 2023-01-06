@@ -117,26 +117,26 @@ export const checkNotificationTime = async () =>{
 
 const showNotification = async (body: any) => {
   // const registration = await navigator.serviceWorker.getRegistration();
-  let registration:any = await self.ServiceWorker;
-  console.log(await registration);
-  registration = registration.ServiceWorkerRegistration;
-  const title = 'MOODZ: Friendly Reminder.';
+  // let registration:any = await self.ServiceWorker;
+  // console.log(await registration);
+  // registration = registration.ServiceWorkerRegistration;
+  const title = '!!!MOODZ: Friendly Reminder.';
   const payload = {
       body,
   };
 
   navigator.serviceWorker.ready.then((registration) => {
-    registration.showNotification("Vibration Sample");
+    registration.showNotification(title,payload);
   });
-  
-  if (await registration) {
-      if ('showNotification' in registration) {
-          registration.showNotification(title, payload);
-      } else {
-          // new Notification(title, payload);
-          registration.showNotification(title, payload);
-      }
-  }
+
+  // if (await registration) {
+  //     if ('showNotification' in registration) {
+  //         registration.showNotification(title, payload);
+  //     } else {
+  //         // new Notification(title, payload);
+  //         registration.showNotification(title, payload);
+  //     }
+  // }
 };
 
 export const sendNotification = async () => {
