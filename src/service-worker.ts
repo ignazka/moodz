@@ -129,13 +129,13 @@ self.addEventListener('activate', async () => {
 
   // console.log('reqNotif',reqNotif);
 
-
+  const checkTime = await checkNotificationTime();
   // Check every minute if it's time to show the notification
   // while (i < 5){
   setInterval(async () => {
     
     console.log("setInterval start");
-    if (await checkNotificationTime()=== true){
+    if (checkTime === true){
       console.log('{checkNotificationTime}');
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
