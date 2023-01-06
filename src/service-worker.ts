@@ -135,19 +135,20 @@ self.addEventListener('activate', async () => {
   setInterval(async () => {
     
     console.log("setInterval start");
-    if (await checkNotificationTime() === true){
-      console.log('{checkNotificationTime}');
-      // Use the showNotification function to show a notification
-      console.log("sw-checktime true, now show notification!");
-      // self.registration.showNotification('test-title');
-      await sendNotification();
+    checkNotificationTime();
+    // if (await checkNotificationTime() === true){
+    //   console.log('{checkNotificationTime}');
+    //   // Use the showNotification function to show a notification
+    //   console.log("sw-checktime true, now show notification!");
+    //   // self.registration.showNotification('test-title');
+    //   await sendNotification();
       
-    }
-    else{
-      console.log("sw-checktime false!");
-      // self.registration.showNotification('test-title');
-      // sendNotification();
-    }
+    // }
+    // else{
+    //   console.log("sw-checktime false!");
+    //   // self.registration.showNotification('test-title');
+    //   // sendNotification();
+    // }
     console.log("setInterval end");
     // i++;
   
