@@ -4,7 +4,7 @@ import {register} from '../serviceWorkerRegistration';
 
 
 if('serviceWorker' in navigator) {
-  await register
+  register();
   // .then((serviceWorkerRegistration: any) => {
     console.log('service worker registered', ServiceWorkerRegistration);
 
@@ -13,7 +13,7 @@ if('serviceWorker' in navigator) {
 
       console.log(`FROM SW:`, message);
     });
-  // })
+  //  })
   // .catch((err) => {
   //   console.log('error registering service worker', err);
   // });
