@@ -1,18 +1,18 @@
 /* eslint-disable no-restricted-globals */
 import { openDB, IDBPDatabase } from 'idb';
-import {register} from '../serviceWorkerRegistration';
+// import {register} from '../serviceWorkerRegistration';
 
 
 if('serviceWorker' in navigator) {
-  register();
+  // register();
   // .then((serviceWorkerRegistration: any) => {
     console.log('service worker registered', ServiceWorkerRegistration);
 
-    navigator.serviceWorker.addEventListener('message', ({data}) => {
-      const message = data.msg;
+    // navigator.serviceWorker.addEventListener('message', ({data}) => {
+    //   const message = data.msg;
 
-      console.log(`FROM SW:`, message);
-    });
+    //   console.log(`FROM SW:`, message);
+    // });
   //  })
   // .catch((err) => {
   //   console.log('error registering service worker', err);
