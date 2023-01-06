@@ -115,28 +115,43 @@ export const checkNotificationTime = async () =>{
 // const sendButton = document.querySelector('#send');
 
 
+// const showNotification = async (body: any) => {
+//   // const registration = await navigator.serviceWorker.getRegistration();
+//   // let registration:any = await self.ServiceWorker;
+//   // console.log(await registration);
+//   // registration = registration.ServiceWorkerRegistration;
+//   const title = '!!!MOODZ: Friendly Reminder.';
+//   const payload = {
+//       body,
+//   };
+
+//  await navigator.serviceWorker.ready.then((registration) => {
+//     registration.showNotification(title,payload);
+//   });
+
+//   // if (await registration) {
+//   //     if ('showNotification' in registration) {
+//   //         registration.showNotification(title, payload);
+//   //     } else {
+//   //         // new Notification(title, payload);
+//   //         registration.showNotification(title, payload);
+//   //     }
+//   // }
+// };
+
 const showNotification = async (body: any) => {
-  // const registration = await navigator.serviceWorker.getRegistration();
-  // let registration:any = await self.ServiceWorker;
-  // console.log(await registration);
-  // registration = registration.ServiceWorkerRegistration;
   const title = '!!!MOODZ: Friendly Reminder.';
   const payload = {
       body,
   };
 
- await navigator.serviceWorker.ready.then((registration) => {
-    registration.showNotification(title,payload);
-  });
-
-  // if (await registration) {
-  //     if ('showNotification' in registration) {
-  //         registration.showNotification(title, payload);
-  //     } else {
-  //         // new Notification(title, payload);
-  //         registration.showNotification(title, payload);
-  //     }
-  // }
+  if (await navigator.serviceWorker.ready) {
+    await navigator.serviceWorker.ready.then((registration) => {
+      registration.showNotification(title, payload);
+    });
+  } else {
+    console.error("Service worker is not ready");
+  }
 };
 
 export const sendNotification = async () => {
