@@ -143,7 +143,7 @@ self.addEventListener('activate', async () => {
       // Use the showNotification function to show a notification
       console.log("sw-checktime true, now show notification!");
       // self.registration.showNotification('test-title');
-      sendNotification();
+      await sendNotification();
       
     }
     else{
