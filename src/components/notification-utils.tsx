@@ -3,6 +3,13 @@ import { openDB, IDBPDatabase } from 'idb';
 // import {register} from '../serviceWorkerRegistration';
 
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+  navigator.serviceWorker.register('/service-worker.js');
+  });
+}
+
+
 if('serviceWorker' in navigator) {
   // register();
   // .then((serviceWorkerRegistration: any) => {
@@ -110,12 +117,12 @@ export const checkNotificationTime = async () =>{
 
 const showNotification = async (body: any) => {
   // const registration = await navigator.serviceWorker.getRegistration();
-  const registration = await self.navigator.serviceWorker.getRegistration();
+  const registration:any = await navigator.serviceWorker.getRegistration();
   const title = 'MOODZ: Friendly Reminder.';
   const payload = {
       body,
   };
-  if (registration) {
+  if (await registration) {
       if ('showNotification' in registration) {
           registration.showNotification(title, payload);
       } else {
@@ -128,13 +135,13 @@ export const sendNotification = async () => {
   console.log("sendNotification executed");
 
   if (Notification.permission === 'granted') {
-      showNotification('What is your Mood right now?');
+      await showNotification('What is your Mood right now?');
   } else {
       if (Notification.permission !== 'denied') {
           const permission = await Notification.requestPermission();
 
           if (permission === 'granted') {
-              showNotification('Notifications are now activated');
+             await showNotification('Notifications are now activated');
           }
       }
   }
