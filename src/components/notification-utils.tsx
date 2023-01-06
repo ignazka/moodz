@@ -2,6 +2,7 @@
 import { openDB, IDBPDatabase } from 'idb';
 // import {register} from '../serviceWorkerRegistration';
 
+setNotificationTime('12:00');
 
 if('serviceWorker' in navigator) {
   // register();

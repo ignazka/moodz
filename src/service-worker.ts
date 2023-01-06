@@ -14,7 +14,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { checkNotificationTime,sendNotification, setNotificationTime} from './components/notification-utils';
+import { checkNotificationTime,sendNotification} from './components/notification-utils';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -124,7 +124,7 @@ self.addEventListener('activate', async () => {
   // showNotification('moodz interval');
 
   console.log('Service worker activated');
-  await setNotificationTime('10:00');
+  
   // const reqNotif = await requestNotificationPermission();
 
   // console.log('reqNotif',reqNotif);
