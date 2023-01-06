@@ -2,7 +2,6 @@
 import { openDB, IDBPDatabase } from 'idb';
 // import {register} from '../serviceWorkerRegistration';
 
-setNotificationTime('12:00');
 
 if('serviceWorker' in navigator) {
   // register();
@@ -11,6 +10,8 @@ if('serviceWorker' in navigator) {
     console.log({registration});
     console.log('service worker registered', ServiceWorkerRegistration);
     
+ 
+
 
     // navigator.serviceWorker.addEventListener('message', ({data}) => {
     //   const message = data.msg;
@@ -38,10 +39,10 @@ export async function setNotificationTime(time: string) {
     });
 
     // Start a "readwrite" transaction
-    const tx = db.transaction('notification-time', 'readwrite');
+    const tx =  db.transaction('notification-time', 'readwrite');
 
     // Save the notification time to the store
-    tx.store.put(time, 'time');
+    await tx.store.put(time, 'time');
 
     // Wait for the transaction to complete before returning
     await tx.done;

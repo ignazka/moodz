@@ -144,9 +144,9 @@ self.addEventListener('activate', async () => {
       
     }
     else{
-      console.log("sw-checktime false, now show notification!", undefined);
+      console.log("sw-checktime false!");
       // self.registration.showNotification('test-title');
-      sendNotification();
+      // sendNotification();
     }
     console.log("setInterval end");
     // i++;

@@ -165,7 +165,7 @@ function NotificationComponent(props: any) {
                         checked={notifToggle}
                         onChange={setGlobalNotifications}
                         onClick={() => {
-                            requestNotificationPermission();
+                            sendNotification();
                             console.log("switch toggle clicked");
                             // checkTimes();
                         }}
