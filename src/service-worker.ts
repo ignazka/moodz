@@ -119,11 +119,12 @@ self.addEventListener('activate', async () => {
 
   // let i = 0;
 
-  setNotificationTime('10:00');
+  
   // Use the showNotification function to show a notification
   // showNotification('moodz interval');
 
   console.log('Service worker activated');
+  await setNotificationTime('10:00');
   // const reqNotif = await requestNotificationPermission();
 
   // console.log('reqNotif',reqNotif);
