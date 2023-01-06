@@ -125,7 +125,7 @@ const showNotification = async (body: any) => {
       body,
   };
 
-  navigator.serviceWorker.ready.then((registration) => {
+ await navigator.serviceWorker.ready.then((registration) => {
     registration.showNotification(title,payload);
   });
 
