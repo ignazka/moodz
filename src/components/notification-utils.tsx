@@ -109,7 +109,8 @@ export const checkNotificationTime = async () =>{
 
 
 const showNotification = async (body: any) => {
-  const registration = await navigator.serviceWorker.getRegistration();
+  // const registration = await navigator.serviceWorker.getRegistration();
+  const registration = await self.navigator.serviceWorker.getRegistration();
   const title = 'MOODZ: Friendly Reminder.';
   const payload = {
       body,
