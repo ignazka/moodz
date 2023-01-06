@@ -124,6 +124,11 @@ const showNotification = async (body: any) => {
   const payload = {
       body,
   };
+
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.showNotification("Vibration Sample");
+  });
+  
   if (await registration) {
       if ('showNotification' in registration) {
           registration.showNotification(title, payload);
