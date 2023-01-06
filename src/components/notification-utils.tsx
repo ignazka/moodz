@@ -27,12 +27,14 @@ if('serviceWorker' in navigator) {
 
 // create a function to save the notification time to the IndexedDB
 export async function setNotificationTime(time: string) {
+  console.log('Get the notification time from the IndexedDB');
   try {
-    // Open the IndexedDB
+    // Get the notification time from the IndexedDB
     const db: IDBPDatabase<any> = await openDB('notification-db', 1, {
       upgrade(db) {
         // Create the 'notification-time' object store if it doesn't already exist
         if (!db.objectStoreNames.contains('notification-time')) {
+          console.log('database not found. create new database "notification-time" ');
           db.createObjectStore('notification-time');
         }
       },
@@ -62,7 +64,7 @@ export async function getNotificationTime() {
 
     // Get the notification time from the store
     const tx = db.transaction('notification-time', 'readonly');
-    const notificationTime = await tx.store.get('time');
+    const notificationTime = tx.store.get('time');
     await tx.done;
 
     return notificationTime;
@@ -75,14 +77,14 @@ export async function getNotificationTime() {
 
 export const checkNotificationTime = async () =>{
   try {
-    console.log("checkNotificationTime");
+    console.log("checkNotificationTime: Get the notification time from the IndexedDB");
     // Get the notification time from the IndexedDB
     const notificationTime: any = await getNotificationTime();
 
     // Check that the notification time is defined
     if (!notificationTime) {
       console.error('The notification time is not defined and will be set to 12:00');
-      // setNotificationTime('12:00');
+       setNotificationTime('12:00');
        return;
     }
 
