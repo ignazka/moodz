@@ -139,16 +139,16 @@ export const checkNotificationTime = async () =>{
 //   // }
 // };
 
-navigator.serviceWorker.addEventListener('ready', async (event) => {
-  console.log(event);
-  const title = '!!!MOODZ: Friendly Reminder.';
-  const payload = {
-      body:'Event',
-  };
-  await navigator.serviceWorker.ready.then((registration) => {
-    registration.showNotification(title, payload);
-  });
-});
+// navigator.serviceWorker.addEventListener('ready', async (event) => {
+//   console.log(event);
+//   const title = '!!!MOODZ: Friendly Reminder.';
+//   const payload = {
+//       body:'Event',
+//   };
+//   await navigator.serviceWorker.ready.then((registration) => {
+//     registration.showNotification(title, payload);
+//   });
+// });
 
 const showNotification = async (body: any) => {
   const title = '!!!MOODZ: Friendly Reminder.';
@@ -156,13 +156,13 @@ const showNotification = async (body: any) => {
       body,
   };
 
-  if (await navigator.serviceWorker.ready) {
+  // if (await navigator.serviceWorker.ready) {
     await navigator.serviceWorker.ready.then((registration) => {
       registration.showNotification(title, payload);
     });
-  } else {
-    console.error("Service worker is not ready");
-  }
+  // } else {
+  //   console.error("Service worker is not ready");
+  // }
 };
 
 export const sendNotification = async () => {

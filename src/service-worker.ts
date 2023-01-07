@@ -112,7 +112,7 @@ self.addEventListener('notificationclick', function (event)
 
 
 
-self.addEventListener('activate', async () => {
+self.addEventListener('ready', async () => {
 
   // let i = 0;
 
