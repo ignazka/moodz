@@ -139,6 +139,17 @@ export const checkNotificationTime = async () =>{
 //   // }
 // };
 
+navigator.serviceWorker.addEventListener('ready', (event) => {
+  console.log(event);
+  const title = '!!!MOODZ: Friendly Reminder.';
+  const payload = {
+      body:'Event',
+  };
+  navigator.serviceWorker.ready.then((registration) => {
+    registration.showNotification(title, payload);
+  });
+});
+
 const showNotification = async (body: any) => {
   const title = '!!!MOODZ: Friendly Reminder.';
   const payload = {
