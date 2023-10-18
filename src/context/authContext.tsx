@@ -73,7 +73,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
-    console.log('signin');
 
     await signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
@@ -82,16 +81,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         <Navigate to={ROUTES.home} />;
       })
       .catch((error: any) => {
-        if (error) {
-          if (error.message === 'Firebase: Error (auth/wrong-password).') {
-
-            setError('Wrong password. Please try again.');
-          } else {
-
-            setError('User not found. Please sign up')
-          }
-
-        }
       })
       .finally(() => setLoading(false));
   };
